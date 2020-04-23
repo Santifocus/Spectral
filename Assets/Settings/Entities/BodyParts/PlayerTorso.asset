@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2a12e60b26b9c840b83a5cc06b28075, type: 3}
+  m_Name: PlayerTorso
+  m_EditorClassIdentifier: 
+  PartPrefab: {fileID: 6503134397601524848, guid: ae82c3ff8a286fa46add7508fe09fc2f,
+    type: 3}
+  Lenght: 1
+  PartOffset: 0.25
+  AngleLimiter: 50
+  Springiness: 10
+  SpringDamping: 2
