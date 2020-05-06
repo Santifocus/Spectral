@@ -23,12 +23,13 @@ MonoBehaviour:
   EntityTurnSmoothMultiplier: 0.025
   EntityPartMinimumScale: 0.5
   EntityScaleChangePerPart: 0.1
+  EntityEatDistance: 0.9
   AIIdleMoveSpeedMultiplier: 0.3
   AINextMovementDelay: 1
-  AIWanderingRadius: 10
-  AIViewRange: 15
+  AIWanderingRadius: 25
+  AIViewRange: 12
   AIViewAngle: 50
-  AIForgetTargetDistance: 20
+  AIForgetTargetDistance: 16
   AIAttackRange: 3
   AIAttackDamage: 1
   AIAttackCooldown: 3

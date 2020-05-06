@@ -33,6 +33,8 @@ namespace Spectral.Behaviours.Entities
 		protected float CurrentAcceleration { get; private set; }
 		protected float intendedAcceleration;
 
+		protected float EatDistance => entitySettings.FoodEatDistance.GetDefaultedValue(GameManager.CurrentGameSettings.DefaultEntitySettings.EntityEatDistance) * Head.transform.localScale.x;
+
 		private float intendedMoveAngle;
 		private Vector3? intendedMoveDirection;
 		private bool isSetup;
@@ -149,7 +151,7 @@ namespace Spectral.Behaviours.Entities
 		}
 		public virtual void OnEat(FoodObject target = null)
 		{
-
+			EntityFactory.IncreaseEntitySize(this, entitySettings);
 		}
 		public void Damage(int amount = 1)
 		{

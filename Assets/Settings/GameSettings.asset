@@ -15,5 +15,8 @@ MonoBehaviour:
   DefaultEntitySettings: {fileID: 11400000, guid: 75bd91b0098f17f419e4c2b5ea4187db,
     type: 2}
   AttackablePlayerTorsoCount: 3
+  DefaultFoodInLevelCount: 10
   DefaultLevelWidht: 100
   DefaultLevelHeight: 100
+  FoodObjectVariants:
+  - {fileID: 3903851201713435295, guid: 104bcc0dcd9f352409a93e16c752202d, type: 3}

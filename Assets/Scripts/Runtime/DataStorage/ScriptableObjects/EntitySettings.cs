@@ -33,6 +33,7 @@ namespace Spectral.DataStorage
 		public EntityBodyPartConfiguration EntityTail;
 
 		//Other
+		public DefaultableFloat FoodEatDistance = new DefaultableFloat(null);
 		public EntityMover OverwritePrefab = default;
 		public bool EnableAI = false;
 		public EntityAIConfiguration AIConfiguration;
