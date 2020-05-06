@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b75810e386a85748a82f2813f8bfd72, type: 3}
+  m_Name: DefaultEntitySettings
+  m_EditorClassIdentifier: 
+  EntityMoveSpeed: 10
+  EntityVelocityDamping: 7
+  EntityAcceleration: 7
+  EntityDeceleration: 20
+  EntityAccelerationAngle: 60
+  EntityTurnSpeed: 540
+  EntityTurnAcceleration: 0.5
+  EntityTurnSmoothAngle: 40
+  EntityTurnSmoothMultiplier: 0.025
+  EntityPartMinimumScale: 0.8
+  EntityScaleChangePerPart: 0.05
+  AIIdleMoveSpeedMultiplier: 0.3
+  AINextMovementDelay: 1
+  AIWanderingRadius: 10
+  AIViewRange: 15
+  AIViewAngle: 50
+  AIForgetTargetDistance: 20
+  AIAttackRange: 3
+  AIAttackDamage: 1
+  AIAttackCooldown: 3
+  AIMaxSizeIncrease: 3

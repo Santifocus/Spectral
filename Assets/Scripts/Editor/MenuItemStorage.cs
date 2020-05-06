@@ -1,4 +1,4 @@
-﻿using Spectral.Data;
+﻿using Spectral.DataStorage;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,11 +11,36 @@ namespace Spectral.EditorInspector
 	{
 		//[MenuItem("Spectral/Objects/Object")] public static void CreateObject() => AssetCreator<Object>("Settings", "Objects");
 
-		[MenuItem("Spectral/Settings/GameSettings")] public static void CreateGameSettings() => AssetCreator<GameSettings>("Settings");
+		[MenuItem("Spectral/Settings/GameSettings")]
+		public static void CreateGameSettings()
+		{
+			AssetCreator<GameSettings>("Settings");
+		}
 
-		//EntitieSettings
-		[MenuItem("Spectral/Settings/Entities/Movement")] public static void CreateMovementSettings() => AssetCreator<MovingEntitieSettings>("Settings", "Entities", "MovementSettings");
-		[MenuItem("Spectral/Settings/Entities/BodyPart")] public static void CreateEntitieBodyPartSettings() => AssetCreator<EntitieBodyPartSettings>("Settings", "Entities", "BodyParts");
+		[MenuItem("Spectral/Settings/DefaultEntitySettings")]
+		public static void CreateDefaultEntitySettings()
+		{
+			AssetCreator<DefaultEntitySettings>("Settings");
+		}
+
+		[MenuItem("Spectral/Settings/LevelSettings")]
+		public static void CreateLevelSettings()
+		{
+			AssetCreator<LevelSettings>("Settings", "Levels");
+		}
+
+		//EntitySettings
+		[MenuItem("Spectral/Settings/Entities/Settings")]
+		public static void CreateEntitySettings()
+		{
+			AssetCreator<EntitySettings>("Settings", "Entities");
+		}
+
+		[MenuItem("Spectral/Settings/Entities/BodyPart")]
+		public static void CreateEntityBodyPartSettings()
+		{
+			AssetCreator<EntityBodyPartSettings>("Settings", "Entities", "BodyParts");
+		}
 
 		#region Asset Creator
 		public static T AssetCreator<T>(params string[] pathParts) where T : ScriptableObject

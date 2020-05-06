@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de45d34ba2c13943b0e9356af557716, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  EntitieVelocityDamping: 6
+  DefaultEntitySettings: {fileID: 11400000, guid: 75bd91b0098f17f419e4c2b5ea4187db,
+    type: 2}
+  AttackablePlayerTorsoCount: 3
+  DefaultLevelWidht: 100
+  DefaultLevelHeight: 100
