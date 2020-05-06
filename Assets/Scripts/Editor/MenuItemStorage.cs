@@ -17,6 +17,25 @@ namespace Spectral.EditorInspector
 		[MenuItem("Spectral/Settings/Entities/Movement")] public static void CreateMovementSettings() => AssetCreator<MovingEntitieSettings>("Settings", "Entities", "MovementSettings");
 		[MenuItem("Spectral/Settings/Entities/BodyPart")] public static void CreateEntitieBodyPartSettings() => AssetCreator<EntitieBodyPartSettings>("Settings", "Entities", "BodyParts");
 
+		[MenuItem("Spectral/Settings/LevelSettings")]
+		public static void CreateLevelSettings()
+		{
+			AssetCreator<LevelSettings>("Settings", "Levels");
+		}
+
+		//EntitySettings
+		[MenuItem("Spectral/Settings/Entities/Settings")]
+		public static void CreateEntitySettings()
+		{
+			AssetCreator<EntitySettings>("Settings", "Entities");
+		}
+
+		[MenuItem("Spectral/Settings/Entities/BodyPart")]
+		public static void CreateEntityBodyPartSettings()
+		{
+			AssetCreator<EntityBodyPartConfiguration>("Settings", "Entities", "BodyParts");
+		}
+
 		#region Asset Creator
 		public static T AssetCreator<T>(params string[] pathParts) where T : ScriptableObject
 		{
