@@ -21,7 +21,11 @@ namespace Spectral.EditorInspector
 				EditorUtility.SetDirty(target);
 			}
 		}
-		protected virtual bool ShouldHideBaseInspector() => false;
+		protected virtual bool ShouldHideBaseInspector()
+		{
+			return false;
+		}
+
 		protected virtual void CustomInspector() { }
 	}
 }

@@ -14,10 +14,10 @@ namespace Spectral.EditorInspector
 		public static bool IsDirty { get; private set; }
 		#endregion
 		#region Standard Drawing
-		public static bool FloatField(string content, ref float curValue)
+		public static bool FloatField(string label, ref float curValue)
 		{
 			BeginIndentSpaces();
-			float newValue = EditorGUILayout.FloatField(content, curValue);
+			float newValue = EditorGUILayout.FloatField(label, curValue);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -28,10 +28,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool FloatSliderField(string content, ref float curValue, float minValue = 0, float maxValue = 1)
+		public static bool FloatSliderField(string label, ref float curValue, float minValue = 0, float maxValue = 1)
 		{
 			BeginIndentSpaces();
-			float newValue = EditorGUILayout.Slider(content, curValue, minValue, maxValue);
+			float newValue = EditorGUILayout.Slider(label, curValue, minValue, maxValue);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -42,10 +42,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool IntField(string content, ref int curValue)
+		public static bool IntField(string label, ref int curValue)
 		{
 			BeginIndentSpaces();
-			int newValue = EditorGUILayout.IntField(content, curValue);
+			int newValue = EditorGUILayout.IntField(label, curValue);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -56,10 +56,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool IntSliderField(string content, ref int curValue, int minValue, int maxValue)
+		public static bool IntSliderField(string label, ref int curValue, int minValue, int maxValue)
 		{
 			BeginIndentSpaces();
-			int newValue = EditorGUILayout.IntSlider(content, curValue, minValue, maxValue);
+			int newValue = EditorGUILayout.IntSlider(label, curValue, minValue, maxValue);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -70,10 +70,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool DelayedIntField(string content, ref int curValue)
+		public static bool DelayedIntField(string label, ref int curValue)
 		{
 			BeginIndentSpaces();
-			int newValue = EditorGUILayout.DelayedIntField(content, curValue);
+			int newValue = EditorGUILayout.DelayedIntField(label, curValue);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -84,10 +84,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool DoubleField(string content, ref double curValue)
+		public static bool DoubleField(string label, ref double curValue)
 		{
 			BeginIndentSpaces();
-			double newValue = EditorGUILayout.DoubleField(content, curValue);
+			double newValue = EditorGUILayout.DoubleField(label, curValue);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -98,10 +98,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool StringField(string content, ref string curValue)
+		public static bool StringField(string label, ref string curValue)
 		{
 			BeginIndentSpaces();
-			string newValue = EditorGUILayout.TextField(content, curValue);
+			string newValue = EditorGUILayout.TextField(label, curValue);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -112,10 +112,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool BoolField(string content, ref bool curValue)
+		public static bool BoolField(string label, ref bool curValue)
 		{
 			BeginIndentSpaces();
-			bool newValue = EditorGUILayout.Toggle(content, curValue);
+			bool newValue = EditorGUILayout.Toggle(label, curValue);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -126,10 +126,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool Vector2Field(string content, ref Vector2 curValue)
+		public static bool Vector2Field(string label, ref Vector2 curValue)
 		{
 			BeginIndentSpaces();
-			Vector2 newValue = EditorGUILayout.Vector2Field(content, curValue);
+			Vector2 newValue = EditorGUILayout.Vector2Field(label, curValue);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -140,10 +140,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool Vector3Field(string content, ref Vector3 curValue)
+		public static bool Vector3Field(string label, ref Vector3 curValue)
 		{
 			BeginIndentSpaces();
-			Vector3 newValue = EditorGUILayout.Vector3Field(content, curValue);
+			Vector3 newValue = EditorGUILayout.Vector3Field(label, curValue);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -154,7 +154,7 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool Vector4Field(string content, ref Vector4 curValue)
+		public static bool Vector4Field(string label, ref Vector4 curValue)
 		{
 			bool changed = false;
 			Vector4 newValue = curValue;
@@ -170,7 +170,7 @@ namespace Spectral.EditorInspector
 			DecreaseIndent(3);
 
 			BeginIndentSpaces();
-			newValue.x = EditorGUILayout.FloatField(content, newValue.x);
+			newValue.x = EditorGUILayout.FloatField(label, newValue.x);
 
 			GUILayout.Space(STANDARD_OFFSET * 1.3f);
 			newValue.z = EditorGUILayout.FloatField("", newValue.z, GUILayout.MaxWidth(EditorGUIUtility.fieldWidth));
@@ -182,6 +182,7 @@ namespace Spectral.EditorInspector
 			newValue.w = EditorGUILayout.FloatField(" ", newValue.w);
 			GUILayout.FlexibleSpace();
 			EndIndentSpaces();
+			DecreaseIndent(3);
 
 			for (int i = 0; i < 4; i++)
 			{
@@ -200,10 +201,10 @@ namespace Spectral.EditorInspector
 			}
 			return changed;
 		}
-		public static bool ColorField(string content, ref Color curValue)
+		public static bool ColorField(string label, ref Color curValue)
 		{
 			BeginIndentSpaces();
-			Color newValue = EditorGUILayout.ColorField(content, curValue);
+			Color newValue = EditorGUILayout.ColorField(label, curValue);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -214,7 +215,7 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool GradientField(string content, ref Gradient curValue)
+		public static bool GradientField(string label, ref Gradient curValue)
 		{
 			Gradient newValue = new Gradient
 			{
@@ -222,7 +223,7 @@ namespace Spectral.EditorInspector
 				alphaKeys = curValue.alphaKeys
 			};
 			BeginIndentSpaces();
-			newValue = EditorGUILayout.GradientField(content, newValue);
+			newValue = EditorGUILayout.GradientField(label, newValue);
 			EndIndentSpaces();
 
 			if (!newValue.Equals(curValue))
@@ -233,11 +234,11 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool AnimationCurveField(string content, ref AnimationCurve curValue)
+		public static bool AnimationCurveField(string label, ref AnimationCurve curValue)
 		{
 			BeginIndentSpaces();
 			AnimationCurve newValue = new AnimationCurve(curValue.keys);
-			newValue = EditorGUILayout.CurveField(content, newValue);
+			newValue = EditorGUILayout.CurveField(label, newValue);
 			EndIndentSpaces();
 
 			if (!newValue.Equals(curValue))
@@ -248,10 +249,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool EnumField<T>(string content, ref T curValue) where T : System.Enum
+		public static bool EnumField<T>(string label, ref T curValue) where T : System.Enum
 		{
 			BeginIndentSpaces();
-			T newValue = (T)EditorGUILayout.EnumPopup(content, curValue);
+			T newValue = (T)EditorGUILayout.EnumPopup(label, curValue);
 			EndIndentSpaces();
 
 			if (newValue.GetHashCode() != curValue.GetHashCode())
@@ -262,10 +263,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool PopupField(string content, ref int curValue, string[] options)
+		public static bool PopupField(string label, ref int curValue, string[] options)
 		{
 			BeginIndentSpaces();
-			int newValue = EditorGUILayout.Popup(content, curValue, options);
+			int newValue = EditorGUILayout.Popup(label, curValue, options);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -276,7 +277,7 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool PopupField(string content, ref int curValue, string[] options, int[] optionValues)
+		public static bool PopupField(string label, ref int curValue, string[] options, int[] optionValues)
 		{
 			GUIContent[] displayedOptions = new GUIContent[options.Length];
 			for (int i = 0; i < options.Length; i++)
@@ -284,7 +285,7 @@ namespace Spectral.EditorInspector
 				displayedOptions[i] = new GUIContent(options[i]);
 			}
 			BeginIndentSpaces();
-			int newValue = EditorGUILayout.IntPopup(new GUIContent(content), curValue, displayedOptions, optionValues);
+			int newValue = EditorGUILayout.IntPopup(new GUIContent(label), curValue, displayedOptions, optionValues);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -295,10 +296,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool PopupMaskField(string content, ref int curValue, string[] options)
+		public static bool PopupMaskField(string label, ref int curValue, string[] options)
 		{
 			BeginIndentSpaces();
-			int newValue = EditorGUILayout.MaskField(content, curValue, options);
+			int newValue = EditorGUILayout.MaskField(label, curValue, options);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -309,10 +310,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool EnumFlagField<T>(string content, ref T curValue) where T : System.Enum
+		public static bool EnumFlagField<T>(string label, ref T curValue) where T : System.Enum
 		{
 			BeginIndentSpaces();
-			T newValue = (T)EditorGUILayout.EnumFlagsField(content, curValue);
+			T newValue = (T)EditorGUILayout.EnumFlagsField(label, curValue);
 			EndIndentSpaces();
 
 			if (newValue.GetHashCode() != curValue.GetHashCode())
@@ -323,10 +324,10 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool UnityObjectField<T>(string content, ref T curValue) where T : Object
+		public static bool UnityObjectField<T>(string label, ref T curValue) where T : Object
 		{
 			BeginIndentSpaces();
-			T newValue = (T)EditorGUILayout.ObjectField(content, curValue, typeof(T), false);
+			T newValue = (T)EditorGUILayout.ObjectField(label, curValue, typeof(T), false);
 			EndIndentSpaces();
 
 			if (newValue != curValue)
@@ -339,34 +340,34 @@ namespace Spectral.EditorInspector
 		}
 		#endregion
 		#region Array Drawing
-		public static bool DrawArray<T>(string content,
+		public static bool DrawArray<T>(string label,
 										ref T[] curValue,
 										SerializedProperty arrayProperty,
-										System.Action<string, T, SerializedProperty> elementBinding,
-										string elementContent = null,
-										bool allowTypeSpecificFieldContent = true,
+										System.Action<string, T, SerializedProperty> drawerFunction,
+										string elementlabel = null,
+										bool allowTypeSpecificFieldlabel = true,
 										bool asHeader = false) where T : class
 		{
-			return DrawArray<T>(content,
+			return DrawArray<T>(label,
 								ref curValue,
 								arrayProperty,
-								elementBinding,
-								(elementContent != null) ? (new System.Func<int, string>((int index) => elementContent)) : null,
-								allowTypeSpecificFieldContent,
+								drawerFunction,
+								(elementlabel != null) ? (new System.Func<int, string>((int index) => elementlabel)) : null,
+								allowTypeSpecificFieldlabel,
 								asHeader);
 		}
-		public static bool DrawArray<T>(string content,
+		public static bool DrawArray<T>(string label,
 										ref T[] curValue,
 										SerializedProperty arrayProperty,
-										System.Action<string, T, SerializedProperty> elementBinding,
-										System.Func<int, string> fieldContentGetter,
-										bool allowTypeSpecificFieldContent = true,
+										System.Action<string, T, SerializedProperty> drawerFunction,
+										System.Func<int, string> fieldlabelGetter,
+										bool allowTypeSpecificFieldlabel = true,
 										bool asHeader = false) where T : class
 		{
 			if (typeof(T) == typeof(Object))
 			{
 				Object[] objectArray = curValue as Object[];
-				return DrawUnityObjectArray<Object>(content, ref objectArray, arrayProperty, fieldContentGetter, allowTypeSpecificFieldContent, asHeader);
+				return DrawUnityObjectArray<Object>(label, ref objectArray, arrayProperty, fieldlabelGetter, allowTypeSpecificFieldlabel, asHeader);
 			}
 			bool changed = false;
 			if (curValue == null)
@@ -375,7 +376,7 @@ namespace Spectral.EditorInspector
 				changed = true;
 			}
 
-			changed |= Foldout(content, arrayProperty, asHeader);
+			changed |= Foldout(label, arrayProperty, asHeader);
 
 			if (arrayProperty.isExpanded)
 			{
@@ -383,13 +384,13 @@ namespace Spectral.EditorInspector
 				int newSize = curValue.Length;
 				DelayedIntField("Size", ref newSize);
 
-				string failedGetterContent = allowTypeSpecificFieldContent ? ObjectNames.NicifyVariableName(typeof(T).Name) : "Element";
-				failedGetterContent = ". " + failedGetterContent;
+				string failedGetterlabel = allowTypeSpecificFieldlabel ? ObjectNames.NicifyVariableName(typeof(T).Name) : "Element";
+				failedGetterlabel = ". " + failedGetterlabel;
 
 				for (int i = 0; i < curValue.Length; i++)
 				{
-					string elementContent = fieldContentGetter?.Invoke(i) ?? failedGetterContent;
-					elementBinding?.Invoke(i + elementContent, curValue[i], arrayProperty.GetArrayElementAtIndex(i));
+					string elementlabel = fieldlabelGetter?.Invoke(i) ?? failedGetterlabel;
+					drawerFunction?.Invoke(i + elementlabel, curValue[i], arrayProperty.GetArrayElementAtIndex(i));
 				}
 
 				if (curValue.Length != newSize)
@@ -423,25 +424,109 @@ namespace Spectral.EditorInspector
 			}
 			return changed;
 		}
-		public static bool DrawUnityObjectArray<T>(string content,
+		public static bool DrawArray<T>(string label,
+										ref T[] curValue,
+										SerializedProperty arrayProperty,
+										System.Func<string, T, SerializedProperty, T> drawerFunction,
+										string elementlabel = null,
+										bool allowTypeSpecificFieldlabel = true,
+										bool asHeader = false) where T : struct
+		{
+			return DrawArray<T>(label,
+								ref curValue,
+								arrayProperty,
+								drawerFunction,
+								(elementlabel != null) ? (new System.Func<int, string>((int index) => elementlabel)) : null,
+								allowTypeSpecificFieldlabel,
+								asHeader);
+		}
+		public static bool DrawArray<T>(string label,
+										ref T[] curValue,
+										SerializedProperty arrayProperty,
+										System.Func<string, T, SerializedProperty, T> drawerFunction,
+										System.Func<int, string> fieldlabelGetter,
+										bool allowTypeSpecificFieldlabel = true,
+										bool asHeader = false) where T : struct
+		{
+			if (typeof(T) == typeof(Object))
+			{
+				Object[] objectArray = curValue as Object[];
+				return DrawUnityObjectArray<Object>(label, ref objectArray, arrayProperty, fieldlabelGetter, allowTypeSpecificFieldlabel, asHeader);
+			}
+			bool changed = false;
+			if (curValue == null)
+			{
+				curValue = new T[0];
+				changed = true;
+			}
+
+			changed |= Foldout(label, arrayProperty, asHeader);
+
+			if (arrayProperty.isExpanded)
+			{
+				IncreaseIndent();
+				int newSize = curValue.Length;
+				DelayedIntField("Size", ref newSize);
+
+				string failedGetterlabel = allowTypeSpecificFieldlabel ? ObjectNames.NicifyVariableName(typeof(T).Name) : "Element";
+				failedGetterlabel = ". " + failedGetterlabel;
+
+				for (int i = 0; i < curValue.Length; i++)
+				{
+					string elementlabel = fieldlabelGetter?.Invoke(i) ?? failedGetterlabel;
+					curValue[i] = drawerFunction?.Invoke(i + elementlabel, curValue[i], arrayProperty.GetArrayElementAtIndex(i)) ?? default;
+				}
+
+				if (curValue.Length != newSize)
+				{
+					changed = true;
+					T[] newArray = new T[newSize];
+					for (int i = 0; i < newSize; i++)
+					{
+						if (i < curValue.Length)
+						{
+							newArray[i] = curValue[i];
+						}
+						else
+						{
+							break;
+						}
+					}
+					curValue = newArray;
+					arrayProperty.arraySize = newSize;
+				}
+				DecreaseIndent();
+			}
+			if (asHeader)
+			{
+				EndFoldoutHeader();
+			}
+
+			if (changed)
+			{
+				ShouldBeDirty();
+			}
+			return changed;
+		}
+		public static bool DrawUnityObjectArray<T>(string label,
 													ref T[] curValue,
 													SerializedProperty arrayProperty,
-													string elementContent = null,
-													bool allowTypeSpecificFieldContent = true,
+													string elementlabel = null,
+													bool allowTypeSpecificFieldlabel = true,
 													bool asHeader = false) where T : Object
 		{
-			return DrawUnityObjectArray<T>(content,
+			return DrawUnityObjectArray<T>(label,
 											ref curValue,
 											arrayProperty,
-											(elementContent != null) ? (new System.Func<int, string>((int index) => elementContent)) : null,
-											allowTypeSpecificFieldContent,
+											(elementlabel != null) ? (new System.Func<int, string>((int index) => elementlabel)) : null,
+											allowTypeSpecificFieldlabel,
 											asHeader);
 		}
-		public static bool DrawUnityObjectArray<T>(string content,
+		public static bool DrawUnityObjectArray<T>(string label,
 													ref T[] curValue,
 													SerializedProperty arrayProperty,
-													System.Func<int, string> fieldContentGetter,
-													bool allowTypeSpecificFieldContent = true,
+													System.Func<int, string> fieldlabelGetter,
+													bool allowTypeSpecificFieldlabel = true,
 													bool asHeader = false) where T : Object
 		{
 			bool changed = false;
@@ -450,22 +535,22 @@ namespace Spectral.EditorInspector
 				curValue = new T[0];
 				changed = true;
 			}
-			changed |= Foldout(content, arrayProperty, asHeader);
+			changed |= Foldout(label, arrayProperty, asHeader);
 
 			if (arrayProperty.isExpanded)
 			{
+				IncreaseIndent();
 				int newSize = curValue.Length;
 				DelayedIntField("Size", ref newSize);
 
-				string failedGetterContent = allowTypeSpecificFieldContent ? ObjectNames.NicifyVariableName(typeof(T).Name) : "Element";
-				failedGetterContent = ". " + failedGetterContent;
+				string failedGetterlabel = allowTypeSpecificFieldlabel ? ObjectNames.NicifyVariableName(typeof(T).Name) : "Element";
+				failedGetterlabel = ". " + failedGetterlabel;
 
 				for (int i = 0; i < curValue.Length; i++)
 				{
-					string elementContent = fieldContentGetter?.Invoke(i) ?? failedGetterContent;
-					changed |= UnityObjectField(i + elementContent, ref curValue[i]);
+					string elementlabel = fieldlabelGetter?.Invoke(i) ?? failedGetterlabel;
+					changed |= UnityObjectField(i + elementlabel, ref curValue[i]);
 				}
-
 				if (newSize != curValue.Length)
 				{
 					changed = true;
@@ -484,6 +569,7 @@ namespace Spectral.EditorInspector
 
 					curValue = newArray;
 				}
+				DecreaseIndent();
 			}
 
 			if (asHeader)
@@ -509,7 +595,7 @@ namespace Spectral.EditorInspector
 		{
 			EditorGUILayout.EndHorizontal();
 		}
-		public static void Header(string content, bool spaces = true, bool bold = true)
+		public static void Header(string label, bool spaces = true, bool bold = true)
 		{
 			if (spaces)
 			{
@@ -519,11 +605,11 @@ namespace Spectral.EditorInspector
 			BeginIndentSpaces();
 			if (bold)
 			{
-				GUILayout.Label(content, EditorStyles.boldLabel);
+				GUILayout.Label(label, EditorStyles.boldLabel);
 			}
 			else
 			{
-				GUILayout.Label(content);
+				GUILayout.Label(label);
 			}
 			EndIndentSpaces();
 
@@ -549,27 +635,27 @@ namespace Spectral.EditorInspector
 				GUILayout.Space(3);
 			}
 		}
-		public static bool Foldout(string content, SerializedProperty property, bool asHeader = false)
+		public static bool Foldout(string label, SerializedProperty property, bool asHeader = false)
 		{
 			bool curOpen = property.isExpanded;
-			if (Foldout(content, ref curOpen, asHeader))
+			if (Foldout(label, ref curOpen, asHeader))
 			{
 				property.isExpanded = curOpen;
 				return true;
 			}
 			return false;
 		}
-		public static bool Foldout(string content, ref bool curValue, bool asHeader = false)
+		public static bool Foldout(string label, ref bool curValue, bool asHeader = false)
 		{
 			bool newValue;
 			if (asHeader)
 			{
-				newValue = EditorGUILayout.BeginFoldoutHeaderGroup(curValue, content);
+				newValue = EditorGUILayout.BeginFoldoutHeaderGroup(curValue, label);
 			}
 			else
 			{
 				BeginIndentSpaces();
-				newValue = EditorGUILayout.Foldout(curValue, content, true);
+				newValue = EditorGUILayout.Foldout(curValue, label, true);
 				EndIndentSpaces();
 			}
 
@@ -581,19 +667,19 @@ namespace Spectral.EditorInspector
 			}
 			return false;
 		}
-		public static bool DrawInFoldoutHeader(string content, SerializedProperty property, System.Action drawFunction)
+		public static bool DrawInFoldoutHeader(string label, SerializedProperty property, System.Action drawFunction)
 		{
 			bool curOpen = property.isExpanded;
-			if (DrawInFoldoutHeader(content, ref curOpen, drawFunction))
+			if (DrawInFoldoutHeader(label, ref curOpen, drawFunction))
 			{
 				property.isExpanded = curOpen;
 				return true;
 			}
 			return false;
 		}
-		public static bool DrawInFoldoutHeader(string content, ref bool curValue, System.Action drawFunction)
+		public static bool DrawInFoldoutHeader(string label, ref bool curValue, System.Action drawFunction)
 		{
-			bool changed = Foldout(content, ref curValue, true);
+			bool changed = Foldout(label, ref curValue, true);
 			if (curValue)
 			{
 				drawFunction?.Invoke();
@@ -601,9 +687,9 @@ namespace Spectral.EditorInspector
 			EndFoldoutHeader();
 			return changed;
 		}
-		public static bool DrawButton(string content, System.Action activateFunction)
+		public static bool DrawButtonWithFunction(string label, System.Action activateFunction)
 		{
-			if (GUILayout.Button(content))
+			if (GUILayout.Button(label))
 			{
 				activateFunction?.Invoke();
 				return true;

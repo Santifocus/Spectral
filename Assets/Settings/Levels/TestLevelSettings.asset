@@ -9,11 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7de45d34ba2c13943b0e9356af557716, type: 3}
-  m_Name: GameSettings
+  m_Script: {fileID: 11500000, guid: 017848a574208fa44bc291a480c94a5b, type: 3}
+  m_Name: TestLevelSettings
   m_EditorClassIdentifier: 
-  DefaultEntitySettings: {fileID: 11400000, guid: 75bd91b0098f17f419e4c2b5ea4187db,
-    type: 2}
-  AttackablePlayerTorsoCount: 3
-  DefaultLevelWidht: 100
-  DefaultLevelHeight: 100
+  LevelWidht:
+    RawValue: 0
+    UseDefault: 1
+    DefaultOffset: 0
+  LevelHeight:
+    RawValue: 0
+    UseDefault: 1
+    DefaultOffset: 0
