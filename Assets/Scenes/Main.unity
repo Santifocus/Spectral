@@ -296,7 +296,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &795937870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entitySettings: {fileID: 11400000, guid: 58bb25392747ce949bfa508351ed1c83, type: 2}
-  spawnBodyPartCount: 2
+  spawnBodyPartCount: 4
 --- !u!4 &795937871
 Transform:
   m_ObjectHideFlags: 0
@@ -564,7 +564,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1117317713
 MonoBehaviour:
   m_ObjectHideFlags: 0

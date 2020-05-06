@@ -86,12 +86,12 @@ namespace Spectral
 				if (i < (bodyPartCount - 1) || data.EntityTail == null)
 				{
 					int choosenIndex = data.TorsoChooseStyle == ChooseStyle.Random ? Random.Range(0, data.EntityTorso.Length) : i % data.EntityTorso.Length;
-					torsoParts.Add(CreateBodyHingePart(data.EntityTorso[choosenIndex], i));
+					torsoParts.Add(CreateBodyHingePart(data.EntityTorso[choosenIndex], i + 1));
 				}
 				else
 				{
 					//Create the tail
-					tail = CreateBodyHingePart(data.EntityTail, i);
+					tail = CreateBodyHingePart(data.EntityTail, i + 1);
 				}
 			}
 
@@ -138,9 +138,10 @@ namespace Spectral
 				limits.max = settings.AngleLimiter;
 				hingeJoint.limits = limits;
 
-				//This will put the anchor in the middle of the offset between the last and current torso part, why it has to be divided by exactly 5.75f is unknown
-				//probably some hard coded value in the Unity API that had to be neutralized from here
+				//Setup the anchors
+				hingeJoint.autoConfigureConnectedAnchor = false;
 				hingeJoint.anchor = new Vector3(0, 0, 0.5f + (settings.PartOffset / 5.75f));
+				hingeJoint.connectedAnchor = -bodyHingePart.transform.InverseTransformPoint(currentJointAttachment.transform.position) * hingeJoint.anchor.z;
 
 				//Setup the rigidbody which was already added from HingeJoint
 				currentJointAttachment = bodyHingePart.GetComponent<Rigidbody>();
@@ -200,12 +201,20 @@ namespace Spectral
 			float newOffset = ((bodyPartData.CalculatedLenght + headPartData.CalculatedLenght) * 0.5f) + bodyPartData.Data.PartOffset;
 			targetPart.transform.localPosition = entityCore.Head.transform.localPosition + (newOffset * offsetDirection * -1);
 
-			//Update the hinge joing of the body part
+			//Update the hinge joint of the body part
 			HingeJoint hingeJoint = targetPart.GetComponent<HingeJoint>();
 			hingeJoint.connectedBody = entityCore.Head.GetComponent<Rigidbody>();
 
-			hingeJoint.autoConfigureConnectedAnchor = false;
-			hingeJoint.anchor = (0.5f + (bodyPartData.Data.PartOffset / 5.75f)) * entityCore.Head.transform.forward * -1;
+			float angleDelta = Mathf.DeltaAngle(entityCore.Head.transform.localEulerAngles.y, targetPart.transform.localEulerAngles.y);
+
+			JointSpring spring = hingeJoint.spring;
+			spring.targetPosition = -angleDelta;
+			hingeJoint.spring = spring;
+
+			JointLimits limits = hingeJoint.limits;
+			limits.min = -bodyPartData.Data.AngleLimiter - angleDelta;
+			limits.max = bodyPartData.Data.AngleLimiter - angleDelta;
+			hingeJoint.limits = limits;
 		}
 		private static int GetEntitySize(EntityMover entityCore)
 		{

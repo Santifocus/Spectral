@@ -15,7 +15,7 @@ MonoBehaviour:
   PartPrefab: {fileID: 6503134397601524848, guid: ae82c3ff8a286fa46add7508fe09fc2f,
     type: 3}
   Lenght: 1
-  PartOffset: 1
+  PartOffset: 0.25
   AngleLimiter: 50
   Springiness: 10
   SpringDamping: 2

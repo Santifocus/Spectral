@@ -21,8 +21,8 @@ MonoBehaviour:
   EntityTurnAcceleration: 0.5
   EntityTurnSmoothAngle: 40
   EntityTurnSmoothMultiplier: 0.025
-  EntityPartMinimumScale: 0.8
-  EntityScaleChangePerPart: 0.05
+  EntityPartMinimumScale: 0.5
+  EntityScaleChangePerPart: 0.1
   AIIdleMoveSpeedMultiplier: 0.3
   AINextMovementDelay: 1
   AIWanderingRadius: 10
