@@ -67,6 +67,7 @@ namespace Spectral.EditorInspector
 			EntitySettings settings = target as EntitySettings;
 			IncreaseIndent();
 
+			settings.FoodEatDistance.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.FoodEatDistance)));
 			UnityObjectField<EntityMover>(ObjectNames.NicifyVariableName(nameof(EntitySettings.OverwritePrefab)), ref settings.OverwritePrefab);
 
 			BoolField(ObjectNames.NicifyVariableName(nameof(EntitySettings.EnableAI)), ref settings.EnableAI);

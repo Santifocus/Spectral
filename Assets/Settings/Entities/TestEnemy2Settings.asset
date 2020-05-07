@@ -15,7 +15,7 @@ MonoBehaviour:
   MoveSpeed:
     RawValue: 0
     UseDefault: 1
-    DefaultOffset: 0
+    DefaultOffset: 3
   VelocityDamping:
     RawValue: 0
     UseDefault: 1
@@ -31,7 +31,7 @@ MonoBehaviour:
   AccelerationAngle:
     RawValue: 0
     UseDefault: 1
-    DefaultOffset: -25
+    DefaultOffset: -0
   TurnSpeed:
     RawValue: 0
     UseDefault: 1
@@ -48,7 +48,7 @@ MonoBehaviour:
     RawValue: 0
     UseDefault: 1
     DefaultOffset: 0
-  MinParts: 1
+  MinParts: 3
   PartMinimumScale:
     RawValue: 0
     UseDefault: 1
@@ -62,11 +62,15 @@ MonoBehaviour:
   EntityTorso:
   - {fileID: 11400000, guid: 84138d3dc913380438d3ad94c2d63431, type: 2}
   EntityTail: {fileID: 11400000, guid: 6715d71ed4bb1304aacccdcebc73bc8e, type: 2}
+  FoodEatDistance:
+    RawValue: 0
+    UseDefault: 1
+    DefaultOffset: 0
   OverwritePrefab: {fileID: 0}
   EnableAI: 1
   AIConfiguration:
     IdleBehaviour: 2
-    ActiveBehaviour: 1
+    ActiveBehaviour: 2
     EatBehavior: 2
     IdleMoveSpeedMultiplier:
       RawValue: 0
@@ -79,7 +83,7 @@ MonoBehaviour:
     WanderingRadius:
       RawValue: 0
       UseDefault: 1
-      DefaultOffset: 20
+      DefaultOffset: 0
     PatrolPoints: []
     ViewRange:
       RawValue: 0

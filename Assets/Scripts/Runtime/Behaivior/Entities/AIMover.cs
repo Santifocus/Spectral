@@ -107,7 +107,7 @@ namespace Spectral.Behaviours.Entities
 				if (CanSeePoint(foodPos))
 				{
 					currentTargetPosition = foodPos;
-					if (TryReachTargetPoint())
+					if (TryReachTargetPoint(EatDistance))
 					{
 						targetFood.Eat(this);
 						ResetDecisionDelay();

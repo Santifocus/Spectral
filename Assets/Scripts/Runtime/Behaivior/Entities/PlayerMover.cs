@@ -20,18 +20,10 @@ namespace Spectral.Behaviours.Entities
 		{
 			base.Update();
 			UpdateIntendedMoveDirection();
+			CheckForFood();
 		}
 		private void UpdateIntendedMoveDirection()
 		{
-			if (Input.GetKeyDown(KeyCode.D))
-			{
-				EntityFactory.DecreaseEntitySize(this, entitySettings);
-			}
-			if (Input.GetKeyDown(KeyCode.A))
-			{
-				EntityFactory.IncreaseEntitySize(this, entitySettings);
-			}
-
 			Vector2? inputPos = GetInputPosition();
 			if (!inputPos.HasValue)
 			{
@@ -57,6 +49,14 @@ namespace Spectral.Behaviours.Entities
 			newIntendedMoveDirection.y = 0;
 
 			IntendedMoveDirection = newIntendedMoveDirection;
+		}
+		private void CheckForFood()
+		{
+			FoodObject targetFood = FoodObject.GetNearestFoodObject(Head.transform.position.XYZtoXZ(), EatDistance);
+			if (targetFood)
+			{
+				targetFood.Eat(this);
+			}
 		}
 		private Vector2? GetInputPosition()
 		{

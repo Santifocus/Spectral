@@ -29,6 +29,10 @@ namespace Spectral.DataStorage
 		public float EntityScaleChangePerPart = 0.05f;
 
 		[Space(6)]
+		[Header("Other Settings")]
+		public float EntityEatDistance = 1;
+
+		[Space(6)]
 		[Header("AI Settings")]
 		//Idle Behaviour
 		public float AIIdleMoveSpeedMultiplier = 0.3f;
