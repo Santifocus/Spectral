@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Energy_Circle_Test
-  m_Shader: {fileID: -6465566751694194690, guid: cd588c85217f1ee4c81bd557cfcb2b8c,
+  m_Shader: {fileID: -6465566751694194690, guid: 0e4b7106bce5e3748aa9e2bef397904f,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -34,6 +34,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_127E68DF:
+        m_Texture: {fileID: 2800000, guid: 7f079a84e9dbe7d4d862a8ed4851c773, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_BCB361BF:
         m_Texture: {fileID: 2800000, guid: 7f079a84e9dbe7d4d862a8ed4851c773, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -70,6 +74,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_839E59FA: 25
+    - Vector1_8E701436: 32
     - Vector1_9271D397: 25
     - Vector1_D736F642: 25
     - Vector1_F0F36175: 25
