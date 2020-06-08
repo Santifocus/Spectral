@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Spectral.DataStorage
+namespace Spectral.Runtime.DataStorage
 {
 	[System.Serializable]
 	public struct FloatMinMax
@@ -8,16 +8,22 @@ namespace Spectral.DataStorage
 		public float Min;
 		public float Max;
 
-		public FloatMinMax(float Min, float Max)
+		public FloatMinMax(float min, float max)
 		{
-			this.Min = Min;
-			this.Max = Max;
+			Min = min;
+			Max = max;
 		}
 
-		public float Rand => Random.Range(Min, Max);
+		public float Random => UnityEngine.Random.Range(Min, Max);
+
+		public float Clamped(float value)
+		{
+			return Mathf.Clamp(value, Min, Max);
+		}
+
 		public bool WithIn(float value)
 		{
-			return value >= Min && value <= Max;
+			return (value >= Min) && (value <= Max);
 		}
 	}
 }

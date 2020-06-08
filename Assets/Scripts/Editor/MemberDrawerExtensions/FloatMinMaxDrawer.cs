@@ -1,35 +1,36 @@
-﻿using Spectral.DataStorage;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Spectral.Runtime.DataStorage;
+using Spectral.Runtime.Runtime.DataStorage;
 using UnityEditor;
-using UnityEngine;
-using static Spectral.EditorInspector.EditorUtils;
+using static Spectral.Editor.EditorUtils;
 
-namespace Spectral.EditorInspector
+namespace Spectral.Editor
 {
 	public static class FloatMinMaxDrawer
 	{
 		public static void Draw(this ref FloatMinMax self, string label, SerializedProperty property)
 		{
-			Foldout(label, property);
+			Foldout(property, label);
 			if (property.isExpanded)
 			{
 				IncreaseIndent();
-				FloatField(ObjectNames.NicifyVariableName(nameof(IntMinMax.Min)), ref self.Min);
-				FloatField(ObjectNames.NicifyVariableName(nameof(IntMinMax.Max)), ref self.Max);
+				FloatField(ref self.Min, ObjectNames.NicifyVariableName(nameof(IntMinMax.Min)));
+				FloatField(ref self.Max, ObjectNames.NicifyVariableName(nameof(IntMinMax.Max)));
 				if (self.Min == self.Max)
 				{
 					BeginIndentSpaces();
 					EditorGUILayout.HelpBox("Always " + self.Min, MessageType.None);
 					EndIndentSpaces();
 				}
+
 				DecreaseIndent();
 			}
+
 			if (self.Min > self.Max)
 			{
 				self.Max = self.Min;
 				ShouldBeDirty();
 			}
+
 			if (self.Max < self.Min)
 			{
 				self.Min = self.Max;

@@ -1,13 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Spectral.Runtime.DataStorage;
 
-namespace Spectral.DataStorage
+namespace Spectral.Runtime
 {
 	public class LevelSettings : SpectralScriptableObject
 	{
-		public DefaultableInt FoodInLevel = new DefaultableInt(null);
-		public DefaultableFloat LevelWidht = new DefaultableFloat(null);
-		public DefaultableFloat LevelHeight = new DefaultableFloat(null);
+		#region Referencing
+
+		public static LevelSettings Current { get; private set; }
+
+		public static void SetActiveLevelSettings(LevelSettings target)
+		{
+			Current = target;
+		}
+
+		#endregion
+
+		public DefaultableInt FoodInLevel = new DefaultableInt(() => GameSettings.Current.DefaultFoodInLevelCount);
+		public DefaultableFloat LevelWidth = new DefaultableFloat(() => GameSettings.Current.DefaultLevelWidth);
+		public DefaultableFloat LevelHeight = new DefaultableFloat(() => GameSettings.Current.DefaultLevelHeight);
 	}
 }

@@ -1,17 +1,24 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Spectral
+namespace Spectral.Runtime
 {
 	public interface IPoolableObject<T> where T : MonoBehaviour, IPoolableObject<T>
 	{
 		PoolableObject<T> SelfPool { get; set; }
 		void ReturnToPool();
 	}
+
 	public class PoolableObject<T> where T : MonoBehaviour, IPoolableObject<T>
 	{
 		private int poolSize;
-		public int PoolSize { get => poolSize; set => IncreasePoolsize(value); }
+
+		public int PoolSize
+		{
+			get => poolSize;
+			set => IncreasePoolsize(value);
+		}
+
 		public List<T> ActiveObjects { get; }
 
 		private readonly T objectToPool;
@@ -24,10 +31,8 @@ namespace Spectral
 			objectToPool = ObjectToPool;
 			poolParent = PoolParent;
 			reAdjustPoolsize = ReAdjustPoolsize;
-
-			ActiveObjects = new List<T>((int)PoolSize);
-			inActiveObjects = new Queue<T>((int)PoolSize);
-
+			ActiveObjects = new List<T>((int) PoolSize);
+			inActiveObjects = new Queue<T>((int) PoolSize);
 			IncreasePoolsize(PoolSize);
 		}
 
@@ -40,14 +45,12 @@ namespace Spectral
 			}
 
 			poolSize = newPoolSize;
-			ActiveObjects.Capacity = (int)newPoolSize;
-
+			ActiveObjects.Capacity = (int) newPoolSize;
 			for (uint i = 0; i < dif; i++)
 			{
 				T newObject = Object.Instantiate(objectToPool, poolParent);
 				newObject.gameObject.SetActive(false);
 				newObject.SelfPool = this;
-
 				inActiveObjects.Enqueue(newObject);
 			}
 		}
@@ -72,6 +75,7 @@ namespace Spectral
 
 			return ret;
 		}
+
 		public IEnumerable<T> GetMultipleObjects(int amount)
 		{
 			if (inActiveObjects.Count < amount)
@@ -90,9 +94,11 @@ namespace Spectral
 			{
 				T obj = inActiveObjects.Dequeue();
 				obj.gameObject.SetActive(true);
+
 				yield return obj;
 			}
 		}
+
 		public void ReturnPoolObject(T toQueue)
 		{
 			ActiveObjects.Remove(toQueue);
