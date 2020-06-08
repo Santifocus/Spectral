@@ -1,30 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Spectral.DataStorage
+﻿namespace Spectral.Runtime.DataStorage
 {
 	[System.Serializable]
 	public struct DefaultableFloat
 	{
-		public float RawValue;
+		public float NonDefaultValue;
 		public bool UseDefault;
 		public float DefaultOffset;
-		public DefaultableFloat(float Value, bool UseDefault, float DefaultOffset)
+		public System.Func<float> DefaultGetter;
+
+		public DefaultableFloat(float nonDefaultValue, bool useDefault, float defaultOffset, System.Func<float> defaultGetter)
 		{
-			RawValue = Value;
-			this.UseDefault = UseDefault;
-			this.DefaultOffset = DefaultOffset;
+			NonDefaultValue = nonDefaultValue;
+			UseDefault = useDefault;
+			DefaultOffset = defaultOffset;
+			DefaultGetter = defaultGetter;
 		}
-		public DefaultableFloat(float? Value)
+
+		public DefaultableFloat(System.Func<float> defaultGetter)
 		{
-			RawValue = Value ?? default;
-			UseDefault = !Value.HasValue;
+			NonDefaultValue = default;
+			UseDefault = true;
 			DefaultOffset = default;
+			DefaultGetter = defaultGetter;
 		}
-		public float GetDefaultedValue(float valuesDefault)
+
+		private float GetDefaultedValue()
 		{
-			return UseDefault ? (valuesDefault + DefaultOffset) : RawValue;
+			return UseDefault ? DefaultGetter.Invoke() + DefaultOffset : NonDefaultValue;
+		}
+
+		public static implicit operator float(DefaultableFloat target)
+		{
+			return target.GetDefaultedValue();
 		}
 	}
 }

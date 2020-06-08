@@ -1,600 +1,898 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-namespace Spectral.EditorInspector
+namespace Spectral.Editor
 {
+	public enum ArrayElementWrap
+	{
+		None = 0,
+		Foldout = 1,
+		Header = 2,
+	}
+
 	public static class EditorUtils
 	{
 		#region Fields
+
 		private const int LINE_HEIGHT = 2;
 		private const float STANDARD_OFFSET = 15;
 		private static readonly Color StandardLineColor = new Color(0.25f, 0.25f, 0.65f, 1);
 
+		private const string ARRAY_SHIFT_UP = "▲";
+		private const string ARRAY_SHIFT_DOWN = "▼";
+		private const string ARRAY_DELETE = "✖";
+		private const float ARRAY_CONTROL_WIDTH = 25;
+
 		public static int Indent { get; private set; }
 		public static bool IsDirty { get; private set; }
+		private static event Action FinishedDrawingElement;
+
 		#endregion
+
 		#region Standard Drawing
-		public static bool FloatField(string label, ref float curValue)
+
+		public static bool FloatField(ref float curValue, string label)
 		{
 			BeginIndentSpaces();
 			float newValue = EditorGUILayout.FloatField(label, curValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool FloatSliderField(string label, ref float curValue, float minValue = 0, float maxValue = 1)
+
+		public static bool FloatSliderField(ref float curValue, string label, float minValue = 0, float maxValue = 1)
 		{
 			BeginIndentSpaces();
 			float newValue = EditorGUILayout.Slider(label, curValue, minValue, maxValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool IntField(string label, ref int curValue)
+
+		public static bool IntField(ref int curValue, string label)
 		{
 			BeginIndentSpaces();
 			int newValue = EditorGUILayout.IntField(label, curValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool IntSliderField(string label, ref int curValue, int minValue, int maxValue)
+
+		public static bool IntSliderField(ref int curValue, string label, int minValue, int maxValue)
 		{
 			BeginIndentSpaces();
 			int newValue = EditorGUILayout.IntSlider(label, curValue, minValue, maxValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool DelayedIntField(string label, ref int curValue)
+
+		public static bool DelayedIntField(ref int curValue, string label)
 		{
 			BeginIndentSpaces();
 			int newValue = EditorGUILayout.DelayedIntField(label, curValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool DoubleField(string label, ref double curValue)
+
+		public static bool DoubleField(ref double curValue, string label)
 		{
 			BeginIndentSpaces();
 			double newValue = EditorGUILayout.DoubleField(label, curValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool StringField(string label, ref string curValue)
+
+		public static bool StringField(ref string curValue, string label)
 		{
 			BeginIndentSpaces();
 			string newValue = EditorGUILayout.TextField(label, curValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool BoolField(string label, ref bool curValue)
+
+		public static bool BoolField(ref bool curValue, string label)
 		{
 			BeginIndentSpaces();
 			bool newValue = EditorGUILayout.Toggle(label, curValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool Vector2Field(string label, ref Vector2 curValue)
+
+		public static bool Vector2Field(ref Vector2 curValue, string label)
 		{
 			BeginIndentSpaces();
 			Vector2 newValue = EditorGUILayout.Vector2Field(label, curValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool Vector3Field(string label, ref Vector3 curValue)
+
+		public static bool Vector3Field(ref Vector3 curValue, string label)
 		{
 			BeginIndentSpaces();
 			Vector3 newValue = EditorGUILayout.Vector3Field(label, curValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool Vector4Field(string label, ref Vector4 curValue)
-		{
-			bool changed = false;
-			Vector4 newValue = curValue;
 
-			float preFieldWidth = EditorGUIUtility.fieldWidth;
-			EditorGUIUtility.fieldWidth = STANDARD_OFFSET * 4;
-
-			IncreaseIndent(3);
-			BeginIndentSpaces();
-			newValue.y = EditorGUILayout.FloatField(" ", newValue.y);
-			GUILayout.FlexibleSpace();
-			EndIndentSpaces();
-			DecreaseIndent(3);
-
-			BeginIndentSpaces();
-			newValue.x = EditorGUILayout.FloatField(label, newValue.x);
-
-			GUILayout.Space(STANDARD_OFFSET * 1.3f);
-			newValue.z = EditorGUILayout.FloatField("", newValue.z, GUILayout.MaxWidth(EditorGUIUtility.fieldWidth));
-			GUILayout.FlexibleSpace();
-			EndIndentSpaces();
-
-			IncreaseIndent(3);
-			BeginIndentSpaces();
-			newValue.w = EditorGUILayout.FloatField(" ", newValue.w);
-			GUILayout.FlexibleSpace();
-			EndIndentSpaces();
-			DecreaseIndent(3);
-
-			for (int i = 0; i < 4; i++)
-			{
-				if (curValue[i] != newValue[i])
-				{
-					changed = true;
-					curValue[i] = newValue[i];
-				}
-			}
-
-			EditorGUIUtility.fieldWidth = preFieldWidth;
-
-			if (changed)
-			{
-				ShouldBeDirty();
-			}
-			return changed;
-		}
-		public static bool ColorField(string label, ref Color curValue)
+		public static bool ColorField(ref Color curValue, string label)
 		{
 			BeginIndentSpaces();
 			Color newValue = EditorGUILayout.ColorField(label, curValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool GradientField(string label, ref Gradient curValue)
+
+		public static bool GradientField(ref Gradient curValue, string label)
 		{
 			Gradient newValue = new Gradient
 			{
 				colorKeys = curValue.colorKeys,
-				alphaKeys = curValue.alphaKeys
+				alphaKeys = curValue.alphaKeys,
 			};
+
 			BeginIndentSpaces();
 			newValue = EditorGUILayout.GradientField(label, newValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (!newValue.Equals(curValue))
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool AnimationCurveField(string label, ref AnimationCurve curValue)
+
+		public static bool AnimationCurveField(ref AnimationCurve curValue, string label)
 		{
 			BeginIndentSpaces();
 			AnimationCurve newValue = new AnimationCurve(curValue.keys);
 			newValue = EditorGUILayout.CurveField(label, newValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (!newValue.Equals(curValue))
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool EnumField<T>(string label, ref T curValue) where T : System.Enum
+
+		public static bool EnumField<T>(ref T curValue, string label) where T : Enum
 		{
 			BeginIndentSpaces();
-			T newValue = (T)EditorGUILayout.EnumPopup(label, curValue);
+			T newValue = (T) EditorGUILayout.EnumPopup(label, curValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue.GetHashCode() != curValue.GetHashCode())
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool PopupField(string label, ref int curValue, string[] options)
+
+		public static bool PopupField(ref int curValue, string label, string[] options)
 		{
 			BeginIndentSpaces();
 			int newValue = EditorGUILayout.Popup(label, curValue, options);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool PopupField(string label, ref int curValue, string[] options, int[] optionValues)
+
+		public static bool PopupField(ref int curValue, string label, string[] options, int[] optionValues)
 		{
 			GUIContent[] displayedOptions = new GUIContent[options.Length];
 			for (int i = 0; i < options.Length; i++)
 			{
 				displayedOptions[i] = new GUIContent(options[i]);
 			}
+
 			BeginIndentSpaces();
 			int newValue = EditorGUILayout.IntPopup(new GUIContent(label), curValue, displayedOptions, optionValues);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool PopupMaskField(string label, ref int curValue, string[] options)
+
+		public static bool PopupMaskField(ref int curValue, string label, string[] options)
 		{
 			BeginIndentSpaces();
 			int newValue = EditorGUILayout.MaskField(label, curValue, options);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool EnumFlagField<T>(string label, ref T curValue) where T : System.Enum
+
+		public static bool EnumFlagField<T>(ref T curValue, string label) where T : Enum
 		{
 			BeginIndentSpaces();
-			T newValue = (T)EditorGUILayout.EnumFlagsField(label, curValue);
+			T newValue = (T) EditorGUILayout.EnumFlagsField(label, curValue);
 			EndIndentSpaces();
-
+			FinishedDrawingElement?.Invoke();
 			if (newValue.GetHashCode() != curValue.GetHashCode())
 			{
 				ShouldBeDirty();
-				curValue = (T)newValue;
+				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool UnityObjectField<T>(string label, ref T curValue) where T : Object
+
+		public static bool UnityObjectField<T>(ref T curValue, string label) where T : Object
 		{
 			BeginIndentSpaces();
-			T newValue = (T)EditorGUILayout.ObjectField(label, curValue, typeof(T), false);
-			EndIndentSpaces();
+			T newValue = (T) EditorGUILayout.ObjectField(label, curValue, typeof(T), false);
+			if (typeof(T).IsSubclassOf(typeof(ScriptableObject)))
+			{
+				if (GUILayout.Button("✚", GUILayout.MaxWidth(ARRAY_CONTROL_WIDTH)))
+				{
+					ObjectCreatorWindow.InitiateWindow(typeof(T));
+				}
+			}
 
+			EndIndentSpaces();
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
+
 		#endregion
+
 		#region Array Drawing
-		public static bool DrawArray<T>(string label,
-										ref T[] curValue,
+
+		public static void DrawArray<T>(ref T[] curValue,
+										string label,
 										SerializedProperty arrayProperty,
-										System.Action<string, T, SerializedProperty> drawerFunction,
-										string elementlabel = null,
-										bool allowTypeSpecificFieldlabel = true,
-										bool asHeader = false) where T : class
+										ArrayDrawStyle arrayDrawStyle,
+										Action<T, string, SerializedProperty> drawerFunction,
+										string elementLabel = null) where T : class
 		{
-			return DrawArray<T>(label,
-								ref curValue,
-								arrayProperty,
-								drawerFunction,
-								(elementlabel != null) ? (new System.Func<int, string>((int index) => elementlabel)) : null,
-								allowTypeSpecificFieldlabel,
-								asHeader);
+			DrawArray<T>(ref curValue,
+						label,
+						arrayProperty,
+						arrayDrawStyle,
+						drawerFunction,
+						elementLabel != null ? new Func<int, string>(index => elementLabel) : null);
 		}
-		public static bool DrawArray<T>(string label,
-										ref T[] curValue,
+
+		public static void DrawArray<T>(ref T[] curValue,
+										string label,
 										SerializedProperty arrayProperty,
-										System.Action<string, T, SerializedProperty> drawerFunction,
-										System.Func<int, string> fieldlabelGetter,
-										bool allowTypeSpecificFieldlabel = true,
-										bool asHeader = false) where T : class
+										ArrayDrawStyle arrayDrawStyle,
+										Action<T, string, SerializedProperty> drawerFunction,
+										Func<int, string> fieldLabelGetter) where T : class
 		{
-			if (typeof(T) == typeof(Object))
-			{
-				Object[] objectArray = curValue as Object[];
-				return DrawUnityObjectArray<Object>(label, ref objectArray, arrayProperty, fieldlabelGetter, allowTypeSpecificFieldlabel, asHeader);
-			}
-			bool changed = false;
 			if (curValue == null)
 			{
 				curValue = new T[0];
-				changed = true;
+				ShouldBeDirty();
 			}
 
-			changed |= Foldout(label, arrayProperty, asHeader);
-
+			Foldout(arrayProperty, label, arrayDrawStyle.AsHeader);
 			if (arrayProperty.isExpanded)
 			{
 				IncreaseIndent();
 				int newSize = curValue.Length;
-				DelayedIntField("Size", ref newSize);
+				bool hasDrawnElement = false;
+				DelayedIntField(ref newSize, "Size");
+				string failedGetterLabel = ObjectNames.NicifyVariableName(typeof(T).Name);
+				failedGetterLabel = $". {failedGetterLabel}";
 
-				string failedGetterlabel = allowTypeSpecificFieldlabel ? ObjectNames.NicifyVariableName(typeof(T).Name) : "Element";
-				failedGetterlabel = ". " + failedGetterlabel;
-
-				for (int i = 0; i < curValue.Length; i++)
+				//Expand / Collapse All
+				if (newSize > 0)
 				{
-					string elementlabel = fieldlabelGetter?.Invoke(i) ?? failedGetterlabel;
-					drawerFunction?.Invoke(i + elementlabel, curValue[i], arrayProperty.GetArrayElementAtIndex(i));
+					BeginIndentSpaces();
+					if (GUILayout.Button("Expand All"))
+					{
+						SetExpandState(true);
+					}
+
+					if (GUILayout.Button("Collapse All"))
+					{
+						SetExpandState(false);
+					}
+
+					EndIndentSpaces();
 				}
 
-				if (curValue.Length != newSize)
+				int? controlTargetIndex = null;
+				int? shiftDirection = null;
+				for (int i = 0; i < curValue.Length; i++)
 				{
-					changed = true;
-					T[] newArray = new T[newSize];
-					for (int i = 0; i < newSize; i++)
+					if (curValue[i] == null)
 					{
-						if (i < curValue.Length)
-						{
-							newArray[i] = curValue[i];
-						}
-						else
-						{
+						continue;
+					}
+
+					string elementLabel = $"{i.ToString()}{fieldLabelGetter?.Invoke(i) ?? failedGetterLabel}";
+					SerializedProperty elementProperty = arrayProperty.GetArrayElementAtIndex(i);
+					GUILayout.BeginHorizontal();
+					switch (arrayDrawStyle.ArrayElementWrap)
+					{
+						case ArrayElementWrap.None:
+							FinishedDrawingElement += ElementWasDrawn;
+							drawerFunction?.Invoke(curValue[i], elementLabel, elementProperty);
+							if (!hasDrawnElement)
+							{
+								GUILayout.EndHorizontal();
+								FinishedDrawingElement -= ElementWasDrawn;
+							}
+
+							continue;
+						case ArrayElementWrap.Foldout:
+							Foldout(elementProperty, elementLabel, false);
+
 							break;
+						case ArrayElementWrap.Header:
+							Header(elementLabel);
+
+							break;
+					}
+
+					GUILayout.EndHorizontal();
+					if ((arrayDrawStyle.ArrayElementWrap != ArrayElementWrap.Foldout) || elementProperty.isExpanded)
+					{
+						IncreaseIndent();
+						drawerFunction?.Invoke(curValue[i], elementLabel, elementProperty);
+						DecreaseIndent();
+					}
+
+					void ElementWasDrawn()
+					{
+						hasDrawnElement = true;
+						FinishedDrawingElement -= ElementWasDrawn;
+						AttachArrayControl();
+						GUILayout.EndHorizontal();
+					}
+
+					void AttachArrayControl()
+					{
+						if (arrayDrawStyle.AllowElementShift)
+						{
+							EditorGUI.BeginDisabledGroup(i == 0);
+							if (GUILayout.Button(ARRAY_SHIFT_UP, GUILayout.MaxWidth(ARRAY_CONTROL_WIDTH)))
+							{
+								controlTargetIndex = i;
+								shiftDirection = -1;
+							}
+
+							EditorGUI.EndDisabledGroup();
+							EditorGUI.BeginDisabledGroup(i == (newSize - 1));
+							if (GUILayout.Button(ARRAY_SHIFT_DOWN, GUILayout.MaxWidth(ARRAY_CONTROL_WIDTH)))
+							{
+								controlTargetIndex = i;
+								shiftDirection = 1;
+							}
+
+							EditorGUI.EndDisabledGroup();
+						}
+
+						if (arrayDrawStyle.AllowElementDelete)
+						{
+							if (GUILayout.Button(ARRAY_DELETE, GUILayout.MaxWidth(ARRAY_CONTROL_WIDTH)))
+							{
+								controlTargetIndex = i;
+							}
 						}
 					}
-					curValue = newArray;
+				}
+
+				if (ControlArray(ref curValue, controlTargetIndex, shiftDirection))
+				{
+					ShouldBeDirty();
+					if (!shiftDirection.HasValue)
+					{
+						newSize--;
+					}
+				}
+
+				int arraySizeChange = newSize - curValue.Length;
+				if (arraySizeChange != 0)
+				{
+					ChangeArraySize(ref curValue, arraySizeChange);
 					arrayProperty.arraySize = newSize;
+					ShouldBeDirty();
 				}
+
 				DecreaseIndent();
 			}
-			if (asHeader)
+
+			if (arrayDrawStyle.AsHeader)
 			{
 				EndFoldoutHeader();
 			}
 
-			if (changed)
+			void SetExpandState(bool newState)
 			{
-				ShouldBeDirty();
+				for (int i = 0; i < arrayProperty.arraySize; i++)
+				{
+					arrayProperty.GetArrayElementAtIndex(i).isExpanded = newState;
+				}
 			}
-			return changed;
 		}
-		public static bool DrawArray<T>(string label,
-										ref T[] curValue,
+
+		public static void DrawArray<T>(ref T[] curValue,
+										string label,
 										SerializedProperty arrayProperty,
-										System.Func<string, T, SerializedProperty, T> drawerFunction,
-										string elementlabel = null,
-										bool allowTypeSpecificFieldlabel = true,
-										bool asHeader = false) where T : struct
+										ArrayDrawStyle arrayDrawStyle,
+										Func<T, string, SerializedProperty, T> drawerFunction,
+										string elementLabel = null) where T : struct
 		{
-			return DrawArray<T>(label,
-								ref curValue,
-								arrayProperty,
-								drawerFunction,
-								(elementlabel != null) ? (new System.Func<int, string>((int index) => elementlabel)) : null,
-								allowTypeSpecificFieldlabel,
-								asHeader);
+			DrawArray<T>(ref curValue,
+						label,
+						arrayProperty,
+						arrayDrawStyle,
+						drawerFunction,
+						elementLabel != null ? new Func<int, string>(index => elementLabel) : null);
 		}
-		public static bool DrawArray<T>(string label,
-										ref T[] curValue,
+
+		public static void DrawArray<T>(ref T[] curValue,
+										string label,
 										SerializedProperty arrayProperty,
-										System.Func<string, T, SerializedProperty, T> drawerFunction,
-										System.Func<int, string> fieldlabelGetter,
-										bool allowTypeSpecificFieldlabel = true,
-										bool asHeader = false) where T : struct
+										ArrayDrawStyle arrayDrawStyle,
+										Func<T, string, SerializedProperty, T> drawerFunction,
+										Func<int, string> fieldLabelGetter) where T : struct
 		{
-			if (typeof(T) == typeof(Object))
-			{
-				Object[] objectArray = curValue as Object[];
-				return DrawUnityObjectArray<Object>(label, ref objectArray, arrayProperty, fieldlabelGetter, allowTypeSpecificFieldlabel, asHeader);
-			}
-			bool changed = false;
 			if (curValue == null)
 			{
 				curValue = new T[0];
-				changed = true;
+				ShouldBeDirty();
 			}
 
-			changed |= Foldout(label, arrayProperty, asHeader);
-
+			Foldout(arrayProperty, label, arrayDrawStyle.AsHeader);
 			if (arrayProperty.isExpanded)
 			{
 				IncreaseIndent();
 				int newSize = curValue.Length;
-				DelayedIntField("Size", ref newSize);
+				DelayedIntField(ref newSize, "Size");
+				string failedGetterLabel = ObjectNames.NicifyVariableName(typeof(T).Name);
+				failedGetterLabel = $". {failedGetterLabel}";
 
-				string failedGetterlabel = allowTypeSpecificFieldlabel ? ObjectNames.NicifyVariableName(typeof(T).Name) : "Element";
-				failedGetterlabel = ". " + failedGetterlabel;
-
-				for (int i = 0; i < curValue.Length; i++)
+				//Expand / Collapse All
+				if (newSize > 0)
 				{
-					string elementlabel = fieldlabelGetter?.Invoke(i) ?? failedGetterlabel;
-					curValue[i] = drawerFunction?.Invoke(i + elementlabel, curValue[i], arrayProperty.GetArrayElementAtIndex(i)) ?? default;
+					BeginIndentSpaces();
+					if (GUILayout.Button("Expand All"))
+					{
+						SetExpandState(true);
+					}
+
+					if (GUILayout.Button("Collapse All"))
+					{
+						SetExpandState(false);
+					}
+
+					EndIndentSpaces();
 				}
 
-				if (curValue.Length != newSize)
+				int? controlTargetIndex = null;
+				int? shiftDirection = null;
+				for (int i = 0; i < curValue.Length; i++)
 				{
-					changed = true;
-					T[] newArray = new T[newSize];
-					for (int i = 0; i < newSize; i++)
+					bool hasDrawnElement = false;
+					string elementLabel = $"{i.ToString()}{fieldLabelGetter?.Invoke(i) ?? failedGetterLabel}";
+					SerializedProperty elementProperty = arrayProperty.GetArrayElementAtIndex(i);
+					GUILayout.BeginHorizontal();
+					switch (arrayDrawStyle.ArrayElementWrap)
 					{
-						if (i < curValue.Length)
-						{
-							newArray[i] = curValue[i];
-						}
-						else
-						{
+						case ArrayElementWrap.None:
+							FinishedDrawingElement += ElementWasDrawn;
+							curValue[i] = drawerFunction?.Invoke(curValue[i], elementLabel, elementProperty) ?? default;
+							if (!hasDrawnElement)
+							{
+								GUILayout.EndHorizontal();
+								FinishedDrawingElement -= ElementWasDrawn;
+							}
+
+							continue;
+						case ArrayElementWrap.Foldout:
+							Foldout(elementProperty, elementLabel, false);
+
 							break;
+						case ArrayElementWrap.Header:
+							Header(elementLabel);
+
+							break;
+					}
+
+					GUILayout.EndHorizontal();
+					if ((arrayDrawStyle.ArrayElementWrap != ArrayElementWrap.Foldout) || elementProperty.isExpanded)
+					{
+						IncreaseIndent();
+						curValue[i] = drawerFunction?.Invoke(curValue[i], elementLabel, elementProperty) ?? default;
+						DecreaseIndent();
+					}
+
+					void ElementWasDrawn()
+					{
+						hasDrawnElement = true;
+						FinishedDrawingElement -= ElementWasDrawn;
+						AttachArrayControl();
+						GUILayout.EndHorizontal();
+					}
+
+					void AttachArrayControl()
+					{
+						if (arrayDrawStyle.AllowElementShift)
+						{
+							EditorGUI.BeginDisabledGroup(i == 0);
+							if (GUILayout.Button(ARRAY_SHIFT_UP, GUILayout.MaxWidth(ARRAY_CONTROL_WIDTH)))
+							{
+								controlTargetIndex = i;
+								shiftDirection = -1;
+							}
+
+							EditorGUI.EndDisabledGroup();
+							EditorGUI.BeginDisabledGroup(i == (newSize - 1));
+							if (GUILayout.Button(ARRAY_SHIFT_DOWN, GUILayout.MaxWidth(ARRAY_CONTROL_WIDTH)))
+							{
+								controlTargetIndex = i;
+								shiftDirection = 1;
+							}
+
+							EditorGUI.EndDisabledGroup();
+						}
+
+						if (arrayDrawStyle.AllowElementDelete)
+						{
+							if (GUILayout.Button(ARRAY_DELETE, GUILayout.MaxWidth(ARRAY_CONTROL_WIDTH)))
+							{
+								controlTargetIndex = i;
+							}
 						}
 					}
-					curValue = newArray;
+				}
+
+				if (ControlArray(ref curValue, controlTargetIndex, shiftDirection))
+				{
+					ShouldBeDirty();
+					if (!shiftDirection.HasValue)
+					{
+						newSize--;
+					}
+				}
+
+				int arraySizeChange = newSize - curValue.Length;
+				if (arraySizeChange != 0)
+				{
+					ChangeArraySize(ref curValue, arraySizeChange);
 					arrayProperty.arraySize = newSize;
+					ShouldBeDirty();
 				}
+
 				DecreaseIndent();
 			}
-			if (asHeader)
+
+			if (arrayDrawStyle.AsHeader)
 			{
 				EndFoldoutHeader();
 			}
 
-			if (changed)
+			void SetExpandState(bool newState)
 			{
-				ShouldBeDirty();
+				for (int i = 0; i < arrayProperty.arraySize; i++)
+				{
+					arrayProperty.GetArrayElementAtIndex(i).isExpanded = newState;
+				}
 			}
-			return changed;
 		}
-		public static bool DrawUnityObjectArray<T>(string label,
-													ref T[] curValue,
+
+		public static void DrawUnityObjectArray<T>(ref T[] curValue,
+													string label,
 													SerializedProperty arrayProperty,
-													string elementlabel = null,
-													bool allowTypeSpecificFieldlabel = true,
-													bool asHeader = false) where T : Object
+													ArrayDrawStyle arrayDrawStyle,
+													string elementLabel = null) where T : Object
 		{
-			return DrawUnityObjectArray<T>(label,
-											ref curValue,
-											arrayProperty,
-											(elementlabel != null) ? (new System.Func<int, string>((int index) => elementlabel)) : null,
-											allowTypeSpecificFieldlabel,
-											asHeader);
+			DrawUnityObjectArray<T>(ref curValue,
+									label,
+									arrayProperty,
+									arrayDrawStyle,
+									elementLabel != null ? new Func<int, string>(index => elementLabel) : null);
 		}
-		public static bool DrawUnityObjectArray<T>(string label,
-													ref T[] curValue,
+
+		public static void DrawUnityObjectArray<T>(ref T[] curValue,
+													string label,
 													SerializedProperty arrayProperty,
-													System.Func<int, string> fieldlabelGetter,
-													bool allowTypeSpecificFieldlabel = true,
-													bool asHeader = false) where T : Object
+													ArrayDrawStyle arrayDrawStyle,
+													Func<int, string> fieldLabelGetter) where T : Object
 		{
-			bool changed = false;
 			if (curValue == null)
 			{
 				curValue = new T[0];
-				changed = true;
+				ShouldBeDirty();
 			}
-			changed |= Foldout(label, arrayProperty, asHeader);
 
+			Foldout(arrayProperty, label, arrayDrawStyle.AsHeader);
 			if (arrayProperty.isExpanded)
 			{
 				IncreaseIndent();
 				int newSize = curValue.Length;
-				DelayedIntField("Size", ref newSize);
-
-				string failedGetterlabel = allowTypeSpecificFieldlabel ? ObjectNames.NicifyVariableName(typeof(T).Name) : "Element";
-				failedGetterlabel = ". " + failedGetterlabel;
-
+				DelayedIntField(ref newSize, "Size");
+				string failedGetterLabel = ObjectNames.NicifyVariableName(typeof(T).Name);
+				failedGetterLabel = $". {failedGetterLabel}";
+				int? controlTargetIndex = null;
+				int? shiftDirection = null;
 				for (int i = 0; i < curValue.Length; i++)
 				{
-					string elementlabel = fieldlabelGetter?.Invoke(i) ?? failedGetterlabel;
-					changed |= UnityObjectField(i + elementlabel, ref curValue[i]);
-				}
-				if (newSize != curValue.Length)
-				{
-					changed = true;
-					T[] newArray = new T[newSize];
-					for (int i = 0; i < newSize; i++)
+					string elementLabel = $"{i.ToString()}{fieldLabelGetter?.Invoke(i) ?? failedGetterLabel}";
+					GUILayout.BeginHorizontal();
+					UnityObjectField<T>(ref curValue[i], elementLabel);
+					if (arrayDrawStyle.AllowElementShift)
 					{
-						if (i < curValue.Length)
+						EditorGUI.BeginDisabledGroup(i == 0);
+						if (GUILayout.Button(ARRAY_SHIFT_UP, GUILayout.MaxWidth(ARRAY_CONTROL_WIDTH)))
 						{
-							newArray[i] = curValue[i];
+							controlTargetIndex = i;
+							shiftDirection = -1;
 						}
-						else
+
+						EditorGUI.EndDisabledGroup();
+						EditorGUI.BeginDisabledGroup(i == (curValue.Length - 1));
+						if (GUILayout.Button(ARRAY_SHIFT_DOWN, GUILayout.MaxWidth(ARRAY_CONTROL_WIDTH)))
 						{
-							break;
+							controlTargetIndex = i;
+							shiftDirection = 1;
+						}
+
+						EditorGUI.EndDisabledGroup();
+					}
+
+					if (arrayDrawStyle.AllowElementDelete)
+					{
+						if (GUILayout.Button(ARRAY_DELETE, GUILayout.MaxWidth(ARRAY_CONTROL_WIDTH)))
+						{
+							controlTargetIndex = i;
 						}
 					}
 
-					curValue = newArray;
+					EndIndentSpaces();
 				}
+
+				if (ControlArray(ref curValue, controlTargetIndex, shiftDirection))
+				{
+					ShouldBeDirty();
+					if (!shiftDirection.HasValue)
+					{
+						newSize--;
+					}
+				}
+
+				int arraySizeChange = newSize - curValue.Length;
+				if (arraySizeChange != 0)
+				{
+					ChangeArraySize(ref curValue, arraySizeChange);
+					arrayProperty.arraySize = newSize;
+					ShouldBeDirty();
+				}
+
 				DecreaseIndent();
 			}
 
-			if (asHeader)
+			if (arrayDrawStyle.AsHeader)
 			{
 				EndFoldoutHeader();
 			}
+		}
 
-			if (changed)
+		#region Array Utils
+
+		private static bool ControlArray<T>(ref T[] targetArray, int? controlTargetIndex, int? shiftDirection)
+		{
+			if (controlTargetIndex.HasValue)
 			{
-				ShouldBeDirty();
+				//We shift the element
+				if (shiftDirection.HasValue)
+				{
+					T targetElement = targetArray[controlTargetIndex.Value];
+					targetArray[controlTargetIndex.Value] = targetArray[controlTargetIndex.Value + shiftDirection.Value];
+					targetArray[controlTargetIndex.Value                                         + shiftDirection.Value] = targetElement;
+				}
+
+				//We delete the element
+				else
+				{
+					DeleteArrayElement(ref targetArray, controlTargetIndex.Value);
+				}
+
+				return true;
 			}
 
-			return changed;
+			return false;
 		}
+
+		private static void DeleteArrayElement<T>(ref T[] targetArray, int elementIndex)
+		{
+			T[] newArray = new T[targetArray.Length - 1];
+			int insertedElements = 0;
+			for (int i = 0; i < newArray.Length; i++)
+			{
+				if (i != elementIndex)
+				{
+					newArray[insertedElements] = targetArray[i];
+					insertedElements++;
+				}
+			}
+
+			targetArray = newArray;
+		}
+
+		private static void ChangeArraySize<T>(ref T[] targetArray, int sizeChange)
+		{
+			int newSize = targetArray.Length + sizeChange;
+			T[] newArray = new T[newSize];
+			for (int i = 0; i < newSize; i++)
+			{
+				if (i < targetArray.Length)
+				{
+					newArray[i] = targetArray[i];
+				}
+				else
+				{
+					break;
+				}
+			}
+
+			targetArray = newArray;
+		}
+
 		#endregion
+
+		#endregion
+
 		#region Layout Drawer
+
 		public static void BeginIndentSpaces()
 		{
-			EditorGUILayout.BeginHorizontal();
+			GUILayout.BeginHorizontal();
 			GUILayout.Space(Indent * STANDARD_OFFSET);
 		}
+
 		public static void EndIndentSpaces()
 		{
 			EditorGUILayout.EndHorizontal();
 		}
+
 		public static void Header(string label, bool spaces = true, bool bold = true)
 		{
 			if (spaces)
@@ -611,13 +909,15 @@ namespace Spectral.EditorInspector
 			{
 				GUILayout.Label(label);
 			}
-			EndIndentSpaces();
 
+			EndIndentSpaces();
+			FinishedDrawingElement?.Invoke();
 			if (spaces)
 			{
 				GUILayout.Space(4);
 			}
 		}
+
 		public static void LineBreak(Color? lineColor = null, bool spaces = true)
 		{
 			if (spaces)
@@ -629,23 +929,27 @@ namespace Spectral.EditorInspector
 			rect.height = LINE_HEIGHT;
 			rect.x /= 2;
 			EditorGUI.DrawRect(rect, lineColor ?? StandardLineColor);
-
+			FinishedDrawingElement?.Invoke();
 			if (spaces)
 			{
 				GUILayout.Space(3);
 			}
 		}
-		public static bool Foldout(string label, SerializedProperty property, bool asHeader = false)
+
+		public static bool Foldout(SerializedProperty property, string label, bool asHeader = false)
 		{
 			bool curOpen = property.isExpanded;
-			if (Foldout(label, ref curOpen, asHeader))
+			if (Foldout(ref curOpen, label, asHeader))
 			{
 				property.isExpanded = curOpen;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool Foldout(string label, ref bool curValue, bool asHeader = false)
+
+		public static bool Foldout(ref bool curValue, string label, bool asHeader = false)
 		{
 			bool newValue;
 			if (asHeader)
@@ -659,49 +963,55 @@ namespace Spectral.EditorInspector
 				EndIndentSpaces();
 			}
 
+			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)
 			{
 				ShouldBeDirty();
 				curValue = newValue;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool DrawInFoldoutHeader(string label, SerializedProperty property, System.Action drawFunction)
+
+		public static bool DrawInFoldout(SerializedProperty property, string label, Action drawFunction, bool asHeader = false)
 		{
 			bool curOpen = property.isExpanded;
-			if (DrawInFoldoutHeader(label, ref curOpen, drawFunction))
+			if (DrawInFoldout(ref curOpen, label, drawFunction, asHeader))
 			{
 				property.isExpanded = curOpen;
+
 				return true;
 			}
+
 			return false;
 		}
-		public static bool DrawInFoldoutHeader(string label, ref bool curValue, System.Action drawFunction)
+
+		public static bool DrawInFoldout(ref bool curValue, string label, Action drawFunction, bool asHeader = false)
 		{
-			bool changed = Foldout(label, ref curValue, true);
+			bool changed = Foldout(ref curValue, label, asHeader);
 			if (curValue)
 			{
+				IncreaseIndent();
 				drawFunction?.Invoke();
+				DecreaseIndent();
 			}
+
 			EndFoldoutHeader();
+
 			return changed;
 		}
-		public static bool DrawButtonWithFunction(string label, System.Action activateFunction)
-		{
-			if (GUILayout.Button(label))
-			{
-				activateFunction?.Invoke();
-				return true;
-			}
-			return false;
-		}
+
 		public static void EndFoldoutHeader()
 		{
 			EditorGUILayout.EndFoldoutHeaderGroup();
 		}
+
 		#endregion
+
 		#region Utils
+
 		public static void IncreaseIndent(int amount = 1)
 		{
 			Indent += amount;
@@ -716,6 +1026,31 @@ namespace Spectral.EditorInspector
 		{
 			IsDirty = state;
 		}
+
 		#endregion
+	}
+
+	public class ArrayDrawStyle
+	{
+		public static readonly ArrayDrawStyle Default = new ArrayDrawStyle(false, ArrayElementWrap.None, true, true);
+		public static readonly ArrayDrawStyle DefaultHeader = new ArrayDrawStyle(true, ArrayElementWrap.None, true, true);
+
+		public bool AsHeader;
+		public ArrayElementWrap ArrayElementWrap;
+		public bool AllowElementDelete;
+		public bool AllowElementShift;
+
+		public ArrayDrawStyle(bool asHeader, ArrayElementWrap arrayElementWrap, bool allowElementDelete, bool allowElementShift)
+		{
+			AsHeader = asHeader;
+			ArrayElementWrap = arrayElementWrap;
+			AllowElementDelete = allowElementDelete;
+			AllowElementShift = allowElementShift;
+		}
+
+		public ArrayDrawStyle Copy()
+		{
+			return new ArrayDrawStyle(AsHeader, ArrayElementWrap, AllowElementDelete, AllowElementShift);
+		}
 	}
 }

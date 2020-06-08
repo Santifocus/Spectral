@@ -1,12 +1,7 @@
-﻿using Spectral.Behaviours.Entities;
-using Spectral.DataStorage;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Spectral.Runtime;
 using UnityEditor;
-using UnityEngine;
-using static Spectral.EditorInspector.EditorUtils;
 
-namespace Spectral.EditorInspector
+namespace Spectral.Editor
 {
 	[CustomEditor(typeof(LevelSettings), true)]
 	public class LevelSettingsEditor : ObjectEditor
@@ -19,7 +14,7 @@ namespace Spectral.EditorInspector
 		protected override void CustomInspector()
 		{
 			LevelSettings settings = target as LevelSettings;
-			settings.LevelWidht.Draw(ObjectNames.NicifyVariableName(nameof(LevelSettings.LevelWidht)));
+			settings.LevelWidth.Draw(ObjectNames.NicifyVariableName(nameof(LevelSettings.LevelWidth)));
 			settings.LevelHeight.Draw(ObjectNames.NicifyVariableName(nameof(LevelSettings.LevelHeight)));
 		}
 	}

@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Spectral.DataStorage
+namespace Spectral.Runtime.DataStorage
 {
 	public class SpectralScriptableObject : ScriptableObject { }
 }

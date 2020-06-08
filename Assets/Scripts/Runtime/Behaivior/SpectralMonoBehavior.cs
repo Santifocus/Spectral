@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Spectral.Behaviours
+namespace Spectral.Runtime.Behaviours
 {
 	public class SpectralMonoBehavior : MonoBehaviour
 	{

@@ -1,30 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Spectral.DataStorage
+﻿namespace Spectral.Runtime.DataStorage
 {
 	[System.Serializable]
 	public struct DefaultableInt
 	{
-		public int RawValue;
+		public int NonDefaultValue;
 		public bool UseDefault;
 		public int DefaultOffset;
-		public DefaultableInt(int Value, bool UseDefault, int DefaultOffset)
+		public System.Func<int> DefaultGetter;
+
+		public DefaultableInt(int nonDefaultValue, bool useDefault, int defaultOffset, System.Func<int> defaultGetter)
 		{
-			RawValue = Value;
-			this.UseDefault = UseDefault;
-			this.DefaultOffset = DefaultOffset;
+			NonDefaultValue = nonDefaultValue;
+			UseDefault = useDefault;
+			DefaultOffset = defaultOffset;
+			DefaultGetter = defaultGetter;
 		}
-		public DefaultableInt(int? Value)
+
+		public DefaultableInt(System.Func<int> defaultGetter)
 		{
-			RawValue = Value ?? default;
-			UseDefault = !Value.HasValue;
+			NonDefaultValue = default;
+			UseDefault = true;
 			DefaultOffset = default;
+			DefaultGetter = defaultGetter;
 		}
-		public int GetDefaultedValue(int valuesDefault)
+
+		private int GetDefaultedValue()
 		{
-			return UseDefault ? (valuesDefault + DefaultOffset) : RawValue;
+			return UseDefault ? DefaultGetter.Invoke() + DefaultOffset : NonDefaultValue;
+		}
+
+		public static implicit operator int(DefaultableInt target)
+		{
+			return target.GetDefaultedValue();
 		}
 	}
 }

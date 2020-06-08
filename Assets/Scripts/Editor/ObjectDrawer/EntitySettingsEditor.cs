@@ -1,12 +1,9 @@
-﻿using Spectral.Behaviours.Entities;
-using Spectral.DataStorage;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Spectral.Runtime.Behaviours.Entities;
+using Spectral.Runtime.DataStorage;
 using UnityEditor;
-using UnityEngine;
-using static Spectral.EditorInspector.EditorUtils;
+using static Spectral.Editor.EditorUtils;
 
-namespace Spectral.EditorInspector
+namespace Spectral.Editor
 {
 	[CustomEditor(typeof(EntitySettings), true)]
 	public class EntitySettingsEditor : ObjectEditor
@@ -14,6 +11,7 @@ namespace Spectral.EditorInspector
 		private bool movementSettingsOpen;
 		private bool bodySettingsOpen;
 		private bool otherSettingsOpen;
+
 		protected override bool ShouldHideBaseInspector()
 		{
 			return true;
@@ -21,60 +19,62 @@ namespace Spectral.EditorInspector
 
 		protected override void CustomInspector()
 		{
-			DrawInFoldoutHeader("Movement Settings", ref movementSettingsOpen, DrawMovementSettings);
-			DrawInFoldoutHeader("Body Settings", ref bodySettingsOpen, DrawBodySettings);
-			DrawInFoldoutHeader("Other Settings", ref otherSettingsOpen, DrawOtherSettings);
+			DrawInFoldout(ref movementSettingsOpen, "Movement Settings", DrawMovementSettings, true);
+			DrawInFoldout(ref bodySettingsOpen, "Body Settings", DrawBodySettings, true);
+			DrawInFoldout(ref otherSettingsOpen, "Other Settings", DrawOtherSettings, true);
 		}
+
 		protected virtual void DrawMovementSettings()
 		{
 			EntitySettings settings = target as EntitySettings;
 			IncreaseIndent();
-
 			Header("Speed");
 			settings.MoveSpeed.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.MoveSpeed)));
 			settings.VelocityDamping.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.VelocityDamping)));
-
 			Header("Acceleration");
 			settings.Acceleration.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.Acceleration)));
 			settings.Deceleration.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.Deceleration)));
 			settings.AccelerationAngle.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.AccelerationAngle)));
-
 			Header("Turning");
 			settings.TurnSpeed.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.TurnSpeed)));
 			settings.TurnAcceleration.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.TurnAcceleration)));
 			settings.TurnSmoothAngle.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.TurnSmoothAngle)));
 			settings.TurnSmoothMultiplier.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.TurnSmoothMultiplier)));
-
 			DecreaseIndent();
 		}
+
 		protected virtual void DrawBodySettings()
 		{
 			EntitySettings settings = target as EntitySettings;
 			IncreaseIndent();
-			IntField(ObjectNames.NicifyVariableName(nameof(EntitySettings.MinParts)), ref settings.MinParts);
-
+			IntField(ref settings.MinParts, ObjectNames.NicifyVariableName(nameof(EntitySettings.MinParts)));
 			settings.PartMinimumScale.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.PartMinimumScale)));
 			settings.ScaleChangePerPart.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.ScaleChangePerPart)));
+			UnityObjectField<EntityBodyPartConfiguration>(ref settings.EntityHead, ObjectNames.NicifyVariableName(nameof(EntitySettings.EntityHead)));
+			EnumField<ChooseStyle>(ref settings.TorsoChooseStyle, ObjectNames.NicifyVariableName(nameof(EntitySettings.TorsoChooseStyle)));
+			DrawUnityObjectArray<EntityBodyPartConfiguration>(ref settings.EntityTorso, ObjectNames.NicifyVariableName(nameof(EntitySettings.EntityTorso)),
+															serializedObject.FindProperty(nameof(EntitySettings.EntityTorso)), ArrayDrawStyle.Default, ". Torso Variant");
 
-			UnityObjectField<EntityBodyPartConfiguration>(ObjectNames.NicifyVariableName(nameof(EntitySettings.EntityHead)), ref settings.EntityHead);
-			EnumField<ChooseStyle>(ObjectNames.NicifyVariableName(nameof(EntitySettings.TorsoChooseStyle)), ref settings.TorsoChooseStyle);
-			DrawUnityObjectArray<EntityBodyPartConfiguration>(ObjectNames.NicifyVariableName(nameof(EntitySettings.EntityTorso)), ref settings.EntityTorso, serializedObject.FindProperty(nameof(EntitySettings.EntityTorso)),". Torso Variant");
-			UnityObjectField<EntityBodyPartConfiguration>(ObjectNames.NicifyVariableName(nameof(EntitySettings.EntityTail)), ref settings.EntityTail);
+			UnityObjectField<EntityBodyPartConfiguration>(ref settings.EntityTail, ObjectNames.NicifyVariableName(nameof(EntitySettings.EntityTail)));
 			DecreaseIndent();
 		}
+
 		protected virtual void DrawOtherSettings()
 		{
 			EntitySettings settings = target as EntitySettings;
 			IncreaseIndent();
+			if (!settings.EnableAI || (settings.AIConfiguration.EatBehavior != EatBehaviorType.DoesntEat))
+			{
+				settings.FoodEatDistance.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.FoodEatDistance)));
+			}
 
-			settings.FoodEatDistance.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.FoodEatDistance)));
-			UnityObjectField<EntityMover>(ObjectNames.NicifyVariableName(nameof(EntitySettings.OverwritePrefab)), ref settings.OverwritePrefab);
-
-			BoolField(ObjectNames.NicifyVariableName(nameof(EntitySettings.EnableAI)), ref settings.EnableAI);
+			UnityObjectField<EntityMover>(ref settings.OverwritePrefab, ObjectNames.NicifyVariableName(nameof(EntitySettings.OverwritePrefab)));
+			BoolField(ref settings.EnableAI, ObjectNames.NicifyVariableName(nameof(EntitySettings.EnableAI)));
 			EditorGUI.BeginDisabledGroup(!settings.EnableAI);
-			settings.AIConfiguration.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.AIConfiguration)), serializedObject.FindProperty(nameof(EntitySettings.AIConfiguration)));
-			EditorGUI.EndDisabledGroup();
+			settings.AIConfiguration.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.AIConfiguration)),
+										serializedObject.FindProperty(nameof(EntitySettings.AIConfiguration)));
 
+			EditorGUI.EndDisabledGroup();
 			DecreaseIndent();
 		}
 	}

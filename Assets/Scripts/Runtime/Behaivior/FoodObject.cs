@@ -1,14 +1,12 @@
-﻿using Spectral.Behaviours.Entities;
-using Spectral.DataStorage;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Spectral.Runtime.Behaviours.Entities;
 using UnityEngine;
 
-namespace Spectral.Behaviours
+namespace Spectral.Runtime.Behaviours
 {
 	public class FoodObject : SpectralMonoBehavior, IPoolableObject<FoodObject>
 	{
-		private const float CHECK_FOR_DESPAWN_COOLDOWN = 3;
+		private const float CHECK_FOR_DE_SPAWN_COOLDOWN = 3;
 		public static readonly List<FoodObject> AllFoodObjects = new List<FoodObject>();
 		public PoolableObject<FoodObject> SelfPool { get; set; }
 		[SerializeField] private float expandTime = 1.5f;
@@ -17,23 +15,24 @@ namespace Spectral.Behaviours
 
 		private int expandDir;
 		private float expandTimer;
-		private float checkForDespawnCooldown;
+		private float checkForDeSpawnCooldown;
+
 		private void Update()
 		{
-			if(checkForDespawnCooldown > 0)
+			if (checkForDeSpawnCooldown > 0)
 			{
-				checkForDespawnCooldown -= Time.deltaTime;
+				checkForDeSpawnCooldown -= Time.deltaTime;
 			}
 			else
 			{
-				CheckForDespawn();
+				CheckForDeSpawn();
 			}
-			if(expandDir != 0)
+
+			if (expandDir != 0)
 			{
 				expandTimer += Time.deltaTime * expandDir;
 				transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, expandTimer / expandTime);
-
-				if((expandTimer >= 1) && (expandDir == 1))
+				if ((expandTimer >= 1) && (expandDir == 1))
 				{
 					expandTimer = 1;
 					expandDir = 0;
@@ -46,21 +45,24 @@ namespace Spectral.Behaviours
 				}
 			}
 		}
-		private void CheckForDespawn()
+
+		private void CheckForDeSpawn()
 		{
-			if (ShouldDespawn())
+			if (ShouldDeSpawn())
 			{
 				expandDir = -1;
 			}
 			else
 			{
-				checkForDespawnCooldown = CHECK_FOR_DESPAWN_COOLDOWN;
+				checkForDeSpawnCooldown = CHECK_FOR_DE_SPAWN_COOLDOWN;
 			}
 		}
-		protected virtual bool ShouldDespawn()
+
+		protected virtual bool ShouldDeSpawn()
 		{
 			return transform.position.XYZtoXZ().RequiresLevelBoundsClamping();
 		}
+
 		private void OnEnable()
 		{
 			transform.localScale = Vector3.zero;
@@ -68,10 +70,12 @@ namespace Spectral.Behaviours
 			expandDir = 1;
 			AllFoodObjects.Add(this);
 		}
+
 		private void OnDisable()
 		{
 			AllFoodObjects.Remove(this);
 		}
+
 		public void ReturnToPool()
 		{
 			isEdible = false;
@@ -84,6 +88,7 @@ namespace Spectral.Behaviours
 				Destroy(gameObject);
 			}
 		}
+
 		public virtual void Eat(EntityMover from)
 		{
 			isEdible = false;
@@ -110,7 +115,7 @@ namespace Spectral.Behaviours
 				}
 			}
 
-			return (targetIndex >= 0) ? AllFoodObjects[targetIndex] : null;
+			return targetIndex >= 0 ? AllFoodObjects[targetIndex] : null;
 		}
 	}
 }
