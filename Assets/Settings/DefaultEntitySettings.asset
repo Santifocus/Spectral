@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b75810e386a85748a82f2813f8bfd72, type: 3}
   m_Name: DefaultEntitySettings
   m_EditorClassIdentifier: 
-  EntityMoveSpeed: 10
+  EntityMoveSpeed: 5
   EntityVelocityDamping: 7
   EntityAcceleration: 7
   EntityDeceleration: 20
   EntityAccelerationAngle: 60
-  EntityTurnSpeed: 540
+  EntityTurnSpeed: 300
   EntityTurnAcceleration: 0.5
   EntityTurnSmoothAngle: 40
   EntityTurnSmoothMultiplier: 0.025

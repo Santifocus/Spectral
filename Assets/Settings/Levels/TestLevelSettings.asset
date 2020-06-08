@@ -15,8 +15,8 @@ MonoBehaviour:
   LevelWidht:
     RawValue: 0
     UseDefault: 1
-    DefaultOffset: 0
+    DefaultOffset: -30
   LevelHeight:
     RawValue: 0
     UseDefault: 1
-    DefaultOffset: 0
+    DefaultOffset: -30
