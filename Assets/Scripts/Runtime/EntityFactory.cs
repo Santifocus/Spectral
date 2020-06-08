@@ -35,6 +35,7 @@ namespace Spectral.Runtime
 
 		public static void BuildEntityBody(EntityMover entityCore, EntitySettings settings, int bodyPartCount, int rotation)
 		{
+			entityCore.transform.SetParent(Storage.EntityStorage);
 			float scaleChangePerPart = settings.ScaleChangePerPart;
 			float startScale = settings.PartMinimumScale;
 

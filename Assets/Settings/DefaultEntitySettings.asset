@@ -32,5 +32,6 @@ MonoBehaviour:
   AIForgetTargetDistance: 16
   AIAttackRange: 3
   AIAttackDamage: 1
+  AIAttackForceImpact: 7
   AIAttackCooldown: 3
   AIMaxSizeIncrease: 3
