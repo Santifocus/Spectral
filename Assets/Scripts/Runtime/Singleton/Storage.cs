@@ -2,21 +2,29 @@
 
 namespace Spectral.Runtime
 {
-	public class Storage : MonoBehaviour
+	public class Storage
 	{
-		private static Storage Instance { get; set; }
+		public readonly Transform Main;
+		public readonly Transform EntityStorage;
+		public readonly Transform ParticleStorage;
+		public readonly Transform FoodObjectStorage;
 
-		public static Transform EntityStorage => Instance.entityStorage;
-		public static Transform ParticleStorage => Instance.particleStorage;
-		public static Transform FoodObjectStorage => Instance.foodObjectStorage;
-
-		[SerializeField] private Transform entityStorage = default;
-		[SerializeField] private Transform particleStorage = default;
-		[SerializeField] private Transform foodObjectStorage = default;
-
-		private void Start()
+		public Storage(Transform parent)
 		{
-			Instance = this;
+			Main = new GameObject("Storage Main").transform;
+			Main.SetParent(parent);
+
+			//EntityStorage
+			EntityStorage = new GameObject("EntityStorage").transform;
+			EntityStorage.SetParent(Main);
+
+			//ParticleStorage
+			ParticleStorage = new GameObject("ParticleStorage").transform;
+			ParticleStorage.SetParent(Main);
+
+			//FoodObjectStorage
+			FoodObjectStorage = new GameObject("FoodObjectStorage").transform;
+			FoodObjectStorage.SetParent(Main);
 		}
 	}
 }

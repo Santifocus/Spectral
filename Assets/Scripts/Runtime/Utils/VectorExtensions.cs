@@ -6,26 +6,26 @@ namespace Spectral.Runtime
 	public static class VectorExtensions
 	{
 		//Helper Method's
-		public static Vector2 ClampIntoLevelBounds(this Vector2 self)
+		public static Vector2 ClampIntoLevelBounds(this Vector2 self, LevelSettings targetLevelSettings)
 		{
-			float levelWidth = LevelSettings.Current.LevelWidth;
-			float levelHeight = LevelSettings.Current.LevelHeight;
+			float levelWidth = targetLevelSettings.LevelWidth;
+			float levelHeight = targetLevelSettings.LevelHeight;
 
 			return new Vector2(Mathf.Clamp(self.x, -levelWidth / 2, levelWidth / 2), Mathf.Clamp(self.y, -levelHeight / 2, levelHeight / 2));
 		}
 
-		public static bool RequiresLevelBoundsClamping(this Vector2 self)
+		public static bool RequiresLevelBoundsClamping(this Vector2 self, LevelSettings targetLevelSettings)
 		{
-			float levelWidth = LevelSettings.Current.LevelWidth;
-			float levelHeight = LevelSettings.Current.LevelHeight;
+			float levelWidth = targetLevelSettings.LevelWidth;
+			float levelHeight = targetLevelSettings.LevelHeight;
 
 			return (self.x < (-levelWidth / 2)) || (self.x > (levelWidth / 2)) || (self.y < (-levelHeight / 2)) || (self.y > (levelHeight / 2));
 		}
 
-		public static Vector2 NormalizeFromLevelBounds(this Vector2 self, bool clamped)
+		public static Vector2 NormalizeFromLevelBounds(this Vector2 self, LevelSettings targetLevelSettings, bool clamped)
 		{
-			float levelWidth = LevelSettings.Current.LevelWidth;
-			float levelHeight = LevelSettings.Current.LevelHeight;
+			float levelWidth = targetLevelSettings.LevelWidth;
+			float levelHeight = targetLevelSettings.LevelHeight;
 			if (clamped)
 			{
 				return new Vector2(Mathf.Clamp(self.x / (levelWidth / 2), -1, 1), Mathf.Clamp(self.y / (levelHeight / 2), -1, 1));

@@ -8,12 +8,13 @@ namespace Spectral.Runtime
 {
 	public static class EntityFactory
 	{
-		public static void CreateEntity(EntitySettings settings, int bodyPartCount, Vector2 position, int rotation)
+		public static void CreateEntity(EntitySettings settings, int bodyPartCount, int levelIndex = default, Vector2 position = default, int rotation = default)
 		{
 			EntityMover entityCore;
+			Transform parent = LevelLoader.GameLevelPlanes[levelIndex].CoreObject.TargetStorage.EntityStorage;
 			if (settings.OverwritePrefab)
 			{
-				entityCore = Object.Instantiate(settings.OverwritePrefab, position.XZtoXYZ(), Quaternion.identity, Storage.EntityStorage);
+				entityCore = Object.Instantiate(settings.OverwritePrefab, position.XZtoXYZ(), Quaternion.identity, parent);
 #if SPECTRAL_DEBUG
 				if (settings.EnableAI && !(entityCore is AIMover))
 				{
@@ -25,7 +26,7 @@ namespace Spectral.Runtime
 			else
 			{
 				GameObject entityObjectCore = new GameObject("Spawned Entity");
-				entityObjectCore.transform.SetParent(Storage.EntityStorage);
+				entityObjectCore.transform.SetParent(parent);
 				entityCore = settings.EnableAI ? entityObjectCore.AddComponent<AIMover>() : entityObjectCore.AddComponent<EntityMover>();
 				entityCore.transform.position = position.XZtoXYZ();
 			}
@@ -33,9 +34,17 @@ namespace Spectral.Runtime
 			BuildEntityBody(entityCore, settings, bodyPartCount, rotation);
 		}
 
+		public static void CreatePlayerEntity()
+		{
+			GameObject playerObjectCore = new GameObject("Player");
+			playerObjectCore.transform.SetParent(LevelLoader.CoreStorage.EntityStorage);
+			PlayerMover playerCore = playerObjectCore.AddComponent<PlayerMover>();
+			playerCore.transform.position = Vector3.zero;
+			BuildEntityBody(playerCore, LevelLoaderSettings.Current.PlayerSettings, LevelLoaderSettings.Current.PlayerSpawnSize, Random.Range(0, 360));
+		}
+
 		public static void BuildEntityBody(EntityMover entityCore, EntitySettings settings, int bodyPartCount, int rotation)
 		{
-			entityCore.transform.SetParent(Storage.EntityStorage);
 			float scaleChangePerPart = settings.ScaleChangePerPart;
 			float startScale = settings.PartMinimumScale;
 
@@ -127,9 +136,9 @@ namespace Spectral.Runtime
 				if (i > 0)
 				{
 					float offset = ((currentBodyPart.CalculatedLength + lastSize) * 0.5f) + currentBodyPart.Config.PartOffset;
-
-					//currentBodyPart.transform.position = (jointAttachment.transform.forward * offset + currentBodyPart.transform.forward * offset) * -0.5f;
 					currentBodyPart.Joint.anchor = new Vector3(0, 0, (offset / scale) * 0.5f);
+
+					//currentBodyPart.transform.localPosition = jointAttachment.transform.localPosition + (jointAttachment.transform.forward * (offset * -0.5f) + currentBodyPart.transform.forward * (offset * -0.5f));
 				}
 
 				lastSize = currentBodyPart.CalculatedLength;

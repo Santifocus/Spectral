@@ -1,5 +1,4 @@
-﻿using Spectral.Runtime.Behaviours;
-using Spectral.Runtime.DataStorage;
+﻿using Spectral.Runtime.DataStorage;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,11 +19,13 @@ namespace Spectral.Runtime
 		public static void SetActiveGameSettings(GameSettings target)
 		{
 			current = target;
+			LevelLoaderSettings.SetActiveLevelLoaderSettings(target.GameLevelSettings);
 		}
 
 		#endregion
 
 		public DefaultEntitySettings DefaultEntitySettings;
+		public LevelLoaderSettings GameLevelSettings;
 
 		public Material ScreenEffectMaterial;
 		public int AttackablePlayerTorsoCount = 3;
@@ -37,7 +38,5 @@ namespace Spectral.Runtime
 
 		public float LevelBorderForceFieldWidth = 3;
 		public float LevelBorderForceFieldStrength = 2;
-
-		public FoodObject[] FoodObjectVariants;
 	}
 }

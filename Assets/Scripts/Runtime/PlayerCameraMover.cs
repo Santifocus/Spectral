@@ -54,8 +54,8 @@ namespace Spectral.Runtime.Behaviours
 			Vector2 viewRect = CalculateViewRect();
 
 			//Normalize position based on the level-bounds minus the view rect
-			float levelWidth = (LevelSettings.Current.LevelWidth   / 2) - viewRect.x;
-			float levelHeight = (LevelSettings.Current.LevelHeight / 2) - viewRect.y;
+			float levelWidth = (LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].PlaneSettings.LevelWidth   / 2) - viewRect.x;
+			float levelHeight = (LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].PlaneSettings.LevelHeight / 2) - viewRect.y;
 			Vector2 normalizedPosition = NormalizePositionFromLevelBoundsAndViewRect(basePosition, levelWidth, levelHeight);
 			transform.position = new Vector3(levelWidth * normalizedPosition.x, currentToPlayerOffset, levelHeight * normalizedPosition.y);
 		}
