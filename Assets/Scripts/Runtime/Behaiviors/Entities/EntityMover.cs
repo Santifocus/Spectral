@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Spectral.Runtime.DataStorage;
+using TMPro;
 using UnityEngine;
 
 namespace Spectral.Runtime.Behaviours.Entities
@@ -118,25 +119,31 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private void SetMoveVelocity()
 		{
+			//Check for current state of the velocity
+			Vector3 forward = Head.transform.forward;
 			float currentMoveSpeed = CurrentVelocity.magnitude;
-			Vector3 currentMoveDirection = currentMoveSpeed > 0 ? CurrentVelocity / currentMoveSpeed : Head.transform.forward;
-			UpdateAccelerationValue(currentMoveDirection, currentMoveSpeed);
-			float intendedMoveSpeed = CurrentAcceleration     * entitySettings.MoveSpeed;
-			Vector3 intendedVelocity = Head.transform.forward * intendedMoveSpeed;
-			CurrentVelocity = Vector3.MoveTowards(CurrentVelocity, intendedVelocity, intendedMoveSpeed * Time.fixedDeltaTime);
+			Vector3 currentMoveDirection = currentMoveSpeed > 0 ? CurrentVelocity / currentMoveSpeed : forward;
+			
+			//Update the acceleration based on the current state
+			UpdateAcceleration(currentMoveDirection, forward, currentMoveSpeed);
+			
+			//Lerp toward the intended movement based on the current
+			float targetMoveSpeed = CurrentAcceleration     * entitySettings.MoveSpeed;
+			Vector3 targetVelocity = forward * targetMoveSpeed;
+			CurrentVelocity = Vector3.MoveTowards(CurrentVelocity, targetVelocity, targetMoveSpeed * Time.fixedDeltaTime);
+			
+			//Update the position based on the speed
 			Head.transform.position += CurrentVelocity * Time.fixedDeltaTime;
 		}
 
-		private void UpdateAccelerationValue(Vector3 currentMoveDirection, float currentMoveSpeed)
+		private void UpdateAcceleration(Vector3 currentMoveDirection, Vector3 forward, float currentMoveSpeed)
 		{
 			if (IntendedAcceleration > 0)
 			{
-				float directionAgreement = Vector3.Dot(currentMoveDirection, Head.transform.forward);
+				float directionAgreement = Vector3.Dot(currentMoveDirection, forward);
 				float accelerationArea = entitySettings.AccelerationAngle / 180;
 				directionAgreement = currentMoveSpeed > 0
-										? Mathf
-											.Min(directionAgreement + (entitySettings.MoveSpeed / currentMoveSpeed),
-												1)
+										? Mathf.Min(directionAgreement + (entitySettings.MoveSpeed / currentMoveSpeed), 1)
 										: 1;
 
 				directionAgreement -= 1 - accelerationArea;
@@ -147,17 +154,31 @@ namespace Spectral.Runtime.Behaviours.Entities
 			{
 				ChangeAcceleration(-1);
 			}
-			else
+			
+			//Apply velocity damp
+			if (CurrentAcceleration < 0.00001f)
 			{
-				//Apply velocity damp
 				CurrentVelocity = Vector3.MoveTowards(CurrentVelocity, Vector3.zero, entitySettings.VelocityDamping * Time.fixedDeltaTime);
 			}
+		}
+		
+		private void ChangeAcceleration(float changeMultiplier)
+		{
+			float accelerationChange = changeMultiplier > 0 ? entitySettings.Acceleration : entitySettings.Deceleration;
+			accelerationChange *= changeMultiplier * Time.fixedDeltaTime;
+			float newAcceleration = Mathf.Clamp(CurrentAcceleration + accelerationChange, 0, IntendedAcceleration);
+
+			//If the intendedAcceleration clamp decelerated faster then would be allowed by the movement settings we will only decelerate by the settings amount
+			float maxDeceleration = Time.fixedDeltaTime * entitySettings.Deceleration;
+			CurrentAcceleration = (CurrentAcceleration - newAcceleration) > maxDeceleration
+									? Mathf.Clamp01(CurrentAcceleration - maxDeceleration)
+									: newAcceleration;
 		}
 
 		public virtual void OnEat(FoodObject target = null)
 		{
 			EntityFactory.IncreaseEntitySize(this, entitySettings);
-			if (target)
+			if (target != null)
 			{
 				target.Eat();
 			}
@@ -179,19 +200,6 @@ namespace Spectral.Runtime.Behaviours.Entities
 		public void Death()
 		{
 			Alive = false;
-		}
-
-		private void ChangeAcceleration(float changeMultiplier)
-		{
-			float accelerationChange = changeMultiplier > 0 ? entitySettings.Acceleration : entitySettings.Deceleration;
-			accelerationChange *= changeMultiplier * Time.fixedDeltaTime;
-			float newAcceleration = Mathf.Clamp(CurrentAcceleration + accelerationChange, 0, IntendedAcceleration);
-
-			//If the intendedAcceleration clamp decelerated faster then would be allowed by the movement settings we will only decelerate by the settings amount
-			float maxDeceleration = Time.fixedDeltaTime * entitySettings.Deceleration;
-			CurrentAcceleration = (CurrentAcceleration - newAcceleration) > maxDeceleration
-									? Mathf.Clamp01(CurrentAcceleration - maxDeceleration)
-									: newAcceleration;
 		}
 	}
 }

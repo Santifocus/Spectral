@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Spectral.Runtime.Behaviours
 {
 	[RequireComponent(typeof(Camera))]
-	public class PlayerCameraMover : SpectralMonoBehavior
+	public class PlayerCameraMover : MonoBehaviour
 	{
 		private static PlayerCameraMover activePlayerCamera { get; set; }
 		public static Camera ActiveCamera => activePlayerCamera.cameraComponent;

@@ -20,15 +20,6 @@ namespace Spectral.Runtime.Behaviours.Entities
 			UpdateIntendedMoveDirection();
 			CheckForFood();
 			ApplyLevelBorderForceField();
-			if (Input.GetKeyDown(KeyCode.K))
-			{
-				OnEat();
-			}
-
-			if (Input.GetKeyDown(KeyCode.O))
-			{
-				Damage();
-			}
 		}
 
 		private void UpdateIntendedMoveDirection()
