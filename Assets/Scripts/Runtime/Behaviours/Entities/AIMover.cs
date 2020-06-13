@@ -232,13 +232,13 @@ namespace Spectral.Runtime.Behaviours.Entities
 				attackCooldown = entitySettings.AIConfiguration.AttackCooldown;
 				SetIdleState(true);
 
-				//Damage the player
-				PlayerMover.Instance.Damage(entitySettings.AIConfiguration.AttackDamage);
-
 				//Cause the force impact
 				float forceImpact = entitySettings.AIConfiguration.AttackForceImpact;
 				Vector2 forceDirection = (currentTargetPosition - Head.transform.position.XYZtoXZ()).normalized;
 				PlayerMover.Instance.AddForceImpact(forceDirection * forceImpact);
+
+				//Damage the player
+				PlayerMover.Instance.Damage(entitySettings.AIConfiguration.AttackDamage);
 
 				//Grow the entity
 				OnEat();

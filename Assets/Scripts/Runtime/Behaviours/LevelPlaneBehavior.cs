@@ -2,7 +2,7 @@
 
 namespace Spectral.Runtime.Behaviours
 {
-	public class SpectralMonoBehavior : MonoBehaviour
+	public class LevelPlaneBehavior : MonoBehaviour
 	{
 		private int? planeLevelIndex;
 

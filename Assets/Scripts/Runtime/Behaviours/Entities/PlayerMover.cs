@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Spectral.Runtime.Behaviours.Entities
 {
 	public class PlayerMover : EntityMover
 	{
 		private const float INTENDED_ACCELERATION_CUTOFF = 0.1f;
+		public static event Action PlayerAte;
+		public static event Action PlayerTookDamage;
+		public static event Action PlayerDied;
 		public static PlayerMover Instance { get; private set; }
 		public static bool Existent => Instance && Instance.Alive;
 
@@ -86,6 +90,24 @@ namespace Spectral.Runtime.Behaviours.Entities
 #else
 			return Input.GetMouseButton(0) ? (Vector2?) Input.mousePosition : null;
 #endif
+		}
+
+		public override void OnEat(FoodObject target = null)
+		{
+			base.OnEat(target);
+			PlayerAte?.Invoke();
+		}
+
+		public override void Damage(int amount = 1)
+		{
+			base.Damage(amount);
+			PlayerTookDamage?.Invoke();
+		}
+
+		public override void Death()
+		{
+			base.Death();
+			PlayerDied?.Invoke();
 		}
 	}
 }

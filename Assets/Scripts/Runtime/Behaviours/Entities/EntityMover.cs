@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using Spectral.Runtime.DataStorage;
-using TMPro;
+using Spectral.Runtime.Factories;
 using UnityEngine;
 
 namespace Spectral.Runtime.Behaviours.Entities
 {
-	public class EntityMover : SpectralMonoBehavior
+	public class EntityMover : LevelPlaneBehavior
 	{
 		[SerializeField] protected EntitySettings entitySettings = default;
 		[SerializeField] private int spawnTotalBodySize = 1;
@@ -15,7 +15,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 		public List<EntityBodyPart> TorsoParts { get; set; }
 		public EntityBodyPart Tail { get; set; }
 
-		protected Vector3 CurrentVelocity;
+		public Vector3 CurrentVelocity { get; private set; }
 
 		protected Vector3? IntendedMoveDirection
 		{
@@ -123,15 +123,15 @@ namespace Spectral.Runtime.Behaviours.Entities
 			Vector3 forward = Head.transform.forward;
 			float currentMoveSpeed = CurrentVelocity.magnitude;
 			Vector3 currentMoveDirection = currentMoveSpeed > 0 ? CurrentVelocity / currentMoveSpeed : forward;
-			
+
 			//Update the acceleration based on the current state
 			UpdateAcceleration(currentMoveDirection, forward, currentMoveSpeed);
-			
+
 			//Lerp toward the intended movement based on the current
-			float targetMoveSpeed = CurrentAcceleration     * entitySettings.MoveSpeed;
-			Vector3 targetVelocity = forward * targetMoveSpeed;
+			float targetMoveSpeed = CurrentAcceleration * entitySettings.MoveSpeed;
+			Vector3 targetVelocity = forward            * targetMoveSpeed;
 			CurrentVelocity = Vector3.MoveTowards(CurrentVelocity, targetVelocity, targetMoveSpeed * Time.fixedDeltaTime);
-			
+
 			//Update the position based on the speed
 			Head.transform.position += CurrentVelocity * Time.fixedDeltaTime;
 		}
@@ -154,14 +154,14 @@ namespace Spectral.Runtime.Behaviours.Entities
 			{
 				ChangeAcceleration(-1);
 			}
-			
+
 			//Apply velocity damp
 			if (CurrentAcceleration < 0.00001f)
 			{
 				CurrentVelocity = Vector3.MoveTowards(CurrentVelocity, Vector3.zero, entitySettings.VelocityDamping * Time.fixedDeltaTime);
 			}
 		}
-		
+
 		private void ChangeAcceleration(float changeMultiplier)
 		{
 			float accelerationChange = changeMultiplier > 0 ? entitySettings.Acceleration : entitySettings.Deceleration;
@@ -184,7 +184,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 			}
 		}
 
-		public void Damage(int amount = 1)
+		public virtual void Damage(int amount = 1)
 		{
 			for (int i = 0; i < amount; i++)
 			{
@@ -197,9 +197,10 @@ namespace Spectral.Runtime.Behaviours.Entities
 			}
 		}
 
-		public void Death()
+		public virtual void Death()
 		{
 			Alive = false;
+			EntityFactory.TearDownEntity(this);
 		}
 	}
 }

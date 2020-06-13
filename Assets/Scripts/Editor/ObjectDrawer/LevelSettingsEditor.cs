@@ -28,6 +28,21 @@ namespace Spectral.Editor
 		{
 			LevelSettings settings = target as LevelSettings;
 			IntField(ref settings.LevelSceneID, ObjectNames.NicifyVariableName(nameof(LevelSettings.LevelSceneID)));
+			BeginIndentSpaces();
+			int targetSceneID = settings.LevelSceneID + 1;
+			if ((targetSceneID <= 0) || (targetSceneID >= EditorBuildSettings.scenes.Length))
+			{
+				EditorGUILayout.HelpBox("This Scene does not Exist!", MessageType.Error);
+			}
+			else
+			{
+				EditorBuildSettingsScene scene = EditorBuildSettings.scenes[targetSceneID];
+				int subStringStart = scene.path.LastIndexOf("/") + 1;
+				int subStringEnd = scene.path.LastIndexOf(".unity");
+				EditorGUILayout.LabelField("Target Scene: ", scene.path.Substring(subStringStart, subStringEnd - subStringStart), EditorStyles.boldLabel);
+			}
+
+			EndIndentSpaces();
 		}
 
 		private void DrawDimensionsSettings()

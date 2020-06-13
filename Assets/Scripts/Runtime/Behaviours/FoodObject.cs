@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Spectral.Runtime.Behaviours
 {
-	public class FoodObject : SpectralMonoBehavior, IPoolableObject<FoodObject>
+	public class FoodObject : LevelPlaneBehavior, IPoolableObject<FoodObject>
 	{
 		private const float CHECK_FOR_DE_SPAWN_COOLDOWN = 3;
 		public ObjectPool<FoodObject> SelfPool { get; set; }
@@ -39,13 +39,19 @@ namespace Spectral.Runtime.Behaviours
 			transform.localPosition = spawnPos;
 			IsEdible = true;
 			expandDir = 1;
-			affiliatedSpawner.ActiveFoodObjects.Add(this);
+			if (affiliatedSpawner)
+			{
+				affiliatedSpawner.ActiveFoodObjects.Add(this);
+			}
 		}
 
 		private void TearDown()
 		{
 			IsEdible = false;
-			affiliatedSpawner.ActiveFoodObjects.Remove(this);
+			if (affiliatedSpawner)
+			{
+				affiliatedSpawner.ActiveFoodObjects.Remove(this);
+			}
 		}
 
 		private void ForceInitiation()
@@ -103,19 +109,29 @@ namespace Spectral.Runtime.Behaviours
 				return;
 			}
 
-			expandTimer += Time.deltaTime      * expandDir;
-			transform.localScale = Vector3.one * (expandTimer / expandTime);
-			if ((expandTimer >= 1) && (expandDir == 1))
+			expandTimer += Time.deltaTime * expandDir;
+			float expandState = expandTimer / expandTime;
+			transform.localScale = Vector3.one * expandState;
+			if ((expandState >= 1) && (expandDir == 1))
 			{
-				expandTimer = 1;
-				expandDir = 0;
+				FinishExpansion(true);
 			}
-			else if ((expandTimer <= 0) && (expandDir == -1))
+			else if ((expandState <= 0) && (expandDir == -1))
 			{
-				expandTimer = 0;
-				expandDir = 0;
+				FinishExpansion(false);
+			}
+		}
+
+		public void FinishExpansion(bool expanded)
+		{
+			expandDir = 0;
+			expandTimer = expanded ? 1 : 0;
+			if (!expanded)
+			{
 				ReturnToPool();
 			}
+
+			transform.localScale = Vector3.one * expandTimer;
 		}
 
 		public void ReturnToPool()

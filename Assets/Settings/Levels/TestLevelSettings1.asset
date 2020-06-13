@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017848a574208fa44bc291a480c94a5b, type: 3}
   m_Name: TestLevelSettings1
   m_EditorClassIdentifier: 
-  LevelSceneID: 1
+  LevelSceneID: 2
   LevelWidth:
     NonDefaultValue: 0
     UseDefault: 1
@@ -20,7 +20,7 @@ MonoBehaviour:
   LevelHeight:
     NonDefaultValue: 0
     UseDefault: 1
-    DefaultOffset: -30
+    DefaultOffset: -0
   FoodInLevel:
     NonDefaultValue: 0
     UseDefault: 1

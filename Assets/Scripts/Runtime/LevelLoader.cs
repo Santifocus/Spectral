@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Spectral.Runtime.Behaviours;
 using Spectral.Runtime.DataStorage;
+using Spectral.Runtime.Factories;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
