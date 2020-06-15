@@ -360,7 +360,7 @@ namespace Spectral.Editor
 			{
 				if (GUILayout.Button("✚", GUILayout.MaxWidth(ARRAY_CONTROL_WIDTH)))
 				{
-					ObjectCreatorWindow.InitiateWindow(typeof(T));
+					ObjectCreatorWindow.InitialiseWindow(typeof(T));
 				}
 			}
 

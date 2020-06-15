@@ -33,7 +33,7 @@ namespace Spectral.Editor
 		private string currentTargetName = "";
 		private string currentTargetPath = "";
 
-		private void Initiate(Type baseType)
+		private void Initialise(Type baseType)
 		{
 			this.baseType = baseType;
 			inheritedTypes = baseType.Assembly.GetTypes().Where(type => type.IsSubclassOf(baseType) || (type == baseType)).ToArray();
@@ -88,7 +88,7 @@ namespace Spectral.Editor
 				}
 				else
 				{
-					Initiate(baseType);
+					Initialise(baseType);
 				}
 			}
 
@@ -157,7 +157,7 @@ namespace Spectral.Editor
 			GUILayout.EndHorizontal();
 		}
 
-		public static void InitiateWindow(Type baseType)
+		public static void InitialiseWindow(Type baseType)
 		{
 			if (!baseType.IsSubclassOf(typeof(ScriptableObject)))
 			{
@@ -166,7 +166,7 @@ namespace Spectral.Editor
 
 			ObjectCreatorWindow creatorWindow = GetWindow<ObjectCreatorWindow>("Object Creation", true, mouseOverWindow.GetType());
 			creatorWindow.titleContent.image = EditorGUIUtility.IconContent("Toolbar Plus").image;
-			creatorWindow.Initiate(baseType);
+			creatorWindow.Initialise(baseType);
 			creatorWindow.Show();
 		}
 	}

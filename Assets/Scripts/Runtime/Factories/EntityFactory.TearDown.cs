@@ -34,7 +34,7 @@ namespace Spectral.Runtime.Factories
 
 			//Setup the foodObject
 			FoodObject targetFoodObject = foodObjectCore.gameObject.AddComponent<FoodObject>();
-			targetFoodObject.Initiate(targetFoodSpawner);
+			targetFoodObject.Initialise(targetFoodSpawner);
 			targetFoodObject.Setup(partModel.position);
 			targetFoodObject.FinishExpansion(true);
 			partModel.localPosition = Vector3.zero;

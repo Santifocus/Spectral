@@ -20,11 +20,11 @@ namespace Spectral.Runtime
 
 		private static bool Transitioning;
 
-		public static async void Initiate()
+		public static async void Initialise()
 		{
 			//Basic setups
-			InitiateCoreStorage();
-			InitiateGamePlaneArray();
+			InitialiseCoreStorage();
+			InitialiseGamePlaneArray();
 			PlayerLevelIndex = LevelLoaderSettings.Current.LevelStartIndex;
 
 			//Create all required Level planes
@@ -36,14 +36,14 @@ namespace Spectral.Runtime
 			EntityFactory.CreatePlayerEntity();
 		}
 
-		private static void InitiateCoreStorage()
+		private static void InitialiseCoreStorage()
 		{
 			CoreStorage = new Storage(null);
 			LevelPlanesStorage = new GameObject("Level Planes").transform;
 			LevelPlanesStorage.SetParent(CoreStorage.Main);
 		}
 
-		private static void InitiateGamePlaneArray()
+		private static void InitialiseGamePlaneArray()
 		{
 			GameLevelPlanes = new LevelPlane[LevelLoaderSettings.Current.Levels.Length];
 			for (int i = 0; i < GameLevelPlanes.Length; i++)
@@ -63,7 +63,7 @@ namespace Spectral.Runtime
 
 			//Setup the Plane Level Data
 			GameLevelPlanes[targetLevelIndex].CoreObject = planeCore.gameObject.AddComponent<PlaneLevelData>();
-			GameLevelPlanes[targetLevelIndex].CoreObject.Initiate(targetLevelIndex);
+			GameLevelPlanes[targetLevelIndex].CoreObject.Initialise(targetLevelIndex);
 
 			//Update the depth
 			GameLevelPlanes[targetLevelIndex].CurrentPlaneDepth = creationDepth;

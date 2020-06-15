@@ -27,7 +27,7 @@ namespace Spectral.Runtime.Behaviours
 			}
 		}
 
-		public void Initiate(FoodSpawner affiliatedSpawner)
+		public void Initialise(FoodSpawner affiliatedSpawner)
 		{
 			initiated = true;
 			this.affiliatedSpawner = affiliatedSpawner;
@@ -66,7 +66,7 @@ namespace Spectral.Runtime.Behaviours
 			}
 			else
 			{
-				Initiate(acquiredAffiliatedSpawner);
+				Initialise(acquiredAffiliatedSpawner);
 				Setup(transform.localPosition);
 			}
 		}

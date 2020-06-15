@@ -15,7 +15,7 @@ namespace Spectral.Runtime.Behaviours
 		private ObjectPool<FoodObject>[] foodObjectPools;
 		private float checkSpawnCooldown;
 
-		public void Initiate(PlaneLevelData targetPlane)
+		public void Initialise(PlaneLevelData targetPlane)
 		{
 			TargetPlane = targetPlane;
 			SetupFoodObjectPools();
@@ -34,7 +34,7 @@ namespace Spectral.Runtime.Behaviours
 		private FoodObject CreateNewFoodObject(FoodObject variant)
 		{
 			FoodObject newFoodObject = Instantiate(variant);
-			newFoodObject.Initiate(this);
+			newFoodObject.Initialise(this);
 
 			return newFoodObject;
 		}
@@ -83,7 +83,8 @@ namespace Spectral.Runtime.Behaviours
 
 			float shortestDist = (maxRange * maxRange) ?? Mathf.Infinity;
 			int targetIndex = -1;
-			List<FoodObject> targetFoodObjectList = LevelLoader.GameLevelPlanes[planeIndex].CoreObject.AffiliatedFoodSpawner.ActiveFoodObjects;
+			PlaneLevelData targetPlane = LevelLoader.GameLevelPlanes[planeIndex].CoreObject;
+			List<FoodObject> targetFoodObjectList = targetPlane.AffiliatedFoodSpawner.ActiveFoodObjects;
 			for (int i = 0; i < targetFoodObjectList.Count; i++)
 			{
 				if (!targetFoodObjectList[i].isActiveAndEnabled || !targetFoodObjectList[i].IsEdible)
@@ -91,7 +92,13 @@ namespace Spectral.Runtime.Behaviours
 					continue;
 				}
 
-				float dist = (targetFoodObjectList[i].transform.position.XYZtoXZ() - point).sqrMagnitude;
+				Vector2 foodPos = targetFoodObjectList[i].transform.position.XYZtoXZ();
+				if (foodPos.RequiresLevelBoundsClamping(targetPlane.PlaneSettings))
+				{
+					continue;
+				}
+
+				float dist = (foodPos - point).sqrMagnitude;
 				if (dist < shortestDist)
 				{
 					shortestDist = dist;

@@ -10,7 +10,7 @@ namespace Spectral.Runtime
 		{
 			GameSettings.SetActiveGameSettings(gameSettings);
 			StaticData.ActivePauses = 0;
-			LevelLoader.Initiate();
+			LevelLoader.Initialise();
 		}
 
 		private void OnDrawGizmosSelected()
