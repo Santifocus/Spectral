@@ -27,13 +27,13 @@ namespace Spectral.Runtime
 			InitialiseGamePlaneArray();
 			PlayerLevelIndex = LevelLoaderSettings.Current.LevelStartIndex;
 
-			//Create all required Level planes
-			await Task.WhenAll(CreateLevelPlane(PlayerLevelIndex - 1, -1),
-								CreateLevelPlane(PlayerLevelIndex, 0),
-								CreateLevelPlane(PlayerLevelIndex + 1, 1));
-
 			//Spawn the player
 			EntityFactory.CreatePlayerEntity();
+			
+			//Create all required Level planes
+			await CreateLevelPlane(PlayerLevelIndex - 1, -1);
+			await CreateLevelPlane(PlayerLevelIndex, 0);
+			await CreateLevelPlane(PlayerLevelIndex + 1, 1);
 		}
 
 		private static void InitialiseCoreStorage()
@@ -99,8 +99,11 @@ namespace Spectral.Runtime
 			}
 
 			//Now unload the empty scene
-			SceneManager.UnloadSceneAsync(targetScene);
-
+			AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(targetScene);
+			while (!unloadOperation.isDone)
+			{
+				await Task.Delay(1);
+			}
 			return extractedObjectParent;
 		}
 

@@ -181,7 +181,6 @@ namespace Spectral.Runtime.Behaviours.Entities
 										+ (new Vector3(Mathf.Sin(directionAngle * Mathf.Deg2Rad), 0, Mathf.Cos(directionAngle * Mathf.Deg2Rad))
 											* entitySettings.AIConfiguration.WanderingRadius
 											* Random.Range(0.25f, 1));
-
 			currentTargetPosition = newWanderPosition.XYZtoXZ().ClampIntoLevelBounds(AffiliatedLevelPlane.PlaneSettings);
 		}
 
@@ -195,9 +194,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 		private void ResetDecisionDelay()
 		{
 			idleDecisionCooldown =
-				Mathf.Max(0.001f,
-						entitySettings.AIConfiguration.NextMovementDelay *
-						Random.Range(0.75f, 1.25f));
+				Mathf.Max(0.001f, entitySettings.AIConfiguration.NextMovementDelay * Random.Range(0.75f, 1.25f));
 		}
 
 		#endregion
