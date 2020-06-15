@@ -13,7 +13,7 @@ namespace Spectral.Runtime.Behaviours
 		{
 			PlaneLevelIndex = levelPlaneIndex;
 			PlaneSettings = LevelLoader.GameLevelPlanes[PlaneLevelIndex].PlaneSettings;
-			
+
 			//Planes Storage
 			TargetStorage = new Storage(transform);
 

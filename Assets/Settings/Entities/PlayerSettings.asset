@@ -49,6 +49,7 @@ MonoBehaviour:
     UseDefault: 1
     DefaultOffset: 0
   MinParts: 3
+  SpawnPartCount: 3
   PartMinimumScale:
     NonDefaultValue: 0
     UseDefault: 1
@@ -66,7 +67,6 @@ MonoBehaviour:
     NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: 0
-  OverwritePrefab: {fileID: 0}
   EnableAI: 0
   AIConfiguration:
     IdleBehaviour: 1

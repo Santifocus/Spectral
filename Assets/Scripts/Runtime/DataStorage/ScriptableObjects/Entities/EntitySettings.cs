@@ -1,4 +1,5 @@
-﻿using Spectral.Runtime.Behaviours.Entities;
+﻿using Spectral.Runtime.Factories;
+using UnityEngine;
 
 namespace Spectral.Runtime.DataStorage
 {
@@ -8,7 +9,7 @@ namespace Spectral.Runtime.DataStorage
 		InOrder = 2,
 	}
 
-	public class EntitySettings : SpectralScriptableObject
+	public class EntitySettings : SpawnableEntity
 	{
 		//Movement Settings
 		public DefaultableFloat MoveSpeed = new DefaultableFloat(() => GameSettings.Current.DefaultEntitySettings.EntityMoveSpeed);
@@ -24,7 +25,8 @@ namespace Spectral.Runtime.DataStorage
 		public DefaultableFloat TurnSmoothMultiplier = new DefaultableFloat(() => GameSettings.Current.DefaultEntitySettings.EntityTurnSmoothMultiplier);
 
 		//Body Settings
-		public int MinParts = 1;
+		public int MinParts = 2;
+		public int SpawnPartCount = 3;
 
 		public DefaultableFloat PartMinimumScale = new DefaultableFloat(() => GameSettings.Current.DefaultEntitySettings.EntityPartMinimumScale);
 		public DefaultableFloat ScaleChangePerPart = new DefaultableFloat(() => GameSettings.Current.DefaultEntitySettings.EntityScaleChangePerPart);
@@ -36,8 +38,13 @@ namespace Spectral.Runtime.DataStorage
 
 		//Other
 		public DefaultableFloat FoodEatDistance = new DefaultableFloat(() => GameSettings.Current.DefaultEntitySettings.EntityEatDistance);
-		public EntityMover OverwritePrefab = default;
 		public bool EnableAI = false;
 		public EntityAIConfiguration AIConfiguration;
+
+		//Creation
+		public override MonoBehaviour Spawn(Vector2 position, int levelPlaneIndex)
+		{
+			return EntityFactory.CreateEntity(this, SpawnPartCount, position, levelPlaneIndex, Random.Range(0, 360));
+		}
 	}
 }

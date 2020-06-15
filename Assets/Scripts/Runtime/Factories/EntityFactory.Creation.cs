@@ -8,30 +8,18 @@ namespace Spectral.Runtime.Factories
 {
 	public static partial class EntityFactory
 	{
-		public static void CreateEntity(EntitySettings settings, int bodyPartCount, int levelIndex = default, Vector2 position = default, int rotation = default)
+		public static EntityMover CreateEntity(EntitySettings settings, int bodyPartCount, Vector2 position, int levelIndex, int rotation = default)
 		{
-			EntityMover entityCore;
-			Transform parent = LevelLoader.GameLevelPlanes[levelIndex].CoreObject.TargetStorage.EntityStorage;
-			if (settings.OverwritePrefab)
-			{
-				entityCore = Object.Instantiate(settings.OverwritePrefab, position.XZtoXYZ(), Quaternion.identity, parent);
-#if SPECTRAL_DEBUG
-				if (settings.EnableAI && !(entityCore is AIMover))
-				{
-					throw new
-						System.Exception("The Entity Factory was given the instructions to spawn an Entity which has AIEnabled active but has an Overwrite-Prefab set which is not of the type AIMover.");
-				}
-#endif
-			}
-			else
-			{
-				GameObject entityObjectCore = new GameObject("Spawned Entity");
-				entityObjectCore.transform.SetParent(parent);
-				entityCore = settings.EnableAI ? entityObjectCore.AddComponent<AIMover>() : entityObjectCore.AddComponent<EntityMover>();
-				entityCore.transform.position = position.XZtoXYZ();
-			}
+			//Setup core object
+			Transform entityObjectCore = new GameObject("Entity").transform;
+			entityObjectCore.SetParent(LevelLoader.GameLevelPlanes[levelIndex].CoreObject.TargetStorage.EntityStorage);
+			entityObjectCore.localPosition = position.XZtoXYZ();
 
+			//Add entityCore
+			EntityMover entityCore = settings.EnableAI ? entityObjectCore.gameObject.AddComponent<AIMover>() : entityObjectCore.gameObject.AddComponent<EntityMover>();
 			BuildEntityBody(entityCore, settings, bodyPartCount, rotation);
+
+			return entityCore;
 		}
 
 		public static void CreatePlayerEntity()
@@ -40,7 +28,7 @@ namespace Spectral.Runtime.Factories
 			playerObjectCore.transform.SetParent(LevelLoader.CoreStorage.EntityStorage);
 			PlayerMover playerCore = playerObjectCore.AddComponent<PlayerMover>();
 			playerCore.transform.position = Vector3.zero;
-			BuildEntityBody(playerCore, LevelLoaderSettings.Current.PlayerSettings, LevelLoaderSettings.Current.PlayerSpawnSize, Random.Range(0, 360));
+			BuildEntityBody(playerCore, LevelLoaderSettings.Current.PlayerSettings, LevelLoaderSettings.Current.PlayerSettings.SpawnPartCount, Random.Range(0, 360));
 		}
 
 		public static void BuildEntityBody(EntityMover entityCore, EntitySettings settings, int bodyPartCount, int rotation)
@@ -113,7 +101,7 @@ namespace Spectral.Runtime.Factories
 
 			//Setup the core
 			entityCore.TorsoParts = torsoParts;
-			entityCore.SetupEntity(settings);
+			entityCore.Initialise(settings);
 		}
 
 		public static void IncreaseEntitySize(EntityMover entityCore, EntitySettings settings)

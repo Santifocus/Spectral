@@ -35,7 +35,7 @@ namespace Spectral.Runtime
 			{
 				Directory.CreateDirectory(folderPath);
 			}
-			
+
 #if SPECTRAL_DEBUG
 			Debug.Log($"Saving at: {savePath}");
 #endif

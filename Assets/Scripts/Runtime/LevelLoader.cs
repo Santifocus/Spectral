@@ -29,7 +29,7 @@ namespace Spectral.Runtime
 
 			//Spawn the player
 			EntityFactory.CreatePlayerEntity();
-			
+
 			//Create all required Level planes
 			await CreateLevelPlane(PlayerLevelIndex - 1, -1);
 			await CreateLevelPlane(PlayerLevelIndex, 0);
@@ -104,6 +104,7 @@ namespace Spectral.Runtime
 			{
 				await Task.Delay(1);
 			}
+
 			return extractedObjectParent;
 		}
 

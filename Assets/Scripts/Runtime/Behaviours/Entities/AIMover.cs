@@ -11,7 +11,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 		private const float REACHED_POINT_THRESHOLD_SQR = REACHED_POINT_THRESHOLD * REACHED_POINT_THRESHOLD;
 		private const float FLEE_FORESIGHT_DISTANCE = 15;
 		private const float EAT_COOLDOWN = 0.75f;
-		
+
 		private bool idle;
 
 		private Vector2 currentTargetPosition;
@@ -65,6 +65,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 			{
 				attackCooldown -= Time.deltaTime;
 			}
+
 			if (eatCooldown > 0)
 			{
 				eatCooldown -= Time.deltaTime;
@@ -101,7 +102,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private bool CheckForFood()
 		{
-			if (eatCooldown > 0 || !PlaneLevelIndex.HasValue)
+			if ((eatCooldown > 0) || !PlaneLevelIndex.HasValue)
 			{
 				return false;
 			}
@@ -181,6 +182,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 										+ (new Vector3(Mathf.Sin(directionAngle * Mathf.Deg2Rad), 0, Mathf.Cos(directionAngle * Mathf.Deg2Rad))
 											* entitySettings.AIConfiguration.WanderingRadius
 											* Random.Range(0.25f, 1));
+
 			currentTargetPosition = newWanderPosition.XYZtoXZ().ClampIntoLevelBounds(AffiliatedLevelPlane.PlaneSettings);
 		}
 

@@ -10,7 +10,6 @@ namespace Spectral.Runtime.DataStorage
 		}
 
 		public EntitySettings PlayerSettings;
-		public int PlayerSpawnSize = 3;
 		public LevelSettings[] Levels;
 		public int LevelStartIndex = 0;
 		public float LevelTransitionTime = 2;

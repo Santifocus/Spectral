@@ -15,6 +15,7 @@ namespace Spectral.Editor
 {
 	public class ObjectCreatorWindow : EditorWindow
 	{
+		private const string ASSET_FOLDER = "Assets";
 		private const string SETTINGS_FOLDER = "Settings";
 		private const string FX_FOLDER = "FX";
 		private const string ENTITIES_FOLDER = "Entities";
@@ -33,6 +34,12 @@ namespace Spectral.Editor
 		private string currentTargetName = "";
 		private string currentTargetPath = "";
 
+		[MenuItem("Spectral/Object Creator Window")]
+		public static void CreateObjectCreateWindowUnSeeded()
+		{
+			InitialiseWindow(typeof(SpectralScriptableObject));
+		}
+
 		private void Initialise(Type baseType)
 		{
 			this.baseType = baseType;
@@ -41,7 +48,7 @@ namespace Spectral.Editor
 			currentTargetName = $"New{this.baseType.Name}";
 			if (!TryGetPredictedPath())
 			{
-				currentTargetPath = $"Assets/{SETTINGS_FOLDER}";
+				currentTargetPath = $"{Application.dataPath}/{SETTINGS_FOLDER}";
 			}
 		}
 
@@ -80,18 +87,14 @@ namespace Spectral.Editor
 		{
 			if (inheritedTypes == null)
 			{
-				if (baseType == null)
-				{
-					Close();
-
-					return;
-				}
-				else
-				{
-					Initialise(baseType);
-				}
+				Initialise(baseType ?? typeof(SpectralScriptableObject));
 			}
 
+			SeededOnGUI();
+		}
+
+		private void SeededOnGUI()
+		{
 			bool lastWasAbstract = false;
 			for (int i = 0; i < inheritedTypes.Length; i++)
 			{
@@ -133,7 +136,7 @@ namespace Spectral.Editor
 			GUILayout.BeginHorizontal();
 			EditorGUI.BeginDisabledGroup(true);
 			BeginIndentSpaces();
-			EditorGUILayout.TextField("Path", currentTargetPath.Substring(Math.Max(0, currentTargetPath.LastIndexOf("Assets"))));
+			EditorGUILayout.TextField("Path", currentTargetPath.Substring(Math.Max(0, currentTargetPath.LastIndexOf(ASSET_FOLDER))));
 			EndIndentSpaces();
 			EditorGUI.EndDisabledGroup();
 			if (GUILayout.Button("...", GUILayout.Width(25)))
@@ -141,11 +144,11 @@ namespace Spectral.Editor
 				string newPath;
 				if (Directory.Exists(currentTargetPath))
 				{
-					newPath = EditorUtility.OpenFolderPanel("Asset Save Folder", currentTargetPath.Substring(Math.Max(0, currentTargetPath.LastIndexOf("Assets"))), "");
+					newPath = EditorUtility.OpenFolderPanel("Asset Save Folder", currentTargetPath.Substring(Math.Max(0, currentTargetPath.LastIndexOf(ASSET_FOLDER))), "");
 				}
 				else
 				{
-					newPath = EditorUtility.OpenFolderPanel("Asset Save Folder", $"Assets/{SETTINGS_FOLDER}", "");
+					newPath = EditorUtility.OpenFolderPanel("Asset Save Folder", $"{ASSET_FOLDER}/{SETTINGS_FOLDER}", "");
 				}
 
 				if (!string.IsNullOrEmpty(newPath))
@@ -164,7 +167,7 @@ namespace Spectral.Editor
 				throw new ArgumentException($"Cannot initiate Object Creation window with a type not inheriting from {nameof(ScriptableObject)}. (Given: {baseType.Name})");
 			}
 
-			ObjectCreatorWindow creatorWindow = GetWindow<ObjectCreatorWindow>("Object Creation", true, mouseOverWindow.GetType());
+			ObjectCreatorWindow creatorWindow = GetWindow<ObjectCreatorWindow>("Object Creation", true, typeof(EditorWindow).Assembly.GetType("UnityEditor.InspectorWindow"));
 			creatorWindow.titleContent.image = EditorGUIUtility.IconContent("Toolbar Plus").image;
 			creatorWindow.Initialise(baseType);
 			creatorWindow.Show();
