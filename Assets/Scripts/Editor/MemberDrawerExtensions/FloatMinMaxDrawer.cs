@@ -1,5 +1,4 @@
 ﻿using Spectral.Runtime.DataStorage;
-using Spectral.Runtime.Runtime.DataStorage;
 using UnityEditor;
 using static Spectral.Editor.EditorUtils;
 
@@ -13,8 +12,8 @@ namespace Spectral.Editor
 			if (property.isExpanded)
 			{
 				IncreaseIndent();
-				FloatField(ref self.Min, ObjectNames.NicifyVariableName(nameof(IntMinMax.Min)));
-				FloatField(ref self.Max, ObjectNames.NicifyVariableName(nameof(IntMinMax.Max)));
+				FloatField(ref self.Min, ObjectNames.NicifyVariableName(nameof(FloatMinMax.Min)));
+				FloatField(ref self.Max, ObjectNames.NicifyVariableName(nameof(FloatMinMax.Max)));
 				if (self.Min == self.Max)
 				{
 					BeginIndentSpaces();

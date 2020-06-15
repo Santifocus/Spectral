@@ -58,7 +58,7 @@ namespace Spectral.Runtime.FX.Handling
 				Vector3 scale = InstanceData.CustomScale                   ?? FXData.ParticleMainObject.transform.localScale;
 
 				//Create the main object
-				Transform mainObjectTransform = Object.Instantiate(FXData.ParticleMainObject, Storage.ParticleStorage).transform;
+				Transform mainObjectTransform = Object.Instantiate(FXData.ParticleMainObject, LevelLoader.CoreStorage.ParticleStorage).transform;
 				mainObjectTransform.position = InstanceData.Parent.position       + positionOffset;
 				mainObjectTransform.eulerAngles = InstanceData.Parent.eulerAngles + rotationOffset;
 				mainObjectTransform.localScale = scale;

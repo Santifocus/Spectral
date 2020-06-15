@@ -39,11 +39,11 @@ namespace Spectral.Runtime.FX.Handling
 			}
 			else
 			{
-				Initiate();
+				Initialise();
 			}
 		}
 
-		private void Initiate()
+		private void Initialise()
 		{
 			passedTime = 0;
 			CurrentFXState = FXState.Starting;
@@ -66,7 +66,7 @@ namespace Spectral.Runtime.FX.Handling
 				passedTime += timeStep;
 				if (passedTime >= 0)
 				{
-					Initiate();
+					Initialise();
 				}
 
 				return;

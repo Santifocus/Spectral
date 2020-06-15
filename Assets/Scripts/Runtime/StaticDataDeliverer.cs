@@ -10,19 +10,20 @@ namespace Spectral.Runtime
 		{
 			GameSettings.SetActiveGameSettings(gameSettings);
 			StaticData.ActivePauses = 0;
+			LevelLoader.Initialise();
 		}
 
 		private void OnDrawGizmosSelected()
 		{
-			if (!GameSettings.Current || !LevelSettings.Current)
+			if (!GameSettings.Current || (LevelLoader.GameLevelPlanes == null) || (LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].PlaneSettings == null))
 			{
 				return;
 			}
 
 			Gizmos.color = Color.cyan / 2;
 			Gizmos.DrawCube(Vector3.zero,
-							new Vector3(LevelSettings.Current.LevelWidth, 0.5f,
-										LevelSettings.Current.LevelHeight));
+							new Vector3(LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].PlaneSettings.LevelWidth, 0.5f,
+										LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].PlaneSettings.LevelHeight));
 		}
 	}
 }

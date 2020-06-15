@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Spectral.Runtime.Runtime.DataStorage
+namespace Spectral.Runtime.DataStorage
 {
 	[System.Serializable]
 	public struct IntMinMax
