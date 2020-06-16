@@ -13,48 +13,48 @@ MonoBehaviour:
   m_Name: TestEnemy_0_3Settings
   m_EditorClassIdentifier: 
   MoveSpeed:
-    RawValue: 0
+    NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: 0
   VelocityDamping:
-    RawValue: 0
+    NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: 0
   Acceleration:
-    RawValue: 0
+    NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: 0
   Deceleration:
-    RawValue: 0
+    NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: 0
   AccelerationAngle:
-    RawValue: 0
+    NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: -25
   TurnSpeed:
-    RawValue: 0
+    NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: 0
   TurnAcceleration:
-    RawValue: 0
+    NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: 0
   TurnSmoothAngle:
-    RawValue: 0
+    NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: 0
   TurnSmoothMultiplier:
-    RawValue: 0
+    NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: 0
   MinParts: 1
   PartMinimumScale:
-    RawValue: 0
+    NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: 0
   ScaleChangePerPart:
-    RawValue: 0
+    NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: 0
   EntityHead: {fileID: 11400000, guid: 7285556b2f91ca1408bdba6a34b64f41, type: 2}
@@ -62,6 +62,10 @@ MonoBehaviour:
   EntityTorso:
   - {fileID: 11400000, guid: 105c429c30ad83f40a114dcd9c7de151, type: 2}
   EntityTail: {fileID: 11400000, guid: 3daca581fa5921b47a442a5adad0aaa7, type: 2}
+  FoodEatDistance:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: 0
   OverwritePrefab: {fileID: 0}
   EnableAI: 1
   AIConfiguration:
@@ -69,43 +73,47 @@ MonoBehaviour:
     ActiveBehaviour: 1
     EatBehavior: 2
     IdleMoveSpeedMultiplier:
-      RawValue: 0
+      NonDefaultValue: 0
       UseDefault: 1
       DefaultOffset: 0
     NextMovementDelay:
-      RawValue: 0
+      NonDefaultValue: 0
       UseDefault: 1
       DefaultOffset: 0
     WanderingRadius:
-      RawValue: 0
+      NonDefaultValue: 0
       UseDefault: 1
       DefaultOffset: 20
     PatrolPoints: []
     ViewRange:
-      RawValue: 0
+      NonDefaultValue: 0
       UseDefault: 1
       DefaultOffset: 0
     ViewAngle:
-      RawValue: 0
+      NonDefaultValue: 0
       UseDefault: 1
       DefaultOffset: 0
     ForgetTargetDistance:
-      RawValue: 0
+      NonDefaultValue: 0
       UseDefault: 1
       DefaultOffset: 0
     AttackRange:
-      RawValue: 0
+      NonDefaultValue: 0
       UseDefault: 1
       DefaultOffset: 0
     AttackDamage:
-      RawValue: 0
+      NonDefaultValue: 0
+      UseDefault: 1
+      DefaultOffset: 0
+    AttackForceImpact:
+      NonDefaultValue: 0
       UseDefault: 1
       DefaultOffset: 0
     AttackCooldown:
-      RawValue: 0
+      NonDefaultValue: 0
       UseDefault: 1
       DefaultOffset: 0
     MaxSizeIncrease:
-      RawValue: 0
+      NonDefaultValue: 0
       UseDefault: 1
       DefaultOffset: 0
