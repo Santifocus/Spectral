@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: DefaultEntitySettings
   m_EditorClassIdentifier: 
   EntityMoveSpeed: 5
-  EntityVelocityDamping: 7
-  EntityAcceleration: 7
-  EntityDeceleration: 20
-  EntityAccelerationAngle: 60
-  EntityTurnSpeed: 300
+  EntityVelocityDamping: 10
+  EntityAcceleration: 5
+  EntityDeceleration: 10
+  EntityAccelerationAngle: 20
+  EntityTurnSpeed: 120
   EntityTurnAcceleration: 0.5
-  EntityTurnSmoothAngle: 40
+  EntityTurnSmoothAngle: 50
   EntityTurnSmoothMultiplier: 0.025
   EntityPartMinimumScale: 0.5
   EntityScaleChangePerPart: 0.1
