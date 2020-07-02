@@ -1,11 +1,11 @@
 using UnityEditor;
 using UnityEngine;
-using static Spectral.EditorInspector.EditorUtils;
+using static Spectral.Editor.EditorUtils;
 
-namespace Spectral.EditorInspector
+namespace Spectral.Editor
 {
 	[CustomEditor(typeof(ScriptableObject), true)]
-	public class ObjectEditor : Editor
+	public class ObjectEditor : UnityEditor.Editor
 	{
 		public override void OnInspectorGUI()
 		{
@@ -21,6 +21,7 @@ namespace Spectral.EditorInspector
 				EditorUtility.SetDirty(target);
 			}
 		}
+
 		protected virtual bool ShouldHideBaseInspector()
 		{
 			return false;

@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de45d34ba2c13943b0e9356af557716, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
+  ChooseAsEditorReference: 1
   DefaultEntitySettings: {fileID: 11400000, guid: 75bd91b0098f17f419e4c2b5ea4187db,
     type: 2}
+  GameLevelSettings: {fileID: 11400000, guid: f0799d91ebdccac4a99a09dc5f515f0a, type: 2}
+  ScreenEffectMaterial: {fileID: 0}
   AttackablePlayerTorsoCount: 3
-  DefaultLevelWidht: 100
+  DefaultFoodInLevelCount: 6
+  DefaultLevelWidth: 100
   DefaultLevelHeight: 100
+  LevelBorderForceFieldWidth: 6
+  LevelBorderForceFieldStrength: 10

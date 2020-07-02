@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PartPrefab: {fileID: 3201621791434133722, guid: 4e98f21a564c71d4ab3d29e917df6b9c,
     type: 3}
-  Lenght: 1
+  Lenght: 0.5
   PartOffset: 0.25
   AngleLimiter: 50
   Springiness: 10
