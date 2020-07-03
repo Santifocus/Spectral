@@ -209,7 +209,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242035453}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -530,10 +530,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: FoodObject
       objectReference: {fileID: 0}
+    - target: {fileID: 5462478151598751323, guid: 104bcc0dcd9f352409a93e16c752202d,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
+      value: 0.3150397
+      objectReference: {fileID: 0}
+    - target: {fileID: 5462478151598751323, guid: 104bcc0dcd9f352409a93e16c752202d,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
+      value: 0.6869786
+      objectReference: {fileID: 0}
+    - target: {fileID: 5462478151598751323, guid: 104bcc0dcd9f352409a93e16c752202d,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
+      value: 0.6869786
+      objectReference: {fileID: 0}
+    - target: {fileID: 5462478151598751323, guid: 104bcc0dcd9f352409a93e16c752202d,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inWeight
+      value: 0.07692319
+      objectReference: {fileID: 0}
     - target: {fileID: 7857192641112981250, guid: 104bcc0dcd9f352409a93e16c752202d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3.462
       objectReference: {fileID: 0}
     - target: {fileID: 7857192641112981250, guid: 104bcc0dcd9f352409a93e16c752202d,
         type: 3}
@@ -543,7 +563,7 @@ PrefabInstance:
     - target: {fileID: 7857192641112981250, guid: 104bcc0dcd9f352409a93e16c752202d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.442
+      value: 13.79
       objectReference: {fileID: 0}
     - target: {fileID: 7857192641112981250, guid: 104bcc0dcd9f352409a93e16c752202d,
         type: 3}
@@ -1267,7 +1287,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 10000
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -1972,18 +1992,18 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 0.03137255, g: 1.3176471, b: 4, a: 0}
         key1: {r: 0.7521453, g: 1.0812802, b: 1.7676473, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 0.9980462}
+        key2: {r: 0.09441845, g: 0.09441845, b: 0.09441845, a: 0.9980462}
         key3: {r: 1, g: 1, b: 1, a: 0.9577465}
-        key4: {r: 0, g: 0, b: 0, a: 0}
-        key5: {r: 0, g: 0, b: 0, a: 0}
+        key4: {r: 1, g: 1, b: 1, a: 0}
+        key5: {r: 1, g: 1, b: 1, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
         ctime1: 43115
-        ctime2: 50014
+        ctime2: 59068
         ctime3: 65535
-        ctime4: 0
-        ctime5: 0
+        ctime4: 65535
+        ctime5: 65535
         ctime6: 0
         ctime7: 0
         atime0: 0
@@ -6140,17 +6160,17 @@ PrefabInstance:
     - target: {fileID: 606504940315248616, guid: 1a86b3a7de489c349a1a8ce1b715ad57,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.94
+      value: -1.15
       objectReference: {fileID: 0}
     - target: {fileID: 606504940315248616, guid: 1a86b3a7de489c349a1a8ce1b715ad57,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.46
+      value: -0.56
       objectReference: {fileID: 0}
     - target: {fileID: 606504940315248616, guid: 1a86b3a7de489c349a1a8ce1b715ad57,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.71
+      value: 19.59
       objectReference: {fileID: 0}
     - target: {fileID: 606504940315248616, guid: 1a86b3a7de489c349a1a8ce1b715ad57,
         type: 3}
