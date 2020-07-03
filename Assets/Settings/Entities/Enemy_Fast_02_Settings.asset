@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b90d9615614ce6640ada455017e05caf, type: 3}
-  m_Name: Enemy_Fast_01_Settings
+  m_Name: Enemy_Fast_02_Settings
   m_EditorClassIdentifier: 
   MoveSpeed:
     NonDefaultValue: 0
@@ -69,9 +69,9 @@ MonoBehaviour:
   OverwritePrefab: {fileID: 0}
   EnableAI: 1
   AIConfiguration:
-    IdleBehaviour: 2
-    ActiveBehaviour: 3
-    EatBehavior: 3
+    IdleBehaviour: 3
+    ActiveBehaviour: 1
+    EatBehavior: 2
     IdleMoveSpeedMultiplier:
       NonDefaultValue: 0
       UseDefault: 1

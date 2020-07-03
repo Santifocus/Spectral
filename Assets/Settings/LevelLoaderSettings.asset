@@ -20,6 +20,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4f518edc99c327f43837e783e07f3a64, type: 2}
   - {fileID: 11400000, guid: f61b15f4b1d159441a55f25d965ab72d, type: 2}
   - {fileID: 11400000, guid: 7e12c83e252addd4aac99c0b0b2cd112, type: 2}
-  LevelStartIndex: 0
+  LevelStartIndex: 2
   LevelTransitionTime: 2
   LevelDepth: 30

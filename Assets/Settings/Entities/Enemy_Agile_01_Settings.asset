@@ -70,8 +70,8 @@ MonoBehaviour:
   EnableAI: 1
   AIConfiguration:
     IdleBehaviour: 2
-    ActiveBehaviour: 1
-    EatBehavior: 2
+    ActiveBehaviour: 3
+    EatBehavior: 3
     IdleMoveSpeedMultiplier:
       NonDefaultValue: 0
       UseDefault: 1
