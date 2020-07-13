@@ -21,28 +21,28 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Background
-  m_Shader: {fileID: -6465566751694194690, guid: 178f9b2ff1af7c6408efe363250015bf,
+  m_Shader: {fileID: -6465566751694194690, guid: 6d3555f5716da0b4d9cfe276bbc2c12c,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 0
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_7C27A157:
-        m_Texture: {fileID: 2800000, guid: c6d279a0ed80e2a45846a280b1ffea53, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6f739e5def57c444a97ed69a4bcaf1a0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_BE9CD4A3:
-        m_Texture: {fileID: 2800000, guid: 4d202fa6023bab84195713014adf61bc, type: 3}
+        m_Texture: {fileID: 2800000, guid: c49caf1c187470e488769b8ac1cc705c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_D0248C2E:
-        m_Texture: {fileID: 2800000, guid: c6d279a0ed80e2a45846a280b1ffea53, type: 3}
+        m_Texture: {fileID: 2800000, guid: fd6107b16ef49f945b7566b570b670b8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -102,7 +102,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_79D8D629: 0.01
+    - Vector1_2FF3E7A3: 0.09
+    - Vector1_739CBCE9: 0.92
+    - Vector1_79D8D629: 0.005
+    - Vector1_87C8B60F: -0.24
+    - Vector1_A5B9E432: 117.27
+    - Vector1_B97FA25D: 1.05
     - Vector1_DBADFDAA: 0.001
     - _AlphaClip: 0
     - _Blend: 0
@@ -126,6 +131,12 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_7614F82: {r: 0, g: 0.07665095, b: 0.071707994, a: 0}
+    - Color_97795C75: {r: 0, g: 1, b: 0.13769054, a: 0}
+    - Color_B200ECA6: {r: 0.046078432, g: 0.1637255, b: 0.25, a: 0}
+    - Vector2_43EA2CAE: {r: -0.5, g: 7.61, b: 0, a: 0}
+    - Vector2_9FC62F1F: {r: 0, g: 0.0001, b: 0, a: 0}
+    - Vector2_B48868E2: {r: 0.001, g: -0.001, b: 0, a: 0}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
