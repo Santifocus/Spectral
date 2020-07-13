@@ -203,10 +203,10 @@ namespace Spectral.Editor
 			return false;
 		}
 
-		public static bool ColorField(ref Color curValue, string label)
+		public static bool ColorField(ref Color curValue, string label, bool hdr)
 		{
 			BeginIndentSpaces();
-			Color newValue = EditorGUILayout.ColorField(label, curValue);
+			Color newValue = EditorGUILayout.ColorField(new GUIContent(label), curValue, true, true, hdr);
 			EndIndentSpaces();
 			FinishedDrawingElement?.Invoke();
 			if (newValue != curValue)

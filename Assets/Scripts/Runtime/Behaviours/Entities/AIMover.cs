@@ -11,7 +11,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 		private const float REACHED_POINT_THRESHOLD_SQR = REACHED_POINT_THRESHOLD * REACHED_POINT_THRESHOLD;
 		private const float FLEE_FORESIGHT_DISTANCE = 15;
 		private const float EAT_COOLDOWN = 0.75f;
-		
+
 		private bool idle;
 
 		private Vector2 currentTargetPosition;
@@ -65,6 +65,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 			{
 				attackCooldown -= Time.deltaTime;
 			}
+
 			if (eatCooldown > 0)
 			{
 				eatCooldown -= Time.deltaTime;
@@ -101,7 +102,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private bool CheckForFood()
 		{
-			if (eatCooldown > 0 || !PlaneLevelIndex.HasValue)
+			if ((eatCooldown > 0) || !PlaneLevelIndex.HasValue)
 			{
 				return false;
 			}
@@ -195,9 +196,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 		private void ResetDecisionDelay()
 		{
 			idleDecisionCooldown =
-				Mathf.Max(0.001f,
-						entitySettings.AIConfiguration.NextMovementDelay *
-						Random.Range(0.75f, 1.25f));
+				Mathf.Max(0.001f, entitySettings.AIConfiguration.NextMovementDelay * Random.Range(0.75f, 1.25f));
 		}
 
 		#endregion
@@ -328,7 +327,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private bool IsTargetOutOfInterestRange()
 		{
-			if (!PlayerMover.Existent || (PlaneLevelIndex != LevelLoader.PlayerLevelIndex))
+			if (!SamePlaneAsPlayerInstance())
 			{
 				return true;
 			}
@@ -341,7 +340,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private bool CanSeeTarget()
 		{
-			if (!PlayerMover.Existent || (attackCooldown > 0) || (PlaneLevelIndex != LevelLoader.PlayerLevelIndex))
+			if ((attackCooldown > 0) || !SamePlaneAsPlayerInstance())
 			{
 				return false;
 			}

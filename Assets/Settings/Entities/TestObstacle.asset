@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6a4da04ae97cd24ebcc4f9c10331de6, type: 3}
+  m_Name: TestObstacle
+  m_EditorClassIdentifier: 
+  Model: {fileID: 9140138709427009310, guid: 55d37000ce6166a4dab966282034debd, type: 3}
+  DamageRange: 1
+  DamageAmount: 1
+  DamageImpactForce: 8
+  DamageCooldown: 1
+  MoveSpeed: 1.4
+  BounceOnDealDamage: 1
