@@ -11,6 +11,7 @@ namespace Spectral.Editor
 		private bool baseSettingsOpen;
 		private bool dimensionsSettingsOpen;
 		private bool foodSettingsOpen;
+		private bool visualSettingsOpen;
 
 		protected override bool ShouldHideBaseInspector()
 		{
@@ -22,6 +23,7 @@ namespace Spectral.Editor
 			DrawInFoldout(ref baseSettingsOpen, "Base Settings", DrawBaseSettings, true);
 			DrawInFoldout(ref dimensionsSettingsOpen, "Dimensions Settings", DrawDimensionsSettings, true);
 			DrawInFoldout(ref foodSettingsOpen, "Food Settings", DrawFoodSettings, true);
+			DrawInFoldout(ref visualSettingsOpen, "Visual Settings", DrawVisualSettings, true);
 		}
 
 		private void DrawBaseSettings()
@@ -43,6 +45,8 @@ namespace Spectral.Editor
 			}
 
 			EndIndentSpaces();
+			IntField(ref settings.StartPlayerSize, ObjectNames.NicifyVariableName(nameof(LevelSettings.StartPlayerSize)));
+			IntField(ref settings.RequiredPlayerSizeToTransition, ObjectNames.NicifyVariableName(nameof(LevelSettings.RequiredPlayerSizeToTransition)));
 		}
 
 		private void DrawDimensionsSettings()
@@ -58,6 +62,12 @@ namespace Spectral.Editor
 			settings.FoodInLevel.Draw(ObjectNames.NicifyVariableName(nameof(LevelSettings.FoodInLevel)));
 			DrawUnityObjectArray<FoodObject>(ref settings.FoodObjectVariants, ObjectNames.NicifyVariableName(nameof(LevelSettings.FoodObjectVariants)),
 											serializedObject.FindProperty(nameof(LevelSettings.FoodObjectVariants)), ArrayDrawStyle.Default);
+		}
+
+		private void DrawVisualSettings()
+		{
+			LevelSettings settings = target as LevelSettings;
+			ColorField(ref settings.BackgroundColor, ObjectNames.NicifyVariableName(nameof(LevelSettings.BackgroundColor)), true);
 		}
 	}
 }

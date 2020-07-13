@@ -1,5 +1,4 @@
-﻿using Spectral.Runtime.Behaviours.Entities;
-using Spectral.Runtime.DataStorage;
+﻿using Spectral.Runtime.DataStorage;
 using UnityEditor;
 using static Spectral.Editor.EditorUtils;
 
@@ -48,6 +47,7 @@ namespace Spectral.Editor
 			EntitySettings settings = target as EntitySettings;
 			IncreaseIndent();
 			IntField(ref settings.MinParts, ObjectNames.NicifyVariableName(nameof(EntitySettings.MinParts)));
+			IntField(ref settings.SpawnPartCount, ObjectNames.NicifyVariableName(nameof(EntitySettings.SpawnPartCount)));
 			settings.PartMinimumScale.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.PartMinimumScale)));
 			settings.ScaleChangePerPart.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.ScaleChangePerPart)));
 			UnityObjectField<EntityBodyPartConfiguration>(ref settings.EntityHead, ObjectNames.NicifyVariableName(nameof(EntitySettings.EntityHead)));
@@ -68,7 +68,6 @@ namespace Spectral.Editor
 				settings.FoodEatDistance.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.FoodEatDistance)));
 			}
 
-			UnityObjectField<EntityMover>(ref settings.OverwritePrefab, ObjectNames.NicifyVariableName(nameof(EntitySettings.OverwritePrefab)));
 			BoolField(ref settings.EnableAI, ObjectNames.NicifyVariableName(nameof(EntitySettings.EnableAI)));
 			EditorGUI.BeginDisabledGroup(!settings.EnableAI);
 			settings.AIConfiguration.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.AIConfiguration)),

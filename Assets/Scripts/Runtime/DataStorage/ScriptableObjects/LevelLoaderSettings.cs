@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Spectral.Runtime.DataStorage
 {
 	public class LevelLoaderSettings : SpectralScriptableObject
@@ -10,10 +12,11 @@ namespace Spectral.Runtime.DataStorage
 		}
 
 		public EntitySettings PlayerSettings;
-		public int PlayerSpawnSize = 3;
 		public LevelSettings[] Levels;
 		public int LevelStartIndex = 0;
 		public float LevelTransitionTime = 2;
 		public float LevelDepth = 20;
+		public GameObject TransitionGateModelDown;
+		public GameObject TransitionGateModelUp;
 	}
 }

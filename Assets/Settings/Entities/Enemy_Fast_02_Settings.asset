@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90d9615614ce6640ada455017e05caf, type: 3}
+  m_Name: Enemy_Fast_02_Settings
+  m_EditorClassIdentifier: 
+  MoveSpeed:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: 1
+  VelocityDamping:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: 0
+  Acceleration:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: 0
+  Deceleration:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: 0
+  AccelerationAngle:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: -0
+  TurnSpeed:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: -20
+  TurnAcceleration:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: 0
+  TurnSmoothAngle:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: 0
+  TurnSmoothMultiplier:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: 0
+  MinParts: 1
+  PartMinimumScale:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: 0
+  ScaleChangePerPart:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: 0
+  EntityHead: {fileID: 11400000, guid: 7285556b2f91ca1408bdba6a34b64f41, type: 2}
+  TorsoChooseStyle: 1
+  EntityTorso:
+  - {fileID: 11400000, guid: 105c429c30ad83f40a114dcd9c7de151, type: 2}
+  EntityTail: {fileID: 11400000, guid: 3daca581fa5921b47a442a5adad0aaa7, type: 2}
+  FoodEatDistance:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: 0
+  OverwritePrefab: {fileID: 0}
+  EnableAI: 1
+  AIConfiguration:
+    IdleBehaviour: 3
+    ActiveBehaviour: 1
+    EatBehavior: 2
+    IdleMoveSpeedMultiplier:
+      NonDefaultValue: 0
+      UseDefault: 1
+      DefaultOffset: 0
+    NextMovementDelay:
+      NonDefaultValue: 0
+      UseDefault: 1
+      DefaultOffset: 0
+    WanderingRadius:
+      NonDefaultValue: 0
+      UseDefault: 1
+      DefaultOffset: 20
+    PatrolPoints: []
+    ViewRange:
+      NonDefaultValue: 0
+      UseDefault: 1
+      DefaultOffset: 0
+    ViewAngle:
+      NonDefaultValue: 0
+      UseDefault: 1
+      DefaultOffset: 0
+    ForgetTargetDistance:
+      NonDefaultValue: 0
+      UseDefault: 1
+      DefaultOffset: 0
+    AttackRange:
+      NonDefaultValue: 0
+      UseDefault: 1
+      DefaultOffset: 0
+    AttackDamage:
+      NonDefaultValue: 0
+      UseDefault: 1
+      DefaultOffset: 0
+    AttackForceImpact:
+      NonDefaultValue: 0
+      UseDefault: 1
+      DefaultOffset: 0
+    AttackCooldown:
+      NonDefaultValue: 0
+      UseDefault: 1
+      DefaultOffset: 0
+    MaxSizeIncrease:
+      NonDefaultValue: 0
+      UseDefault: 1
+      DefaultOffset: 0

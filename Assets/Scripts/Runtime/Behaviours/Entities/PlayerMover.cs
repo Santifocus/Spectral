@@ -1,4 +1,5 @@
 ﻿using System;
+using Spectral.Runtime.Factories;
 using UnityEngine;
 
 namespace Spectral.Runtime.Behaviours.Entities
@@ -6,24 +7,28 @@ namespace Spectral.Runtime.Behaviours.Entities
 	public class PlayerMover : EntityMover
 	{
 		private const float INTENDED_ACCELERATION_CUTOFF = 0.1f;
-		public static event Action PlayerAte;
-		public static event Action PlayerTookDamage;
 		public static event Action PlayerDied;
+		public static event Action PlayerEntityChangedSize;
 		public static PlayerMover Instance { get; private set; }
-		public static bool Existent => Instance && Instance.Alive;
+		public static bool Existent => (Instance != null) && Instance.Alive;
 
 		protected override void Start()
 		{
 			base.Start();
 			Instance = this;
+			ForceSizeChangeUpdate();
 		}
 
 		protected override void Update()
 		{
 			base.Update();
 			UpdateIntendedMoveDirection();
-			CheckForFood();
+			CheckForEntityContact();
 			ApplyLevelBorderForceField();
+			if (Input.GetKeyDown(KeyCode.K))
+			{
+				OnEat(null);
+			}
 		}
 
 		private void UpdateIntendedMoveDirection()
@@ -55,12 +60,44 @@ namespace Spectral.Runtime.Behaviours.Entities
 			IntendedMoveDirection = newIntendedMoveDirection;
 		}
 
-		private void CheckForFood()
+		private void CheckForEntityContact()
 		{
+			if (LevelLoader.Transitioning)
+			{
+				return;
+			}
+
+			CheckForFoodContact();
+			CheckForTransitionGateContact();
+		}
+
+		private void CheckForFoodContact()
+		{
+			if (EntityFactory.GetEntitySize(this) >= LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].PlaneSettings.RequiredPlayerSizeToTransition)
+			{
+				return;
+			}
+
 			FoodObject targetFood = FoodSpawner.GetNearestFoodObject(Head.transform.position.XYZtoXZ(), LevelLoader.PlayerLevelIndex, EatDistance);
-			if (targetFood)
+			if (targetFood != null)
 			{
 				OnEat(targetFood);
+			}
+		}
+
+		private void CheckForTransitionGateContact()
+		{
+			if (!LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject)
+			{
+				return;
+			}
+
+			TransitionGate targetGate = LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject
+													.GetNearestTransitionGate(Head.transform.position.XYZtoXZ(), EatDistance);
+
+			if (targetGate != null)
+			{
+				targetGate.TryActivate();
 			}
 		}
 
@@ -92,22 +129,31 @@ namespace Spectral.Runtime.Behaviours.Entities
 #endif
 		}
 
-		public override void OnEat(FoodObject target = null)
-		{
-			base.OnEat(target);
-			PlayerAte?.Invoke();
-		}
-
-		public override void Damage(int amount = 1)
-		{
-			base.Damage(amount);
-			PlayerTookDamage?.Invoke();
-		}
+		#region PlayerEvents
 
 		public override void Death()
 		{
 			base.Death();
 			PlayerDied?.Invoke();
 		}
+
+		public override void Damage(int amount = 1)
+		{
+			base.Damage(amount);
+			PlayerEntityChangedSize?.Invoke();
+		}
+
+		public override void OnEat(FoodObject target = null)
+		{
+			base.OnEat(target);
+			PlayerEntityChangedSize?.Invoke();
+		}
+
+		public static void ForceSizeChangeUpdate()
+		{
+			PlayerEntityChangedSize?.Invoke();
+		}
+
+		#endregion
 	}
 }

@@ -38,19 +38,19 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private float intendedMoveAngle;
 		private Vector3? intendedMoveDirection;
-		private bool isSetup;
+		private bool initialised;
 
 		protected virtual void Start()
 		{
-			if (!isSetup)
+			if (!initialised)
 			{
-				ForceSpawnSetup();
+				ForceInitialise();
 			}
 
 			Alive = true;
 		}
 
-		private void ForceSpawnSetup()
+		private void ForceInitialise()
 		{
 			if (entitySettings)
 			{
@@ -81,9 +81,9 @@ namespace Spectral.Runtime.Behaviours.Entities
 			UpdateFacingDirection();
 		}
 
-		public void SetupEntity(EntitySettings entitySettings)
+		public void Initialise(EntitySettings entitySettings)
 		{
-			isSetup = true;
+			initialised = true;
 			this.entitySettings = entitySettings;
 		}
 

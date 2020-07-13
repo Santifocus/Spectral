@@ -31,7 +31,7 @@ MonoBehaviour:
   AccelerationAngle:
     NonDefaultValue: 0
     UseDefault: 1
-    DefaultOffset: -25
+    DefaultOffset: -0
   TurnSpeed:
     NonDefaultValue: 0
     UseDefault: 1

@@ -31,7 +31,7 @@ MonoBehaviour:
   AccelerationAngle:
     NonDefaultValue: 0
     UseDefault: 1
-    DefaultOffset: -25
+    DefaultOffset: -0
   TurnSpeed:
     NonDefaultValue: 0
     UseDefault: 1
@@ -49,6 +49,7 @@ MonoBehaviour:
     UseDefault: 1
     DefaultOffset: 0
   MinParts: 1
+  SpawnPartCount: 3
   PartMinimumScale:
     NonDefaultValue: 0
     UseDefault: 1
@@ -66,7 +67,6 @@ MonoBehaviour:
     NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: 0
-  OverwritePrefab: {fileID: 0}
   EnableAI: 1
   AIConfiguration:
     IdleBehaviour: 2

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Spectral.Runtime.Behaviours.Entities;
+using UnityEngine;
 
 namespace Spectral.Runtime.Behaviours
 {
@@ -6,7 +7,7 @@ namespace Spectral.Runtime.Behaviours
 	{
 		private int? planeLevelIndex;
 
-		public PlaneLevelData AffiliatedLevelPlane => PlaneLevelIndex.HasValue ? LevelLoader.GameLevelPlanes[PlaneLevelIndex.Value].CoreObject : null;
+		public LevelPlane AffiliatedLevelPlane => PlaneLevelIndex.HasValue ? LevelLoader.GameLevelPlanes[PlaneLevelIndex.Value].CoreObject : null;
 
 		public int? PlaneLevelIndex
 		{
@@ -28,15 +29,20 @@ namespace Spectral.Runtime.Behaviours
 			return GetComponent<T>() ?? gameObject.AddComponent<T>();
 		}
 
+		public bool SamePlaneAsPlayerInstance()
+		{
+			return PlayerMover.Existent && !LevelLoader.Transitioning && (PlaneLevelIndex == LevelLoader.PlayerLevelIndex);
+		}
+
 		private int? RetrievePlaneLevelIndex()
 		{
 			Transform parent = transform.parent;
 			while (parent)
 			{
-				PlaneLevelData planeLevelData = parent.GetComponent<PlaneLevelData>();
+				LevelPlane planeLevelData = parent.GetComponent<LevelPlane>();
 				if (planeLevelData)
 				{
-					return planeLevelData.PlaneLevelIndex;
+					return planeLevelData.LevelPlaneIndex;
 				}
 
 				parent = parent.parent;
