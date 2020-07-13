@@ -33,7 +33,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.211
+    m_Value: -0.066
     min: -1
     max: 1
   xMultiplier:
@@ -111,7 +111,7 @@ MonoBehaviour:
     max: 180
   saturation:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 79.8
     min: -100
     max: 100
 --- !u!114 &1499437688944705130
@@ -130,20 +130,20 @@ MonoBehaviour:
   m_AdvancedMode: 0
   threshold:
     m_OverrideState: 1
-    m_Value: 0.75
+    m_Value: 0.62
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 1.94
+    m_Value: 3.53
     min: 0
   scatter:
     m_OverrideState: 1
-    m_Value: 0.182
+    m_Value: 0.447
     min: 0
     max: 1
   clamp:
     m_OverrideState: 1
-    m_Value: 100
+    m_Value: 35.12
     min: 0
   tint:
     m_OverrideState: 1
@@ -214,7 +214,7 @@ MonoBehaviour:
   master:
     m_OverrideState: 1
     m_Value:
-      <length>k__BackingField: 2
+      <length>k__BackingField: 4
       m_Loop: 0
       m_ZeroValue: 0
       m_Range: 1
@@ -226,6 +226,24 @@ MonoBehaviour:
           value: 0
           inSlope: 1
           outSlope: 1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.33676976
+          value: 0.47686833
+          inSlope: -1.2779584
+          outSlope: -1.2779584
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.69243985
+          value: 0.6868327
+          inSlope: 0.9928175
+          outSlope: 0.9928175
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -406,11 +424,11 @@ MonoBehaviour:
     m_Value: 2
   gaussianStart:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: 53.1
     min: 0
   gaussianEnd:
     m_OverrideState: 1
-    m_Value: 30
+    m_Value: 0
     min: 0
   gaussianMaxRadius:
     m_OverrideState: 1
@@ -422,7 +440,7 @@ MonoBehaviour:
     m_Value: 0
   focusDistance:
     m_OverrideState: 1
-    m_Value: 2.77
+    m_Value: 169.39
     min: 0.1
   aperture:
     m_OverrideState: 0
@@ -468,7 +486,7 @@ MonoBehaviour:
     m_Value: 0
   quality:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 0
   intensity:
     m_OverrideState: 1
     m_Value: 1
@@ -495,6 +513,6 @@ MonoBehaviour:
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.084
     min: 0
     max: 1
