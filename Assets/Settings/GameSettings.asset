@@ -18,7 +18,7 @@ MonoBehaviour:
   GameLevelSettings: {fileID: 11400000, guid: f0799d91ebdccac4a99a09dc5f515f0a, type: 2}
   ScreenEffectMaterial: {fileID: 0}
   AttackablePlayerTorsoCount: 3
-  DefaultFoodInLevelCount: 6
+  DefaultFoodInLevelCount: 10
   DefaultLevelWidth: 100
   DefaultLevelHeight: 100
   LevelBorderForceFieldWidth: 6
