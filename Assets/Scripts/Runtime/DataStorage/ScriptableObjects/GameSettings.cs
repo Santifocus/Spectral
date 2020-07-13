@@ -1,6 +1,5 @@
 ﻿using Spectral.Runtime.DataStorage;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Spectral.Runtime
 {
@@ -31,7 +30,6 @@ namespace Spectral.Runtime
 		public int AttackablePlayerTorsoCount = 3;
 		public int DefaultFoodInLevelCount = 10;
 
-		[FormerlySerializedAs("DefaultLevelWidht")]
 		public float DefaultLevelWidth = 200;
 
 		public float DefaultLevelHeight = 200;

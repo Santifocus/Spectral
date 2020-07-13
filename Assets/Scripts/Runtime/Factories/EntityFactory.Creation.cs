@@ -8,30 +8,18 @@ namespace Spectral.Runtime.Factories
 {
 	public static partial class EntityFactory
 	{
-		public static void CreateEntity(EntitySettings settings, int bodyPartCount, int levelIndex = default, Vector2 position = default, int rotation = default)
+		public static EntityMover CreateEntity(EntitySettings settings, int bodyPartCount, Vector2 position, int levelIndex, int rotation = default)
 		{
-			EntityMover entityCore;
-			Transform parent = LevelLoader.GameLevelPlanes[levelIndex].CoreObject.TargetStorage.EntityStorage;
-			if (settings.OverwritePrefab)
-			{
-				entityCore = Object.Instantiate(settings.OverwritePrefab, position.XZtoXYZ(), Quaternion.identity, parent);
-#if SPECTRAL_DEBUG
-				if (settings.EnableAI && !(entityCore is AIMover))
-				{
-					throw new
-						System.Exception("The Entity Factory was given the instructions to spawn an Entity which has AIEnabled active but has an Overwrite-Prefab set which is not of the type AIMover.");
-				}
-#endif
-			}
-			else
-			{
-				GameObject entityObjectCore = new GameObject("Spawned Entity");
-				entityObjectCore.transform.SetParent(parent);
-				entityCore = settings.EnableAI ? entityObjectCore.AddComponent<AIMover>() : entityObjectCore.AddComponent<EntityMover>();
-				entityCore.transform.position = position.XZtoXYZ();
-			}
+			//Setup core object
+			Transform entityObjectCore = new GameObject("Entity").transform;
+			entityObjectCore.SetParent(LevelLoader.GameLevelPlanes[levelIndex].CoreObject.TargetStorage.EntityStorage);
+			entityObjectCore.localPosition = position.XZtoXYZ();
 
+			//Add entityCore
+			EntityMover entityCore = settings.EnableAI ? entityObjectCore.gameObject.AddComponent<AIMover>() : entityObjectCore.gameObject.AddComponent<EntityMover>();
 			BuildEntityBody(entityCore, settings, bodyPartCount, rotation);
+
+			return entityCore;
 		}
 
 		public static void CreatePlayerEntity()
@@ -40,7 +28,7 @@ namespace Spectral.Runtime.Factories
 			playerObjectCore.transform.SetParent(LevelLoader.CoreStorage.EntityStorage);
 			PlayerMover playerCore = playerObjectCore.AddComponent<PlayerMover>();
 			playerCore.transform.position = Vector3.zero;
-			BuildEntityBody(playerCore, LevelLoaderSettings.Current.PlayerSettings, LevelLoaderSettings.Current.PlayerSpawnSize, Random.Range(0, 360));
+			BuildEntityBody(playerCore, LevelLoaderSettings.Current.PlayerSettings, LevelLoaderSettings.Current.PlayerSettings.SpawnPartCount, Random.Range(0, 360));
 		}
 
 		public static void BuildEntityBody(EntityMover entityCore, EntitySettings settings, int bodyPartCount, int rotation)
@@ -113,12 +101,12 @@ namespace Spectral.Runtime.Factories
 
 			//Setup the core
 			entityCore.TorsoParts = torsoParts;
-			entityCore.SetupEntity(settings);
+			entityCore.Initialise(settings);
 		}
 
 		public static void IncreaseEntitySize(EntityMover entityCore, EntitySettings settings)
 		{
-			int currentEntitySize = GetTotalEntityBodyPartCount(entityCore);
+			int currentEntitySize = GetEntitySize(entityCore);
 			float scaleChangePerPart = settings.ScaleChangePerPart;
 			float startScale = settings.PartMinimumScale;
 
@@ -179,7 +167,7 @@ namespace Spectral.Runtime.Factories
 
 		public static void DecreaseEntitySize(EntityMover entityCore, EntitySettings settings)
 		{
-			int currentEntitySize = GetTotalEntityBodyPartCount(entityCore);
+			int currentEntitySize = GetEntitySize(entityCore);
 			if (((currentEntitySize - 1) < settings.MinParts) || (currentEntitySize == 1))
 			{
 				entityCore.Death();
@@ -261,13 +249,9 @@ namespace Spectral.Runtime.Factories
 			RebuildSpringAndLimits(targetPart, newParentPart.transform);
 		}
 
-		public static int GetTotalEntityBodyPartCount(EntityMover entityCore)
+		public static int GetEntitySize(EntityMover entityCore)
 		{
-			int totalSize = entityCore.Head ? 1 : 0;
-			totalSize += entityCore.TorsoParts.Count;
-			totalSize += entityCore.Tail ? 1 : 0;
-
-			return totalSize;
+			return (entityCore.Head ? 1 : 0) + entityCore.TorsoParts.Count + (entityCore.Tail ? 1 : 0);
 		}
 
 		public static EntityBodyPart GetBodyPartFromIndex(EntityMover entityCore, int index)
@@ -285,7 +269,7 @@ namespace Spectral.Runtime.Factories
 
 #if SPECTRAL_DEBUG
 			throw new System.IndexOutOfRangeException("The given body part index was not able to be parsed to a EntityBodyPart because it was out of Range. Given: " + (index + 1) +
-													", Max Possible index: " + (GetTotalEntityBodyPartCount(entityCore) - 1) + ".");
+													", Max Possible index: " + (GetEntitySize(entityCore) - 1) + ".");
 #else
 			return null;
 #endif

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Spectral.Runtime.Behaviours.UI
@@ -29,7 +28,7 @@ namespace Spectral.Runtime.Behaviours.UI
 		{
 			SetSettingsActive(false);
 		}
-		
+
 		public void SetSettingsActive(bool state)
 		{
 			mainUIObject.SetActive(!state);

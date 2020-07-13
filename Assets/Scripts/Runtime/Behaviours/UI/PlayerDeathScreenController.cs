@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace Spectral.Runtime.Behaviours.UI
 {
-	public class PlayerDeathScreenController : MonoBehaviour
+	public
+		class PlayerDeathScreenController : MonoBehaviour
 	{
 		[SerializeField] private GameObject deathScreenMainObject = default;
 
