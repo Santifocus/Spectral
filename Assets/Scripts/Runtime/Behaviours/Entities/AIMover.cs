@@ -192,6 +192,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 			{
 				return;
 			}
+
 			idleDecisionCooldown = -1;
 			patrolPointIndex = (patrolPointIndex + 1) % entitySettings.AIConfiguration.PatrolPoints.Length;
 			currentTargetPosition = (originSpawnPosition + entitySettings.AIConfiguration.PatrolPoints[patrolPointIndex]).ClampIntoLevelBounds(AffiliatedLevelPlane.PlaneSettings);

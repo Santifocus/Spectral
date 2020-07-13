@@ -5,8 +5,8 @@ namespace Spectral.Runtime.Behaviours
 {
 	public class LevelBackgroundController : MonoBehaviour
 	{
-		[SerializeField] private ParticleSystem targetBackgroundParticles = default;
-		[SerializeField] private string particleMaterialColorName = "_BaseColor";
+		[SerializeField] private Renderer targetRenderer = default;
+		[SerializeField] private string materialColorName = "_BaseColor";
 
 		private int colorNameID;
 
@@ -15,13 +15,10 @@ namespace Spectral.Runtime.Behaviours
 		private Color startColor;
 		private Color targetColor;
 
-		private Renderer particleRenderer;
-
 		private void Start()
 		{
 			LevelLoader.LevelTransitionBegan += OnLevelTransitionStart;
-			colorNameID = Shader.PropertyToID(particleMaterialColorName);
-			particleRenderer = targetBackgroundParticles.GetComponent<Renderer>();
+			colorNameID = Shader.PropertyToID(materialColorName);
 			startColor = targetColor = LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].PlaneSettings.BackgroundColor;
 			UpdateBackgroundColor();
 		}
@@ -56,7 +53,7 @@ namespace Spectral.Runtime.Behaviours
 
 		private void UpdateBackgroundColor()
 		{
-			particleRenderer.material.SetColor(colorNameID, Color.Lerp(startColor, targetColor, colorLerpTime / LevelLoaderSettings.Current.LevelTransitionTime));
+			targetRenderer.material.SetColor(colorNameID, Color.Lerp(startColor, targetColor, colorLerpTime / LevelLoaderSettings.Current.LevelTransitionTime));
 		}
 	}
 }
