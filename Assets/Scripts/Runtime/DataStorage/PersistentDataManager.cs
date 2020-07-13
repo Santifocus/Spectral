@@ -3,43 +3,48 @@ using UnityEngine;
 
 namespace Spectral.Runtime
 {
-	public static class PersistentSettingsManager
+	public static class PersistentDataManager
 	{
-		private const int EXPECTED_FILE_LENGTH = 10;
-		private const string SETTINGS_FILE_NAME = "SpectralSettings";
-		private const string SETTINGS_FILE_EXTENSION = "data";
-		private const string DOT = ".";
+		private const int EXPECTED_SETTINGS_FILE_LENGTH = 10; //2 Floats, 2 Bools
+		private const int EXPECTED_DATA_FILE_LENGTH = 4;      //1 Integer
 		private const string SAVE_FOLDER_PATH = "Data";
+		private const string DOT = ".";
+		private const string FILE_EXTENSION = "data";
+
+		private const string SETTINGS_FILE_NAME = "SpectralSettings";
+		private const string DATA_FILE_NAME = "SpectralData";
 
 		public static readonly SpectralSettings CurrentSettings = new SpectralSettings();
+		public static readonly SpectralPlayerData CurrentPlayerData = new SpectralPlayerData();
 
-		public static void ReadOrCreate()
+		public static void Initialise()
 		{
 			if (!ReadSettings())
 			{
 				SaveOrCreateSettings();
 			}
+
+			if (!ReadPlayerData())
+			{
+				SaveOrCreatePlayerData();
+			}
 		}
 
-		public static void ResetSettings()
-		{
-			CurrentSettings.ResetSettings();
-			SaveOrCreateSettings();
-		}
+		#region Settings
 
 		public static void SaveOrCreateSettings()
 		{
 			string folderPath = Path.Combine(Application.persistentDataPath, SAVE_FOLDER_PATH);
-			string savePath = Path.Combine(folderPath, SETTINGS_FILE_NAME + DOT + SETTINGS_FILE_EXTENSION);
+			string settingsFilePath = Path.Combine(folderPath, SETTINGS_FILE_NAME + DOT + FILE_EXTENSION);
 			if (!Directory.Exists(folderPath))
 			{
 				Directory.CreateDirectory(folderPath);
 			}
 
 #if SPECTRAL_DEBUG
-			Debug.Log($"Saving at: {savePath}");
+			Debug.Log($"Saving at: {settingsFilePath}");
 #endif
-			using (FileStream fileStream = File.Open(savePath, FileMode.Create))
+			using (FileStream fileStream = File.Open(settingsFilePath, FileMode.Create))
 			{
 				BinaryWriter writer = new BinaryWriter(fileStream);
 				CurrentSettings.ApplyCurrent();
@@ -52,18 +57,18 @@ namespace Spectral.Runtime
 
 		private static bool ReadSettings()
 		{
-			string savePath = Path.Combine(Application.persistentDataPath, SAVE_FOLDER_PATH, SETTINGS_FILE_NAME + DOT + SETTINGS_FILE_EXTENSION);
-			if (!File.Exists(savePath))
+			string settingsFilePath = Path.Combine(Application.persistentDataPath, SAVE_FOLDER_PATH, SETTINGS_FILE_NAME + DOT + FILE_EXTENSION);
+			if (!File.Exists(settingsFilePath))
 			{
 				return false;
 			}
 
 #if SPECTRAL_DEBUG
-			Debug.Log($"Reading at: {savePath}");
+			Debug.Log($"Reading at: {settingsFilePath}");
 #endif
-			using (FileStream fileStream = File.Open(savePath, FileMode.Open))
+			using (FileStream fileStream = File.Open(settingsFilePath, FileMode.Open))
 			{
-				if (fileStream.Length != EXPECTED_FILE_LENGTH)
+				if (fileStream.Length != EXPECTED_SETTINGS_FILE_LENGTH)
 				{
 					fileStream.Close();
 
@@ -80,6 +85,58 @@ namespace Spectral.Runtime
 
 			return true;
 		}
+
+		#endregion
+
+		#region PlayerData
+
+		public static void SaveOrCreatePlayerData()
+		{
+			string folderPath = Path.Combine(Application.persistentDataPath, SAVE_FOLDER_PATH);
+			string dataFilePath = Path.Combine(folderPath, DATA_FILE_NAME + DOT + FILE_EXTENSION);
+			if (!Directory.Exists(folderPath))
+			{
+				Directory.CreateDirectory(folderPath);
+			}
+
+#if SPECTRAL_DEBUG
+			Debug.Log($"Saving at: {dataFilePath}");
+#endif
+			using (FileStream fileStream = File.Open(dataFilePath, FileMode.Create))
+			{
+				BinaryWriter writer = new BinaryWriter(fileStream);
+				writer.Write(CurrentPlayerData.HighestScore);
+			}
+		}
+
+		private static bool ReadPlayerData()
+		{
+			string dataFilePath = Path.Combine(Application.persistentDataPath, SAVE_FOLDER_PATH, DATA_FILE_NAME + DOT + FILE_EXTENSION);
+			if (!File.Exists(dataFilePath))
+			{
+				return false;
+			}
+
+#if SPECTRAL_DEBUG
+			Debug.Log($"Reading at: {dataFilePath}");
+#endif
+			using (FileStream fileStream = File.Open(dataFilePath, FileMode.Open))
+			{
+				if (fileStream.Length != EXPECTED_DATA_FILE_LENGTH)
+				{
+					fileStream.Close();
+
+					return false;
+				}
+
+				BinaryReader reader = new BinaryReader(fileStream);
+				CurrentPlayerData.HighestScore = reader.ReadInt32();
+			}
+
+			return true;
+		}
+
+		#endregion
 	}
 
 	public class SpectralSettings
@@ -131,5 +188,10 @@ namespace Spectral.Runtime
 			MusicEnabled = ActiveMusicEnabled;
 			SoundEnabled = ActiveSoundEnabled;
 		}
+	}
+
+	public class SpectralPlayerData
+	{
+		public int HighestScore;
 	}
 }

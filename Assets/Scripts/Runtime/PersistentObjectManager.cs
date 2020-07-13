@@ -4,11 +4,11 @@ namespace Spectral.Runtime
 {
 	public class PersistentObjectManager : MonoBehaviour
 	{
-		private static bool Initiated;
+		public static PersistentObjectManager Instance { get; private set; }
 
 		private void Awake()
 		{
-			if (Initiated)
+			if (Instance != null)
 			{
 				gameObject.SetActive(false);
 				Destroy(gameObject);
@@ -21,9 +21,11 @@ namespace Spectral.Runtime
 
 		private void Initialise()
 		{
-			Initiated = true;
-			PersistentSettingsManager.ReadOrCreate();
+			Instance = this;
 			DontDestroyOnLoad(this);
+			PersistentDataManager.Initialise();
+			SceneChangeManager.ForceSceneIDUpdate();
+			PlayerScoreManager.Initialise();
 		}
 	}
 }

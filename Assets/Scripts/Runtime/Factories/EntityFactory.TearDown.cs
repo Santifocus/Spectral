@@ -14,7 +14,7 @@ namespace Spectral.Runtime.Factories
 
 		public static void TearDownEntity(EntityMover target)
 		{
-			int bodyParts = GetTotalEntityBodyPartCount(target);
+			int bodyParts = GetEntitySize(target);
 			FoodSpawner targetFoodSpawner = LevelLoader.GameLevelPlanes[target.PlaneLevelIndex ?? LevelLoader.PlayerLevelIndex].CoreObject.AffiliatedFoodSpawner;
 			for (int i = 0; i < bodyParts; i++)
 			{

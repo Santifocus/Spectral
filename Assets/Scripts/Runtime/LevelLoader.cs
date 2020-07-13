@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using Spectral.Runtime.DataStorage;
 using Spectral.Runtime.Factories;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Spectral.Runtime
 {
@@ -15,10 +17,11 @@ namespace Spectral.Runtime
 
 		public static Storage CoreStorage { get; private set; }
 		public static int PlayerLevelIndex { get; private set; }
-		public static LevelPlane[] GameLevelPlanes { get; private set; }
+		public static LevelPlaneData[] GameLevelPlanes { get; private set; }
 		private static Transform LevelPlanesStorage;
 
-		private static bool Transitioning;
+		public static event Action<int, LevelPlane, LevelPlane> LevelTransitionBegan;
+		public static bool Transitioning { get; private set; }
 
 		public static async void Initialise()
 		{
@@ -27,13 +30,26 @@ namespace Spectral.Runtime
 			InitialiseGamePlaneArray();
 			PlayerLevelIndex = LevelLoaderSettings.Current.LevelStartIndex;
 
+			//Reset Score manager
+			PlayerScoreManager.Reset();
+
 			//Spawn the player
 			EntityFactory.CreatePlayerEntity();
 
 			//Create all required Level planes
-			await CreateLevelPlane(PlayerLevelIndex - 1, -1);
 			await CreateLevelPlane(PlayerLevelIndex, 0);
 			await CreateLevelPlane(PlayerLevelIndex + 1, 1);
+			await CreateLevelPlane(PlayerLevelIndex - 1, -1);
+
+			//Event subscription
+			SceneChangeManager.GameSceneWillExit += TearDown;
+			TransitionGate.PlayerWantsToStartLevelTransition += TransitionLevel;
+		}
+
+		private static void TearDown()
+		{
+			SceneChangeManager.GameSceneWillExit -= TearDown;
+			TransitionGate.PlayerWantsToStartLevelTransition -= TransitionLevel;
 		}
 
 		private static void InitialiseCoreStorage()
@@ -45,10 +61,10 @@ namespace Spectral.Runtime
 
 		private static void InitialiseGamePlaneArray()
 		{
-			GameLevelPlanes = new LevelPlane[LevelLoaderSettings.Current.Levels.Length];
+			GameLevelPlanes = new LevelPlaneData[LevelLoaderSettings.Current.Levels.Length];
 			for (int i = 0; i < GameLevelPlanes.Length; i++)
 			{
-				GameLevelPlanes[i] = new LevelPlane(LevelLoaderSettings.Current.Levels[i]);
+				GameLevelPlanes[i] = new LevelPlaneData(LevelLoaderSettings.Current.Levels[i]);
 			}
 		}
 
@@ -62,7 +78,7 @@ namespace Spectral.Runtime
 			Transform planeCore = await ExtractLevelPlaneObjects(targetLevelIndex);
 
 			//Setup the Plane Level Data
-			GameLevelPlanes[targetLevelIndex].CoreObject = planeCore.gameObject.AddComponent<PlaneLevelData>();
+			GameLevelPlanes[targetLevelIndex].CoreObject = planeCore.gameObject.AddComponent<LevelPlane>();
 			GameLevelPlanes[targetLevelIndex].CoreObject.Initialise(targetLevelIndex);
 
 			//Update the depth
@@ -86,7 +102,7 @@ namespace Spectral.Runtime
 #if UNITY_EDITOR
 			if (!Application.isPlaying)
 			{
-				throw new System.SystemException($"Tried to load Scene via {nameof(LevelLoader)} while in non play-mode.");
+				throw new SystemException($"Tried to load Scene via {nameof(LevelLoader)} while in non play-mode.");
 			}
 #endif
 
@@ -118,33 +134,38 @@ namespace Spectral.Runtime
 
 			Transitioning = true;
 			await CreateLevelPlane(PlayerLevelIndex + (direction * 2), direction * 2);
-			PlayerLevelIndex = targetLevelIndex;
-			(LevelPlane levelPlane, float prevTransitionDepth)[] targetObjectData = GameLevelPlanes.Where(p => p.CoreObject).Select(p => (p, p.CurrentPlaneDepth)).ToArray();
+
+			//Call Transition event and update the PlayerLevelIndex
+			LevelTransitionBegan?.Invoke(direction,
+										GameLevelPlanes[PlayerLevelIndex].CoreObject,
+										GameLevelPlanes[PlayerLevelIndex = targetLevelIndex].CoreObject);
+
+			(LevelPlaneData planeData, float prevTransitionDepth)[] targetObjectData = GameLevelPlanes.Where(p => p.CoreObject).Select(p => (p, p.CurrentPlaneDepth)).ToArray();
 			int millisecondsPassed = 0;
-			float totalMilliseconds = LevelLoaderSettings.Current.LevelTransitionTime * 1000;
+			int totalMilliseconds = (int) (LevelLoaderSettings.Current.LevelTransitionTime * 1000);
 			while (millisecondsPassed < totalMilliseconds)
 			{
 				await Task.Delay(TRANSITION_TIME_STEP);
 				millisecondsPassed += TRANSITION_TIME_STEP;
-				float transitionPoint = millisecondsPassed / totalMilliseconds;
-				foreach ((LevelPlane levelPlane, float prevTransitionDepth) in targetObjectData)
+				float transitionPoint = millisecondsPassed / (float) totalMilliseconds;
+				foreach ((LevelPlaneData planeData, float prevTransitionDepth) in targetObjectData)
 				{
-					levelPlane.CurrentPlaneDepth = prevTransitionDepth - (transitionPoint * direction);
+					planeData.CurrentPlaneDepth = prevTransitionDepth - (transitionPoint * direction);
 				}
 			}
 
-			foreach ((LevelPlane levelPlane, float prevTransitionDepth) in targetObjectData)
+			foreach ((LevelPlaneData planeData, float prevTransitionDepth) in targetObjectData)
 			{
-				levelPlane.CurrentPlaneDepth = prevTransitionDepth - direction;
-				levelPlane.CheckForClearing();
+				planeData.CurrentPlaneDepth = prevTransitionDepth - direction;
+				planeData.CheckForClearing();
 			}
 
 			Transitioning = false;
 		}
 
-		public class LevelPlane
+		public class LevelPlaneData
 		{
-			public PlaneLevelData CoreObject;
+			public LevelPlane CoreObject;
 			public readonly LevelSettings PlaneSettings;
 			private float currentPlaneDepth;
 
@@ -161,7 +182,7 @@ namespace Spectral.Runtime
 				}
 			}
 
-			public LevelPlane(LevelSettings planeSettings)
+			public LevelPlaneData(LevelSettings planeSettings)
 			{
 				PlaneSettings = planeSettings;
 			}

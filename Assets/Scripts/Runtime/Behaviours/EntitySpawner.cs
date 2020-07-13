@@ -6,7 +6,7 @@ namespace Spectral.Runtime.Behaviours
 {
 	public class EntitySpawner : LevelPlaneBehavior
 	{
-		[SerializeField] private SpawnableEntity targetSpawnable;
+		[SerializeField] private SpawnableEntity targetSpawnable = default;
 		[SerializeField] private int maxSpawnCount = 3;
 		[SerializeField] private float spawnRange = 10;
 		[SerializeField] private float spawnDelayMin = 0;

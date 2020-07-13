@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: LevelLoaderSettings
   m_EditorClassIdentifier: 
   PlayerSettings: {fileID: 11400000, guid: b7550845d1f7f8844bbd184c2fced687, type: 2}
-  PlayerSpawnSize: 3
   Levels:
   - {fileID: 11400000, guid: 135fce1bbd512bd4d9cdd7841380b4ae, type: 2}
   - {fileID: 11400000, guid: 7feef988ce35adc4b82d09e55bdca53f, type: 2}
   LevelStartIndex: 0
-  LevelTransitionTime: 2
+  LevelTransitionTime: 4
   LevelDepth: 30
+  TransitionGateModelDown: {fileID: 9140138709427009310, guid: 55d37000ce6166a4dab966282034debd,
+    type: 3}
+  TransitionGateModelUp: {fileID: 3901906472040601866, guid: 5cc9e25c14cddde4d8d673e05438310b,
+    type: 3}

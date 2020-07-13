@@ -9,13 +9,13 @@ namespace Spectral.Runtime.Behaviours
 		private const float CHECK_SPAWN_COOLDOWN = 2;
 		private const float PER_SPAWN_DELAY_MAX = 2;
 
-		public PlaneLevelData TargetPlane { get; private set; }
+		public LevelPlane TargetPlane { get; private set; }
 		public readonly List<FoodObject> ActiveFoodObjects = new List<FoodObject>();
 
 		private ObjectPool<FoodObject>[] foodObjectPools;
 		private float checkSpawnCooldown;
 
-		public void Initialise(PlaneLevelData targetPlane)
+		public void Initialise(LevelPlane targetPlane)
 		{
 			TargetPlane = targetPlane;
 			SetupFoodObjectPools();
@@ -83,7 +83,7 @@ namespace Spectral.Runtime.Behaviours
 
 			float shortestDist = (maxRange * maxRange) ?? Mathf.Infinity;
 			int targetIndex = -1;
-			PlaneLevelData targetPlane = LevelLoader.GameLevelPlanes[planeIndex].CoreObject;
+			LevelPlane targetPlane = LevelLoader.GameLevelPlanes[planeIndex].CoreObject;
 			List<FoodObject> targetFoodObjectList = targetPlane.AffiliatedFoodSpawner.ActiveFoodObjects;
 			for (int i = 0; i < targetFoodObjectList.Count; i++)
 			{

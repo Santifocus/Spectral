@@ -69,7 +69,7 @@ namespace Spectral.Runtime.Behaviours
 
 		private void CheckForContact()
 		{
-			if (!PlayerMover.Existent || (damageCooldown > 0) || (PlaneLevelIndex != LevelLoader.PlayerLevelIndex))
+			if ((damageCooldown > 0) || !SamePlaneAsPlayerInstance())
 			{
 				return;
 			}
@@ -79,7 +79,7 @@ namespace Spectral.Runtime.Behaviours
 
 		private void CheckForEntityContact(EntityMover target)
 		{
-			int bodyPartCount = EntityFactory.GetTotalEntityBodyPartCount(target);
+			int bodyPartCount = EntityFactory.GetEntitySize(target);
 			for (int i = 0; i < bodyPartCount; i++)
 			{
 				if (CheckForContactOnPart(EntityFactory.GetBodyPartFromIndex(target, i), i / (float) bodyPartCount))

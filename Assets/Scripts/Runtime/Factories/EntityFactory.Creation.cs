@@ -106,7 +106,7 @@ namespace Spectral.Runtime.Factories
 
 		public static void IncreaseEntitySize(EntityMover entityCore, EntitySettings settings)
 		{
-			int currentEntitySize = GetTotalEntityBodyPartCount(entityCore);
+			int currentEntitySize = GetEntitySize(entityCore);
 			float scaleChangePerPart = settings.ScaleChangePerPart;
 			float startScale = settings.PartMinimumScale;
 
@@ -167,7 +167,7 @@ namespace Spectral.Runtime.Factories
 
 		public static void DecreaseEntitySize(EntityMover entityCore, EntitySettings settings)
 		{
-			int currentEntitySize = GetTotalEntityBodyPartCount(entityCore);
+			int currentEntitySize = GetEntitySize(entityCore);
 			if (((currentEntitySize - 1) < settings.MinParts) || (currentEntitySize == 1))
 			{
 				entityCore.Death();
@@ -249,13 +249,9 @@ namespace Spectral.Runtime.Factories
 			RebuildSpringAndLimits(targetPart, newParentPart.transform);
 		}
 
-		public static int GetTotalEntityBodyPartCount(EntityMover entityCore)
+		public static int GetEntitySize(EntityMover entityCore)
 		{
-			int totalSize = entityCore.Head ? 1 : 0;
-			totalSize += entityCore.TorsoParts.Count;
-			totalSize += entityCore.Tail ? 1 : 0;
-
-			return totalSize;
+			return (entityCore.Head ? 1 : 0) + entityCore.TorsoParts.Count + (entityCore.Tail ? 1 : 0);
 		}
 
 		public static EntityBodyPart GetBodyPartFromIndex(EntityMover entityCore, int index)
@@ -273,7 +269,7 @@ namespace Spectral.Runtime.Factories
 
 #if SPECTRAL_DEBUG
 			throw new System.IndexOutOfRangeException("The given body part index was not able to be parsed to a EntityBodyPart because it was out of Range. Given: " + (index + 1) +
-													", Max Possible index: " + (GetTotalEntityBodyPartCount(entityCore) - 1) + ".");
+													", Max Possible index: " + (GetEntitySize(entityCore) - 1) + ".");
 #else
 			return null;
 #endif

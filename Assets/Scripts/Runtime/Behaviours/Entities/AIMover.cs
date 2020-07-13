@@ -327,7 +327,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private bool IsTargetOutOfInterestRange()
 		{
-			if (!PlayerMover.Existent || (PlaneLevelIndex != LevelLoader.PlayerLevelIndex))
+			if (!SamePlaneAsPlayerInstance())
 			{
 				return true;
 			}
@@ -340,7 +340,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private bool CanSeeTarget()
 		{
-			if (!PlayerMover.Existent || (attackCooldown > 0) || (PlaneLevelIndex != LevelLoader.PlayerLevelIndex))
+			if ((attackCooldown > 0) || !SamePlaneAsPlayerInstance())
 			{
 				return false;
 			}
