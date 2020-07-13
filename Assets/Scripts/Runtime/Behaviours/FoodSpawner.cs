@@ -87,7 +87,7 @@ namespace Spectral.Runtime.Behaviours
 			List<FoodObject> targetFoodObjectList = targetPlane.AffiliatedFoodSpawner.ActiveFoodObjects;
 			for (int i = 0; i < targetFoodObjectList.Count; i++)
 			{
-				if (!targetFoodObjectList[i].isActiveAndEnabled || !targetFoodObjectList[i].IsEdible)
+				if (!targetFoodObjectList[i] || !targetFoodObjectList[i].isActiveAndEnabled || !targetFoodObjectList[i].IsEdible)
 				{
 					continue;
 				}
