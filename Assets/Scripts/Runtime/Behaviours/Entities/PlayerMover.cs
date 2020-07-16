@@ -73,7 +73,8 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private void CheckForFoodContact()
 		{
-			if (EntityFactory.GetEntitySize(this) >= LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].PlaneSettings.RequiredPlayerSizeToTransition)
+			if (!LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject ||
+				LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject.downTransitionGate.CanBeActivated())
 			{
 				return;
 			}

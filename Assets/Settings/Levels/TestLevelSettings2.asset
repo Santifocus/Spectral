@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017848a574208fa44bc291a480c94a5b, type: 3}
   m_Name: TestLevelSettings2
   m_EditorClassIdentifier: 
-  LevelSceneID: 2
+  LevelSceneID: 3
   StartPlayerSize: 3
   RequiredPlayerSizeToTransition: 6
   LevelWidth:

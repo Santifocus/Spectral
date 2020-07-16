@@ -36,7 +36,7 @@ namespace Spectral.Editor
 			LevelSettings settings = target as LevelSettings;
 			IntField(ref settings.LevelSceneID, ObjectNames.NicifyVariableName(nameof(LevelSettings.LevelSceneID)));
 			BeginIndentSpaces();
-			int targetSceneID = settings.LevelSceneID + 1;
+			int targetSceneID = settings.LevelSceneID;
 			if ((targetSceneID <= 0) || (targetSceneID >= EditorBuildSettings.scenes.Length))
 			{
 				EditorGUILayout.HelpBox("This Scene does not Exist!", MessageType.Error);

@@ -6,7 +6,7 @@ namespace Spectral.Runtime.Behaviours
 {
 	public class TransitionGate : LevelPlaneBehavior
 	{
-		public static event Action<int> PlayerWantsToStartLevelTransition;
+		public static event Action<int, bool> PlayerWantsToStartLevelTransition;
 
 		private int transitionDirection;
 		private bool wasActivatedBefore;
@@ -47,8 +47,8 @@ namespace Spectral.Runtime.Behaviours
 
 		private void Activate()
 		{
+			PlayerWantsToStartLevelTransition?.Invoke(transitionDirection, wasActivatedBefore);
 			wasActivatedBefore = true;
-			PlayerWantsToStartLevelTransition?.Invoke(transitionDirection);
 		}
 	}
 }

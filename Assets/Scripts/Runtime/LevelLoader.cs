@@ -20,7 +20,7 @@ namespace Spectral.Runtime
 		public static LevelPlaneData[] GameLevelPlanes { get; private set; }
 		private static Transform LevelPlanesStorage;
 
-		public static event Action<int, LevelPlane, LevelPlane> LevelTransitionBegan;
+		public static event Action<int, LevelPlane, LevelPlane, bool> LevelTransitionBegan;
 		public static bool Transitioning { get; private set; }
 
 		private static MusicInstance lastMusicInstance;
@@ -131,7 +131,7 @@ namespace Spectral.Runtime
 			return extractedObjectParent;
 		}
 
-		private static async void TransitionLevel(int direction)
+		private static async void TransitionLevel(int direction, bool hasTransitionedToPlaneBefore)
 		{
 			int targetLevelIndex = PlayerLevelIndex + direction;
 			if (Transitioning || (targetLevelIndex < 0) || (targetLevelIndex >= LevelLoaderSettings.Current.Levels.Length))
@@ -145,7 +145,8 @@ namespace Spectral.Runtime
 			//Call Transition event and update the PlayerLevelIndex
 			LevelTransitionBegan?.Invoke(direction,
 										GameLevelPlanes[PlayerLevelIndex].CoreObject,
-										GameLevelPlanes[PlayerLevelIndex = targetLevelIndex].CoreObject);
+										GameLevelPlanes[PlayerLevelIndex = targetLevelIndex].CoreObject,
+										hasTransitionedToPlaneBefore);
 			
 			//Update the music track
 			lastMusicInstance.WantsToPlay = false;
