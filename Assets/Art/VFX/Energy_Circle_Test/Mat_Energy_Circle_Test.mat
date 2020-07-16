@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Energy_Circle_Test
-  m_Shader: {fileID: -6465566751694194690, guid: 85263a47ef6ff27498bfcca7576eab1d,
+  m_Shader: {fileID: -6465566751694194690, guid: 97d8450336fa0dd499e496ec9c564708,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -37,9 +37,12 @@ Material:
         m_Texture: {fileID: 2800000, guid: 7f079a84e9dbe7d4d862a8ed4851c773, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - Texture2D_4CDE8CF:
+        m_Texture: {fileID: 2800000, guid: cbf8e0de929959f40901cf1a1cf2a07f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_B75EDA88:
-        m_Texture: {fileID: 7639192559009546670, guid: 8ffcc92385f9f5643a1ce024726a87be,
-          type: 3}
+        m_Texture: {fileID: 2800000, guid: cbf8e0de929959f40901cf1a1cf2a07f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_BCB361BF:
@@ -51,7 +54,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_F6739506:
-        m_Texture: {fileID: 2800000, guid: 077a84487356a3f48a430c5f272f8704, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1fa286b2b41e8254ab88a199121d6204, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -87,14 +90,18 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_6919D3A: 16
+    - MaxFrames: 8
+    - Vector1_225FD851: 4
+    - Vector1_37B8B118: 2
+    - Vector1_451B0D4B: 25
+    - Vector1_6919D3A: 8
     - Vector1_7A441D7A: 4
     - Vector1_839E59FA: 25
     - Vector1_8E701436: 32
-    - Vector1_90BB3B20: 7
+    - Vector1_90BB3B20: 4
     - Vector1_9271D397: 25
     - Vector1_9877207: 3
-    - Vector1_CD042035: 10
+    - Vector1_CD042035: 32
     - Vector1_D736F642: 25
     - Vector1_F0F36175: 25
     - Vector1_F393B97: 25
@@ -137,6 +144,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_287050CA: {r: 1, g: 1, b: 1, a: 0}
     - Color_B86BD73A: {r: 1, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _CameraFadeParams: {r: 0, g: 0, b: 0, a: 0}
