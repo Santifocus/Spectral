@@ -15,6 +15,7 @@ namespace Spectral.Runtime.Behaviours.UI
 		[SerializeField] private GameObject soundVolumeToggleOff = default;
 
 		public event Action SettingsMenuWantsToClose;
+		public static event Action VolumeScalesChangedEvent;
 
 		public void Initialise()
 		{
@@ -39,22 +40,26 @@ namespace Spectral.Runtime.Behaviours.UI
 		public void MusicVolumeSliderChanged()
 		{
 			PersistentDataManager.CurrentSettings.ActiveMusicVolumeScale = musicVolumeSlider.value;
+			VolumeScalesChangedEvent?.Invoke();
 		}
 
 		public void SoundVolumeSliderChanged()
 		{
 			PersistentDataManager.CurrentSettings.ActiveSoundVolumeScale = soundVolumeSlider.value;
+			VolumeScalesChangedEvent?.Invoke();
 		}
 
 		public void ToggleMusicVolume()
 		{
 			PersistentDataManager.CurrentSettings.ActiveMusicEnabled = !PersistentDataManager.CurrentSettings.ActiveMusicEnabled;
+			VolumeScalesChangedEvent?.Invoke();
 			UpdateToggle(musicVolumeToggleOn, musicVolumeToggleOff, PersistentDataManager.CurrentSettings.ActiveMusicEnabled);
 		}
 
 		public void ToggleSoundVolume()
 		{
 			PersistentDataManager.CurrentSettings.ActiveSoundEnabled = !PersistentDataManager.CurrentSettings.ActiveSoundEnabled;
+			VolumeScalesChangedEvent?.Invoke();
 			UpdateToggle(soundVolumeToggleOn, soundVolumeToggleOff, PersistentDataManager.CurrentSettings.ActiveSoundEnabled);
 		}
 

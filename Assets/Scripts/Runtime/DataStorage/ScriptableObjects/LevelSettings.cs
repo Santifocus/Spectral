@@ -20,5 +20,8 @@ namespace Spectral.Runtime
 
 		//Background
 		public Color BackgroundColor = Color.blue;
+		
+		//General
+		public int MusicIndex = 0;
 	}
 }
