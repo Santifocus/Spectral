@@ -158,7 +158,7 @@ namespace Spectral.Runtime.Behaviours
 
 		public MusicInstance(float volume, int priority, int musicIndex, int maxRestarts = -1)
 		{
-			WantsToPlay = false;
+			WantsToPlay = true;
 			Volume = volume;
 			Priority = priority;
 			MusicIndex = musicIndex;

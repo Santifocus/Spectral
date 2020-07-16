@@ -15,6 +15,7 @@ namespace Spectral.Runtime
 				GameSceneWillExit?.Invoke();
 			}
 
+			StaticData.ActivePauses = 0;
 			CurrentSceneID = sceneID;
 			SceneManager.LoadScene(sceneID);
 		}

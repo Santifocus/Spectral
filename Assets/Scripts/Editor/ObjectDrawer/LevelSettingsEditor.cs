@@ -13,6 +13,11 @@ namespace Spectral.Editor
 		private bool foodSettingsOpen;
 		private bool visualSettingsOpen;
 
+		private MusicController targetMusicControllerBackingField;
+		private MusicController targetMusicController => targetMusicControllerBackingField 
+															? targetMusicControllerBackingField 
+															: targetMusicControllerBackingField = FindObjectOfType<MusicController>();
+
 		protected override bool ShouldHideBaseInspector()
 		{
 			return true;
@@ -47,6 +52,33 @@ namespace Spectral.Editor
 			EndIndentSpaces();
 			IntField(ref settings.StartPlayerSize, ObjectNames.NicifyVariableName(nameof(LevelSettings.StartPlayerSize)));
 			IntField(ref settings.RequiredPlayerSizeToTransition, ObjectNames.NicifyVariableName(nameof(LevelSettings.RequiredPlayerSizeToTransition)));
+			
+			LineBreak();
+			IntField(ref settings.MusicIndex, ObjectNames.NicifyVariableName(nameof(LevelSettings.MusicIndex)));
+			if (targetMusicController)
+			{
+				BeginIndentSpaces();
+				if (settings.MusicIndex >= 0 && settings.MusicIndex < targetMusicController.MusicList.Length)
+				{
+					if (targetMusicController.MusicList[settings.MusicIndex])
+					{
+						EditorGUILayout.LabelField("Target Music: ", targetMusicController.MusicList[settings.MusicIndex].soundName, EditorStyles.boldLabel);
+					}
+					else
+					{
+						EditorGUILayout.HelpBox("The target Music is null!", MessageType.Error);
+					}
+				}
+				else
+				{
+					EditorGUILayout.HelpBox("Invalid Music Index!", MessageType.Error);
+				}
+				EndIndentSpaces();
+			}
+			else
+			{
+				EditorGUILayout.HelpBox("No Music Controller found in current Scene!", MessageType.Warning);
+			}
 		}
 
 		private void DrawDimensionsSettings()

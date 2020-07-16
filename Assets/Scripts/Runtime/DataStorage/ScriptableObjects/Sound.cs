@@ -1,3 +1,4 @@
+using Spectral.Runtime.DataStorage;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -16,7 +17,7 @@ namespace Spectral.Sounds
 		Music
 	}
 
-	public class Sound : ScriptableObject
+	public class Sound : SpectralScriptableObject
 	{
 		public string soundName = "Sound";
 		public AudioClip clip = null;

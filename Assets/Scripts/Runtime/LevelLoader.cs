@@ -23,12 +23,15 @@ namespace Spectral.Runtime
 		public static event Action<int, LevelPlane, LevelPlane> LevelTransitionBegan;
 		public static bool Transitioning { get; private set; }
 
+		private static MusicInstance lastMusicInstance;
+
 		public static async void Initialise()
 		{
 			//Basic setups
 			InitialiseCoreStorage();
 			InitialiseGamePlaneArray();
 			PlayerLevelIndex = LevelLoaderSettings.Current.LevelStartIndex;
+			
 
 			//Reset Score manager
 			PlayerScoreManager.Reset();
@@ -40,6 +43,10 @@ namespace Spectral.Runtime
 			await CreateLevelPlane(PlayerLevelIndex, 0);
 			await CreateLevelPlane(PlayerLevelIndex + 1, 1);
 			await CreateLevelPlane(PlayerLevelIndex - 1, -1);
+			
+			//Setup the music for the plane
+			lastMusicInstance = new MusicInstance(0, 0, GameLevelPlanes[PlayerLevelIndex].PlaneSettings.MusicIndex);
+			MusicController.Instance.AddMusicInstance(lastMusicInstance);
 
 			//Event subscription
 			SceneChangeManager.GameSceneWillExit += TearDown;
@@ -139,6 +146,11 @@ namespace Spectral.Runtime
 			LevelTransitionBegan?.Invoke(direction,
 										GameLevelPlanes[PlayerLevelIndex].CoreObject,
 										GameLevelPlanes[PlayerLevelIndex = targetLevelIndex].CoreObject);
+			
+			//Update the music track
+			lastMusicInstance.WantsToPlay = false;
+			lastMusicInstance = new MusicInstance(0, 0, GameLevelPlanes[PlayerLevelIndex = targetLevelIndex].PlaneSettings.MusicIndex);
+			MusicController.Instance.AddMusicInstance(lastMusicInstance);
 
 			(LevelPlaneData planeData, float prevTransitionDepth)[] targetObjectData = GameLevelPlanes.Where(p => p.CoreObject).Select(p => (p, p.CurrentPlaneDepth)).ToArray();
 			int millisecondsPassed = 0;

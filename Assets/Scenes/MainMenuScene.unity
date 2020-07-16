@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3290,6 +3290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7060d2ad3f49af744befd3f7b9d2e1a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuMusicIndex: 0
   mainUIObject: {fileID: 1348730294}
   settingsUIObject: {fileID: 943715110}
   creditsUIObject: {fileID: 261637058}

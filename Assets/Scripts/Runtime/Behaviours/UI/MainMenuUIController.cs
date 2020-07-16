@@ -5,6 +5,7 @@ namespace Spectral.Runtime.Behaviours.UI
 {
 	public class MainMenuUIController : MonoBehaviour
 	{
+		[SerializeField] private int mainMenuMusicIndex = 0;
 		[SerializeField] private GameObject mainUIObject = default;
 		[SerializeField] private GameObject settingsUIObject = default;
 		[SerializeField] private GameObject creditsUIObject = default;
@@ -20,6 +21,7 @@ namespace Spectral.Runtime.Behaviours.UI
 			SetSettingsActive(false);
 			settingsUIController.SettingsMenuWantsToClose += SettingsMenuWantsToClose;
 			highScoreDisplay.text = $"{highScoreTextPrefix}{PersistentDataManager.CurrentPlayerData.HighestScore.ToString()}";
+			MusicController.Instance.AddMusicInstance(new MusicInstance(0, 0, mainMenuMusicIndex));
 		}
 
 		private void OnDestroy()
