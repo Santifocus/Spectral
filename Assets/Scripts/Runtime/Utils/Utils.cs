@@ -14,6 +14,15 @@ namespace Spectral.Runtime
 
 	public static class Utils
 	{
+		public static void QuitGame()
+		{
+#if UNITY_EDITOR
+			UnityEditor.EditorApplication.isPlaying = false;
+#else
+			Application.Quit();
+#endif
+		}
+
 		public static bool ShiftBetweenLists<T>(T target, List<T> lhd, List<T> rhd)
 		{
 			if (lhd.Remove(target))

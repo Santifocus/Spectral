@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace Spectral.Runtime.Behaviours.UI
@@ -6,12 +7,19 @@ namespace Spectral.Runtime.Behaviours.UI
 	{
 		[SerializeField] private GameObject mainUIObject = default;
 		[SerializeField] private GameObject settingsUIObject = default;
+		[SerializeField] private GameObject creditsUIObject = default;
 		[SerializeField] private SettingsUIController settingsUIController = default;
+
+		[Header("High Score Display")] [SerializeField]
+		private TextMeshProUGUI highScoreDisplay = default;
+
+		[SerializeField] private string highScoreTextPrefix = "Your High-Score: ";
 
 		private void Start()
 		{
 			SetSettingsActive(false);
 			settingsUIController.SettingsMenuWantsToClose += SettingsMenuWantsToClose;
+			highScoreDisplay.text = $"{highScoreTextPrefix}{PersistentDataManager.CurrentPlayerData.HighestScore.ToString()}";
 		}
 
 		private void OnDestroy()
@@ -39,13 +47,15 @@ namespace Spectral.Runtime.Behaviours.UI
 			}
 		}
 
+		public void SetCreditsActive(bool state)
+		{
+			mainUIObject.SetActive(!state);
+			creditsUIObject.SetActive(state);
+		}
+
 		public void QuitGame()
 		{
-#if UNITY_EDITOR
-			UnityEditor.EditorApplication.isPlaying = false;
-#else
-			Application.Quit();
-#endif
+			Utils.QuitGame();
 		}
 	}
 }
