@@ -1,5 +1,4 @@
 ﻿using System;
-using Spectral.Runtime.Factories;
 using UnityEngine;
 
 namespace Spectral.Runtime.Behaviours.Entities
@@ -73,8 +72,9 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private void CheckForFoodContact()
 		{
-			if (!LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject ||
-				LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject.downTransitionGate.CanBeActivated())
+			if (!LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject                    ||
+				!LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject.downTransitionGate ||
+				!LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject.downTransitionGate.CanBeActivated())
 			{
 				return;
 			}

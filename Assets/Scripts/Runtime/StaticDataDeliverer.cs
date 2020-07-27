@@ -8,6 +8,7 @@ namespace Spectral.Runtime
 
 		private void Start()
 		{
+			Screen.orientation = ScreenOrientation.Portrait;
 			GameSettings.SetActiveGameSettings(gameSettings);
 			StaticData.ActivePauses = 0;
 			LevelLoader.Initialise();

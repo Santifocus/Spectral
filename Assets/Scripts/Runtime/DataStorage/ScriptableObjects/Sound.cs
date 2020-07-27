@@ -8,13 +8,13 @@ namespace Spectral.Sounds
 	{
 		Scaled,
 		Unscaled,
-		StopOnPause
+		StopOnPause,
 	}
 
 	public enum SoundCategory
 	{
 		Sound,
-		Music
+		Music,
 	}
 
 	public class Sound : SpectralScriptableObject
