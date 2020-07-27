@@ -74,7 +74,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 		{
 			if (!LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject                    ||
 				!LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject.downTransitionGate ||
-				!LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject.downTransitionGate.CanBeActivated())
+				LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject.downTransitionGate.CanBeActivated())
 			{
 				return;
 			}
