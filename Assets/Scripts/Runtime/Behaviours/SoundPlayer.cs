@@ -25,8 +25,10 @@ namespace Spectral.Sounds
 		private bool isPaused;
 
 		private float volumeScale => baseData.soundCategory == SoundCategory.Music
-										? (PersistentDataManager.CurrentSettings.ActiveMusicEnabled ? PersistentDataManager.CurrentSettings.ActiveMusicVolumeScale : 0)
-										: (PersistentDataManager.CurrentSettings.ActiveSoundEnabled ? PersistentDataManager.CurrentSettings.ActiveSoundVolumeScale : 0);
+										? PersistentDataManager.CurrentSettings.ActiveMusicEnabled ? PersistentDataManager.CurrentSettings.ActiveMusicVolumeScale : 0
+										: PersistentDataManager.CurrentSettings.ActiveSoundEnabled
+											? PersistentDataManager.CurrentSettings.ActiveSoundVolumeScale
+											: 0;
 
 		public void Setup(Sound baseData)
 		{

@@ -14,8 +14,9 @@ namespace Spectral.Editor
 		private bool visualSettingsOpen;
 
 		private MusicController targetMusicControllerBackingField;
-		private MusicController targetMusicController => targetMusicControllerBackingField 
-															? targetMusicControllerBackingField 
+
+		private MusicController targetMusicController => targetMusicControllerBackingField
+															? targetMusicControllerBackingField
 															: targetMusicControllerBackingField = FindObjectOfType<MusicController>();
 
 		protected override bool ShouldHideBaseInspector()
@@ -52,13 +53,12 @@ namespace Spectral.Editor
 			EndIndentSpaces();
 			IntField(ref settings.StartPlayerSize, ObjectNames.NicifyVariableName(nameof(LevelSettings.StartPlayerSize)));
 			IntField(ref settings.RequiredPlayerSizeToTransition, ObjectNames.NicifyVariableName(nameof(LevelSettings.RequiredPlayerSizeToTransition)));
-			
 			LineBreak();
 			IntField(ref settings.MusicIndex, ObjectNames.NicifyVariableName(nameof(LevelSettings.MusicIndex)));
 			if (targetMusicController)
 			{
 				BeginIndentSpaces();
-				if (settings.MusicIndex >= 0 && settings.MusicIndex < targetMusicController.MusicList.Length)
+				if ((settings.MusicIndex >= 0) && (settings.MusicIndex < targetMusicController.MusicList.Length))
 				{
 					if (targetMusicController.MusicList[settings.MusicIndex])
 					{
@@ -73,6 +73,7 @@ namespace Spectral.Editor
 				{
 					EditorGUILayout.HelpBox("Invalid Music Index!", MessageType.Error);
 				}
+
 				EndIndentSpaces();
 			}
 			else

@@ -31,7 +31,6 @@ namespace Spectral.Runtime
 			InitialiseCoreStorage();
 			InitialiseGamePlaneArray();
 			PlayerLevelIndex = LevelLoaderSettings.Current.LevelStartIndex;
-			
 
 			//Reset Score manager
 			PlayerScoreManager.Reset();
@@ -43,7 +42,7 @@ namespace Spectral.Runtime
 			await CreateLevelPlane(PlayerLevelIndex, 0);
 			await CreateLevelPlane(PlayerLevelIndex + 1, 1);
 			await CreateLevelPlane(PlayerLevelIndex - 1, -1);
-			
+
 			//Setup the music for the plane
 			lastMusicInstance = new MusicInstance(0, 0, GameLevelPlanes[PlayerLevelIndex].PlaneSettings.MusicIndex);
 			MusicController.Instance.AddMusicInstance(lastMusicInstance);
@@ -147,12 +146,11 @@ namespace Spectral.Runtime
 										GameLevelPlanes[PlayerLevelIndex].CoreObject,
 										GameLevelPlanes[PlayerLevelIndex = targetLevelIndex].CoreObject,
 										hasTransitionedToPlaneBefore);
-			
+
 			//Update the music track
 			lastMusicInstance.WantsToPlay = false;
 			lastMusicInstance = new MusicInstance(0, 0, GameLevelPlanes[PlayerLevelIndex = targetLevelIndex].PlaneSettings.MusicIndex);
 			MusicController.Instance.AddMusicInstance(lastMusicInstance);
-
 			(LevelPlaneData planeData, float prevTransitionDepth)[] targetObjectData = GameLevelPlanes.Where(p => p.CoreObject).Select(p => (p, p.CurrentPlaneDepth)).ToArray();
 			int millisecondsPassed = 0;
 			int totalMilliseconds = (int) (LevelLoaderSettings.Current.LevelTransitionTime * 1000);
