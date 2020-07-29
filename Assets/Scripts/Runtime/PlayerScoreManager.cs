@@ -48,12 +48,12 @@ namespace Spectral.Runtime
 			PlayerScoreChanged?.Invoke();
 		}
 
-		private static void StartedLevelTransition(int direction, LevelPlane previousLevelPlane, LevelPlane newLevelPlane)
+		private static void StartedLevelTransition(int direction, LevelPlane previousLevelPlane, LevelPlane newLevelPlane, bool hasTransitionedToPlaneBefore)
 		{
-			PersistentObjectManager.Instance.StartCoroutine(StartedLevelTransitionCoroutine(direction, previousLevelPlane, newLevelPlane));
+			PersistentObjectManager.Instance.StartCoroutine(StartedLevelTransitionCoroutine(direction, previousLevelPlane, newLevelPlane, hasTransitionedToPlaneBefore));
 		}
 
-		private static IEnumerator StartedLevelTransitionCoroutine(int direction, LevelPlane previousLevelPlane, LevelPlane newLevelPlane)
+		private static IEnumerator StartedLevelTransitionCoroutine(int direction, LevelPlane previousLevelPlane, LevelPlane newLevelPlane, bool hasTransitionedToPlaneBefore)
 		{
 			if (direction == -1)
 			{
@@ -82,7 +82,10 @@ namespace Spectral.Runtime
 				}
 
 				PlayerMover.Instance.Damage();
-				ChangePlayerScore(1);
+				if (!hasTransitionedToPlaneBefore)
+				{
+					ChangePlayerScore(1);
+				}
 			}
 		}
 	}

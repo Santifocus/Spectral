@@ -34,6 +34,8 @@ namespace Spectral.Runtime
 
 		public float DefaultLevelHeight = 200;
 
+		public float LevelBorderSpawnBlockWidth = 3;
+
 		public float LevelBorderForceFieldWidth = 3;
 		public float LevelBorderForceFieldStrength = 2;
 	}

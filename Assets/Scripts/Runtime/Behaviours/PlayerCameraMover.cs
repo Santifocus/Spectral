@@ -13,12 +13,16 @@ namespace Spectral.Runtime.Behaviours
 		[SerializeField] private float toPlayerOffset = 25;
 		[SerializeField] private float followSpeed = 2;
 		[SerializeField] private float scaleLerpSpeed = 0.5f;
+		[SerializeField] private float levelDimensionLerp = 0.5f;
 		[SerializeField] private Transform shakeCore = default;
 
 		private bool initiated;
 		private Camera cameraComponent;
 		private Vector2 currentBasePosition;
 		private float currentToPlayerOffset;
+
+		private float currentlyUsedLevelWidth;
+		private float currentlyUsedLevelHeight;
 
 		private void Start()
 		{
@@ -52,12 +56,19 @@ namespace Spectral.Runtime.Behaviours
 			//Calculate position of the Camera relative to the player
 			Vector2 basePosition = GetCurrentBasePosition();
 			Vector2 viewRect = CalculateViewRect();
+			UpdateUsedLevelDimensions(viewRect);
 
 			//Normalize position based on the level-bounds minus the view rect
+			Vector2 normalizedPosition = NormalizePositionFromLevelBoundsAndViewRect(basePosition, currentlyUsedLevelWidth, currentlyUsedLevelHeight);
+			transform.position = new Vector3(currentlyUsedLevelWidth * normalizedPosition.x, currentToPlayerOffset, currentlyUsedLevelHeight * normalizedPosition.y);
+		}
+
+		private void UpdateUsedLevelDimensions(Vector2 viewRect)
+		{
 			float levelWidth = (LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].PlaneSettings.LevelWidth   / 2) - viewRect.x;
 			float levelHeight = (LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].PlaneSettings.LevelHeight / 2) - viewRect.y;
-			Vector2 normalizedPosition = NormalizePositionFromLevelBoundsAndViewRect(basePosition, levelWidth, levelHeight);
-			transform.position = new Vector3(levelWidth * normalizedPosition.x, currentToPlayerOffset, levelHeight * normalizedPosition.y);
+			currentlyUsedLevelWidth = Mathf.Lerp(currentlyUsedLevelWidth, levelWidth, levelDimensionLerp    * Time.deltaTime);
+			currentlyUsedLevelHeight = Mathf.Lerp(currentlyUsedLevelHeight, levelHeight, levelDimensionLerp * Time.deltaTime);
 		}
 
 		private Vector2 GetCurrentBasePosition()

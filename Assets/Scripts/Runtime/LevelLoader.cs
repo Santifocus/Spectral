@@ -20,8 +20,10 @@ namespace Spectral.Runtime
 		public static LevelPlaneData[] GameLevelPlanes { get; private set; }
 		private static Transform LevelPlanesStorage;
 
-		public static event Action<int, LevelPlane, LevelPlane> LevelTransitionBegan;
+		public static event Action<int, LevelPlane, LevelPlane, bool> LevelTransitionBegan;
 		public static bool Transitioning { get; private set; }
+
+		private static MusicInstance lastMusicInstance;
 
 		public static async void Initialise()
 		{
@@ -40,6 +42,10 @@ namespace Spectral.Runtime
 			await CreateLevelPlane(PlayerLevelIndex, 0);
 			await CreateLevelPlane(PlayerLevelIndex + 1, 1);
 			await CreateLevelPlane(PlayerLevelIndex - 1, -1);
+
+			//Setup the music for the plane
+			lastMusicInstance = new MusicInstance(0, 0, GameLevelPlanes[PlayerLevelIndex].PlaneSettings.MusicIndex);
+			MusicController.Instance.AddMusicInstance(lastMusicInstance);
 
 			//Event subscription
 			SceneChangeManager.GameSceneWillExit += TearDown;
@@ -124,7 +130,7 @@ namespace Spectral.Runtime
 			return extractedObjectParent;
 		}
 
-		private static async void TransitionLevel(int direction)
+		private static async void TransitionLevel(int direction, bool hasTransitionedToPlaneBefore)
 		{
 			int targetLevelIndex = PlayerLevelIndex + direction;
 			if (Transitioning || (targetLevelIndex < 0) || (targetLevelIndex >= LevelLoaderSettings.Current.Levels.Length))
@@ -138,8 +144,13 @@ namespace Spectral.Runtime
 			//Call Transition event and update the PlayerLevelIndex
 			LevelTransitionBegan?.Invoke(direction,
 										GameLevelPlanes[PlayerLevelIndex].CoreObject,
-										GameLevelPlanes[PlayerLevelIndex = targetLevelIndex].CoreObject);
+										GameLevelPlanes[PlayerLevelIndex = targetLevelIndex].CoreObject,
+										hasTransitionedToPlaneBefore);
 
+			//Update the music track
+			lastMusicInstance.WantsToPlay = false;
+			lastMusicInstance = new MusicInstance(0, 0, GameLevelPlanes[PlayerLevelIndex = targetLevelIndex].PlaneSettings.MusicIndex);
+			MusicController.Instance.AddMusicInstance(lastMusicInstance);
 			(LevelPlaneData planeData, float prevTransitionDepth)[] targetObjectData = GameLevelPlanes.Where(p => p.CoreObject).Select(p => (p, p.CurrentPlaneDepth)).ToArray();
 			int millisecondsPassed = 0;
 			int totalMilliseconds = (int) (LevelLoaderSettings.Current.LevelTransitionTime * 1000);

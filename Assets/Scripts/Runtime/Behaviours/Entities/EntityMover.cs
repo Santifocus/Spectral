@@ -11,6 +11,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 		[SerializeField] private int spawnTotalBodySize = 1;
 
 		protected bool Alive;
+		public EntitySettings EntitySettings => entitySettings;
 		public EntityBodyPart Head { get; set; }
 		public List<EntityBodyPart> TorsoParts { get; set; }
 		public EntityBodyPart Tail { get; set; }

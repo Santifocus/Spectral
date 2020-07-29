@@ -43,7 +43,7 @@ namespace Spectral.Runtime.Behaviours
 			}
 		}
 
-		private void OnLevelTransitionStart(int transitionDirection, LevelPlane previousLevelPlane, LevelPlane newLevelPlane)
+		private void OnLevelTransitionStart(int transitionDirection, LevelPlane previousLevelPlane, LevelPlane newLevelPlane, bool hasTransitionedToPlaneBefore)
 		{
 			transitioning = true;
 			colorLerpTime = 0;
