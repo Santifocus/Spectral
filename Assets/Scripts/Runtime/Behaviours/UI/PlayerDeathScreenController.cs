@@ -33,6 +33,11 @@ namespace Spectral.Runtime.Behaviours.UI
 			SceneChangeManager.ChangeScene(ConstantCollector.MAIN_MENU_SCENE);
 		}
 
+		public void QuitGame()
+		{
+			Utils.QuitGame();
+		}
+
 		private void ShowDeathScreen()
 		{
 			deathScreenMainObject.SetActive(true);

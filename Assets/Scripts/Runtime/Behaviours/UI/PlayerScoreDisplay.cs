@@ -37,12 +37,17 @@ namespace Spectral.Runtime.Behaviours.UI
 
 		private int GetPlayerSize()
 		{
-			return !PlayerMover.Existent ? 0 : EntityFactory.GetEntitySize(PlayerMover.Instance);
+			return !PlayerMover.Existent ? 0 : EntityFactory.GetEntitySize(PlayerMover.Instance) - PlayerMinSize();
 		}
 
 		private int GetRequiredPlayerSize()
 		{
-			return LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].PlaneSettings.RequiredPlayerSizeToTransition;
+			return !PlayerMover.Existent ? 0 : LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].PlaneSettings.RequiredPlayerSizeToTransition - PlayerMinSize();
+		}
+
+		private int PlayerMinSize()
+		{
+			return PlayerMover.Instance.EntitySettings.MinParts;
 		}
 	}
 }

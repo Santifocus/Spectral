@@ -64,8 +64,14 @@ namespace Spectral.Runtime.Behaviours
 
 		private IEnumerator SpawnFood(int count = 1)
 		{
-			float levelWidth = TargetPlane.PlaneSettings.LevelWidth   - GameSettings.Current.LevelBorderForceFieldWidth;
-			float levelHeight = TargetPlane.PlaneSettings.LevelHeight - GameSettings.Current.LevelBorderForceFieldWidth;
+			float levelWidth = TargetPlane.PlaneSettings.LevelWidth             -
+								GameSettings.Current.LevelBorderForceFieldWidth -
+								GameSettings.Current.LevelBorderSpawnBlockWidth;
+
+			float levelHeight = TargetPlane.PlaneSettings.LevelHeight           -
+								GameSettings.Current.LevelBorderForceFieldWidth -
+								GameSettings.Current.LevelBorderSpawnBlockWidth;
+
 			for (int i = 0; i < count; i++)
 			{
 				yield return new WaitForSeconds(PER_SPAWN_DELAY_MAX * Random.value);

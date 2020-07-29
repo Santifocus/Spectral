@@ -11,8 +11,14 @@ namespace Spectral.Runtime.Factories
 			//Setup the core transform
 			Transform gateCoreObject = new GameObject("Transition Gate").transform;
 			gateCoreObject.SetParent(LevelLoader.GameLevelPlanes[levelPlaneIndex].CoreObject.TargetStorage.FoodObjectStorage);
-			float planeWidth = LevelLoader.GameLevelPlanes[levelPlaneIndex].PlaneSettings.LevelWidth   - GameSettings.Current.LevelBorderForceFieldWidth;
-			float planeHeight = LevelLoader.GameLevelPlanes[levelPlaneIndex].PlaneSettings.LevelHeight - GameSettings.Current.LevelBorderForceFieldWidth;
+			float planeWidth = LevelLoader.GameLevelPlanes[levelPlaneIndex].PlaneSettings.LevelWidth -
+								GameSettings.Current.LevelBorderForceFieldWidth                      -
+								GameSettings.Current.LevelBorderSpawnBlockWidth;
+
+			float planeHeight = LevelLoader.GameLevelPlanes[levelPlaneIndex].PlaneSettings.LevelHeight -
+								GameSettings.Current.LevelBorderForceFieldWidth                        -
+								GameSettings.Current.LevelBorderSpawnBlockWidth;
+
 			gateCoreObject.localPosition = new Vector3((Random.value - 0.5f) * planeWidth, 0, (Random.value - 0.5f) * planeHeight);
 
 			//Setup the model
@@ -36,7 +42,7 @@ namespace Spectral.Runtime.Factories
 					throw new System.ArgumentException($"Cannot create a Transition gate with {nameof(transitionDirection)}: '{transitionDirection}'.");
 #else
 					Object.Destroy(gateCoreObject.gameObject);
-					return;
+					return null;
 #endif
 				}
 			}
