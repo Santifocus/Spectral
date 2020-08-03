@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Medium_Level_01_Settings
   m_EditorClassIdentifier: 
   LevelSceneID: 5
-  StartPlayerSize: 3
-  RequiredPlayerSizeToTransition: 6
+  StartPlayerSize: 4
+  RequiredPlayerSizeToTransition: 8
   LevelWidth:
     NonDefaultValue: 0
     UseDefault: 1
