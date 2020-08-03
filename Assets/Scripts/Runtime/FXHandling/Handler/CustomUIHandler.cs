@@ -11,7 +11,7 @@ namespace Spectral.Runtime.FX.Handling
 		public override System.Type FXTargetType => typeof(CustomUI);
 		private readonly List<CustomUIInstance> effectInstances = new List<CustomUIInstance>();
 
-		public override FXInstance InitiateFX(FXObject baseData, FXInstanceData instanceData)
+		public override FXInstance InitialiseFX(FXObject baseData, FXInstanceData instanceData)
 		{
 			CustomUIInstance newInstance = new CustomUIInstance(baseData, instanceData);
 			effectInstances.Add(newInstance);

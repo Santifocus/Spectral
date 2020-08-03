@@ -729,6 +729,7 @@ GameObject:
   - component: {fileID: 6014199214473234762}
   - component: {fileID: 6014199214473234763}
   - component: {fileID: 6014199214473234756}
+  - component: {fileID: 2091877863}
   m_Layer: 5
   m_Name: VolumeActive
   m_TagString: Untagged
@@ -847,6 +848,31 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2091877863}
+        m_MethodName: Trigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2091877863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014199214473234758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5fa0835377a8724883e7a196f809627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundsToTrigger:
+  - {fileID: 11400000, guid: 492f507c3c619ab499f5a28305275090, type: 2}
 --- !u!1 &6014199214518055326
 GameObject:
   m_ObjectHideFlags: 0
@@ -897,6 +923,7 @@ GameObject:
   - component: {fileID: 6014199214698430404}
   - component: {fileID: 6014199214698430405}
   - component: {fileID: 6014199214698430406}
+  - component: {fileID: 1819741622}
   m_Layer: 5
   m_Name: VolumeActive
   m_TagString: Untagged
@@ -1015,6 +1042,31 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1819741622}
+        m_MethodName: Trigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1819741622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014199214698430400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5fa0835377a8724883e7a196f809627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundsToTrigger:
+  - {fileID: 11400000, guid: 492f507c3c619ab499f5a28305275090, type: 2}
 --- !u!1 &6014199214869904878
 GameObject:
   m_ObjectHideFlags: 0
@@ -1962,6 +2014,7 @@ GameObject:
   - component: {fileID: 6014199215622028617}
   - component: {fileID: 6014199215622028618}
   - component: {fileID: 6014199215622028619}
+  - component: {fileID: 1558830732}
   m_Layer: 5
   m_Name: DoneButton
   m_TagString: Untagged
@@ -2079,6 +2132,31 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1558830732}
+        m_MethodName: Trigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1558830732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014199215622028613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5fa0835377a8724883e7a196f809627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundsToTrigger:
+  - {fileID: 11400000, guid: 492f507c3c619ab499f5a28305275090, type: 2}
 --- !u!1 &6014199215671574116
 GameObject:
   m_ObjectHideFlags: 0

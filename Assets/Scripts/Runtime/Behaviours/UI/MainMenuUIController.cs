@@ -20,7 +20,7 @@ namespace Spectral.Runtime.Behaviours.UI
 		{
 			SetSettingsActive(false);
 			settingsUIController.SettingsMenuWantsToClose += SettingsMenuWantsToClose;
-			highScoreDisplay.text = $"{highScoreTextPrefix}{PersistentDataManager.CurrentPlayerData.HighestScore.ToString()}";
+			highScoreDisplay.text = $"{highScoreTextPrefix}{(PersistentDataManager.CurrentPlayerData.HighestScore * ConstantCollector.SCORE_MULTIPLIER).ToString()}";
 			MusicController.Instance.AddMusicInstance(new MusicInstance(0, 0, mainMenuMusicIndex));
 		}
 

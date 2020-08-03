@@ -17,7 +17,7 @@ namespace Spectral.Runtime.FX.Handling
 			defaultFixedDeltaTime = Time.fixedDeltaTime;
 		}
 
-		public override FXInstance InitiateFX(FXObject baseData, FXInstanceData instanceData)
+		public override FXInstance InitialiseFX(FXObject baseData, FXInstanceData instanceData)
 		{
 			TimeDilationInstance newInstance = new TimeDilationInstance(baseData, instanceData);
 			effectInstances.Add(newInstance);

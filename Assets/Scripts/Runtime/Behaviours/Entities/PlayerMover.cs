@@ -138,9 +138,9 @@ namespace Spectral.Runtime.Behaviours.Entities
 			PlayerDied?.Invoke();
 		}
 
-		public override void Damage(int amount = 1)
+		public override void Damage(int amount = 1, bool silent = false)
 		{
-			base.Damage(amount);
+			base.Damage(amount, silent);
 			PlayerEntityChangedSize?.Invoke();
 		}
 

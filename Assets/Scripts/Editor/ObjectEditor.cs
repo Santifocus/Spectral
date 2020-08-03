@@ -1,20 +1,36 @@
 using UnityEditor;
-using UnityEngine;
 using static Spectral.Editor.EditorUtils;
 
 namespace Spectral.Editor
 {
-	[CustomEditor(typeof(ScriptableObject), true)]
-	public class ObjectEditor : UnityEditor.Editor
+	public abstract class ObjectEditor : UnityEditor.Editor
 	{
-		public override void OnInspectorGUI()
+		protected abstract bool ShouldHideBaseInspector { get; }
+		private bool initialised;
+		protected virtual void OnInitialize() { }
+
+		public sealed override void OnInspectorGUI()
 		{
-			if (!ShouldHideBaseInspector())
+			//If this is the first frame of being selected call the initialise method
+			if (!initialised)
+			{
+				initialised = true;
+				OnInitialize();
+			}
+
+			//Reset the indent from last frame to 0
+			DecreaseIndent(Indent);
+
+			//Draw default inspector if requested
+			if (!ShouldHideBaseInspector)
 			{
 				DrawDefaultInspector();
 			}
 
+			//Draw the custom inspector
 			CustomInspector();
+
+			//Check for changes
 			if (IsDirty)
 			{
 				ShouldBeDirty(false);
@@ -22,11 +38,6 @@ namespace Spectral.Editor
 			}
 		}
 
-		protected virtual bool ShouldHideBaseInspector()
-		{
-			return false;
-		}
-
-		protected virtual void CustomInspector() { }
+		protected abstract void CustomInspector();
 	}
 }
