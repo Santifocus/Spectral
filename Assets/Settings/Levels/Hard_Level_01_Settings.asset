@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Hard_Level_01_Settings
   m_EditorClassIdentifier: 
   LevelSceneID: 6
-  StartPlayerSize: 3
-  RequiredPlayerSizeToTransition: 6
+  StartPlayerSize: 4
+  RequiredPlayerSizeToTransition: 9
   LevelWidth:
     NonDefaultValue: 0
     UseDefault: 1
