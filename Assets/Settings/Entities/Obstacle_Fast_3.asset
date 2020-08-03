@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6a4da04ae97cd24ebcc4f9c10331de6, type: 3}
-  m_Name: TestObstacle
+  m_Name: Obstacle_Fast_3
   m_EditorClassIdentifier: 
   Model: {fileID: 4674235486081778228, guid: 42fe45a7c9e26c94292e5df2dae37beb, type: 3}
   DamageRange: 1
   DamageAmount: 1
   DamageImpactForce: 8
   DamageCooldown: 1
-  MoveSpeed: 1.4
+  MoveSpeed: 3
   BounceOnDealDamage: 1
