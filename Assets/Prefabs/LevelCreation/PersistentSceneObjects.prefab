@@ -45,6 +45,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MusicList:
   - {fileID: 11400000, guid: 1ea6946a0c0ba724fb855761c680d69e, type: 2}
+  - {fileID: 11400000, guid: a4c9db72bcc5dc149ac23e339751a4a7, type: 2}
+  - {fileID: 11400000, guid: 908ba315d7e5885409d81c6d82534998, type: 2}
+  - {fileID: 11400000, guid: 42ad9dc53fa6931418e85ef48d823288, type: 2}
   musicFadeInTime: 3
   musicFadeOutTime: 3
 --- !u!1 &7283833639342730761

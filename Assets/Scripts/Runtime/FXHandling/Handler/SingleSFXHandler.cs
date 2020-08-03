@@ -11,7 +11,7 @@ namespace Spectral.Runtime.FX.Handling
 		public override System.Type FXTargetType => typeof(SingleSFX);
 		private readonly List<SingleSFXInstance> effectInstances = new List<SingleSFXInstance>();
 
-		public override FXInstance InitiateFX(FXObject baseData, FXInstanceData instanceData)
+		public override FXInstance InitialiseFX(FXObject baseData, FXInstanceData instanceData)
 		{
 			SingleSFXInstance newInstance = new SingleSFXInstance(baseData, instanceData);
 			effectInstances.Add(newInstance);

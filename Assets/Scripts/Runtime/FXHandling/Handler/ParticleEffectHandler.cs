@@ -10,7 +10,7 @@ namespace Spectral.Runtime.FX.Handling
 		public override System.Type FXTargetType => typeof(ParticleEffect);
 		private readonly List<ParticleEffectInstance> effectInstances = new List<ParticleEffectInstance>();
 
-		public override FXInstance InitiateFX(FXObject baseData, FXInstanceData instanceData)
+		public override FXInstance InitialiseFX(FXObject baseData, FXInstanceData instanceData)
 		{
 			ParticleEffectInstance newInstance = new ParticleEffectInstance(baseData, instanceData);
 			effectInstances.Add(newInstance);

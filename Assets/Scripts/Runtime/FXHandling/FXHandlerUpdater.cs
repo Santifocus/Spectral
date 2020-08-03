@@ -7,6 +7,7 @@ namespace Spectral.Runtime.FX.Handling
 {
 	public class FXHandlerUpdater : MonoBehaviour
 	{
+		private static bool FXHandlersSetup;
 		private readonly List<FXHandler> scaledTimeFXHandlers = new List<FXHandler>();
 		private readonly List<FXHandler> physicsTimeFXHandlers = new List<FXHandler>();
 		private readonly List<FXHandler> realTimeTimeFXHandlers = new List<FXHandler>();
@@ -48,6 +49,12 @@ namespace Spectral.Runtime.FX.Handling
 
 		private void SetupFXHandlers()
 		{
+			if (FXHandlersSetup)
+			{
+				return;
+			}
+
+			FXHandlersSetup = true;
 			IEnumerable<Type> fxHandlerTypes = typeof(FXHandler)
 												.Assembly
 												.GetTypes()
