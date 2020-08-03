@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Spectral.Runtime.DataStorage;
 using Spectral.Runtime.Factories;
+using Spectral.Runtime.FX.Handling;
 using UnityEngine;
 
 namespace Spectral.Runtime.Behaviours.Entities
@@ -106,8 +107,6 @@ namespace Spectral.Runtime.Behaviours.Entities
 			Head.transform.eulerAngles = new Vector3(0, newMoveAngle, 0);
 		}
 
-		private void UpdateModelSideTurn() { }
-
 		protected virtual void FixedUpdate()
 		{
 			SetMoveVelocity();
@@ -178,6 +177,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		public virtual void OnEat(FoodObject target = null)
 		{
+			FXInstanceUtils.ExecuteFX(entitySettings.EatFX, transform);
 			EntityFactory.IncreaseEntitySize(this, entitySettings);
 			if (target != null)
 			{
@@ -185,8 +185,13 @@ namespace Spectral.Runtime.Behaviours.Entities
 			}
 		}
 
-		public virtual void Damage(int amount = 1)
+		public virtual void Damage(int amount = 1, bool silent = false)
 		{
+			if (!silent)
+			{
+				FXInstanceUtils.ExecuteFX(entitySettings.DamageFX, transform);
+			}
+
 			for (int i = 0; i < amount; i++)
 			{
 				if (!Alive)

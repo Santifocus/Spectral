@@ -1,4 +1,6 @@
-﻿using Spectral.Runtime.DataStorage;
+﻿using Spectral.Editor.MemberDrawer;
+using Spectral.Runtime.DataStorage;
+using Spectral.Runtime.DataStorage.FX;
 using UnityEditor;
 using static Spectral.Editor.EditorUtils;
 
@@ -10,23 +12,21 @@ namespace Spectral.Editor
 		private bool movementSettingsOpen;
 		private bool bodySettingsOpen;
 		private bool otherSettingsOpen;
+		private bool fxSettingsOpen;
 
-		protected override bool ShouldHideBaseInspector()
-		{
-			return true;
-		}
+		protected override bool ShouldHideBaseInspector => true;
 
 		protected override void CustomInspector()
 		{
 			DrawInFoldout(ref movementSettingsOpen, "Movement Settings", DrawMovementSettings, true);
 			DrawInFoldout(ref bodySettingsOpen, "Body Settings", DrawBodySettings, true);
 			DrawInFoldout(ref otherSettingsOpen, "Other Settings", DrawOtherSettings, true);
+			DrawInFoldout(ref fxSettingsOpen, "FX Settings", DrawFXSettings, true);
 		}
 
 		protected virtual void DrawMovementSettings()
 		{
 			EntitySettings settings = target as EntitySettings;
-			IncreaseIndent();
 			Header("Speed");
 			settings.MoveSpeed.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.MoveSpeed)));
 			settings.VelocityDamping.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.VelocityDamping)));
@@ -39,13 +39,11 @@ namespace Spectral.Editor
 			settings.TurnAcceleration.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.TurnAcceleration)));
 			settings.TurnSmoothAngle.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.TurnSmoothAngle)));
 			settings.TurnSmoothMultiplier.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.TurnSmoothMultiplier)));
-			DecreaseIndent();
 		}
 
 		protected virtual void DrawBodySettings()
 		{
 			EntitySettings settings = target as EntitySettings;
-			IncreaseIndent();
 			IntField(ref settings.MinParts, ObjectNames.NicifyVariableName(nameof(EntitySettings.MinParts)));
 			IntField(ref settings.SpawnPartCount, ObjectNames.NicifyVariableName(nameof(EntitySettings.SpawnPartCount)));
 			settings.PartMinimumScale.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.PartMinimumScale)));
@@ -56,13 +54,11 @@ namespace Spectral.Editor
 															serializedObject.FindProperty(nameof(EntitySettings.EntityTorso)), ArrayDrawStyle.Default, ". Torso Variant");
 
 			UnityObjectField<EntityBodyPartConfiguration>(ref settings.EntityTail, ObjectNames.NicifyVariableName(nameof(EntitySettings.EntityTail)));
-			DecreaseIndent();
 		}
 
 		protected virtual void DrawOtherSettings()
 		{
 			EntitySettings settings = target as EntitySettings;
-			IncreaseIndent();
 			if (!settings.EnableAI || (settings.AIConfiguration.EatBehavior != EatBehaviorType.DoesntEat))
 			{
 				settings.FoodEatDistance.Draw(ObjectNames.NicifyVariableName(nameof(EntitySettings.FoodEatDistance)));
@@ -74,7 +70,17 @@ namespace Spectral.Editor
 										serializedObject.FindProperty(nameof(EntitySettings.AIConfiguration)));
 
 			EditorGUI.EndDisabledGroup();
-			DecreaseIndent();
+		}
+
+		protected virtual void DrawFXSettings()
+		{
+			EntitySettings settings = target as EntitySettings;
+			DrawArray<FXObjectData>(ref settings.EatFX, ObjectNames.NicifyVariableName(nameof(EntitySettings.EatFX)), serializedObject.FindProperty(nameof(EntitySettings.EatFX))
+									, ArrayDrawStyle.Default, FXObjectDataDrawer.Draw);
+
+			DrawArray<FXObjectData>(ref settings.DamageFX, ObjectNames.NicifyVariableName(nameof(EntitySettings.DamageFX)),
+									serializedObject.FindProperty(nameof(EntitySettings.DamageFX))
+									, ArrayDrawStyle.Default, FXObjectDataDrawer.Draw);
 		}
 	}
 }

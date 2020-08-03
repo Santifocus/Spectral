@@ -1,4 +1,5 @@
-﻿using Spectral.Runtime.Factories;
+﻿using Spectral.Runtime.DataStorage.FX;
+using Spectral.Runtime.Factories;
 using UnityEngine;
 
 namespace Spectral.Runtime.DataStorage
@@ -40,6 +41,10 @@ namespace Spectral.Runtime.DataStorage
 		public DefaultableFloat FoodEatDistance = new DefaultableFloat(() => GameSettings.Current.DefaultEntitySettings.EntityEatDistance);
 		public bool EnableAI = false;
 		public EntityAIConfiguration AIConfiguration;
+
+		//FX
+		public FXObjectData[] EatFX;
+		public FXObjectData[] DamageFX;
 
 		//Creation
 		public override MonoBehaviour Spawn(Vector2 position, int levelPlaneIndex)

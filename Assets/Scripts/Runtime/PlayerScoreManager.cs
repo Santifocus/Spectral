@@ -81,7 +81,7 @@ namespace Spectral.Runtime
 					yield break;
 				}
 
-				PlayerMover.Instance.Damage();
+				PlayerMover.Instance.Damage(1, true);
 				if (!hasTransitionedToPlaneBefore)
 				{
 					ChangePlayerScore(1);

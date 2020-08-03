@@ -82,7 +82,7 @@ namespace Spectral.Runtime.Behaviours
 			int bodyPartCount = EntityFactory.GetEntitySize(target);
 			for (int i = 0; i < bodyPartCount; i++)
 			{
-				if (CheckForContactOnPart(EntityFactory.GetBodyPartFromIndex(target, i), i / (float) bodyPartCount))
+				if (TryForContactOnPart(EntityFactory.GetBodyPartFromIndex(target, i), i / (float) bodyPartCount))
 				{
 					damageCooldown = obstacleSettings.DamageCooldown;
 
@@ -90,7 +90,7 @@ namespace Spectral.Runtime.Behaviours
 				}
 			}
 
-			bool CheckForContactOnPart(EntityBodyPart part, float toHeadDistance)
+			bool TryForContactOnPart(EntityBodyPart part, float toHeadDistance)
 			{
 				Vector2 dif = part.transform.position.XYZtoXZ() - transform.position.XYZtoXZ();
 				float sqrDist = dif.sqrMagnitude;

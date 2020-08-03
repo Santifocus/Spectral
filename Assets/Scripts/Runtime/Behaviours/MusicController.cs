@@ -15,20 +15,20 @@ namespace Spectral.Runtime.Behaviours
 		[SerializeField] private float musicFadeOutTime = 2;
 
 		private SoundPlayer[] musicPlayer;
+		private List<SoundPlayer> soundInstances;
 		private readonly List<MusicInstance> activeMusicInstances = new List<MusicInstance>();
 
 		private void Start()
 		{
 			Instance = this;
 			SceneManager.sceneLoaded += OnSceneLoaded;
+			soundInstances = new List<SoundPlayer>();
 
 			//Setup Music player
 			musicPlayer = new SoundPlayer[MusicList.Length];
 			for (int i = 0; i < MusicList.Length; i++)
 			{
-				SoundPlayer soundPlayer = new GameObject(MusicList[i].soundName + " Sound Player").AddComponent<SoundPlayer>();
-				soundPlayer.transform.SetParent(transform);
-				soundPlayer.Setup(MusicList[i]);
+				SoundPlayer soundPlayer = CreateSoundPlayer(MusicList[i]);
 				soundPlayer.FadePoint = 0;
 				musicPlayer[i] = soundPlayer;
 			}
@@ -47,6 +47,12 @@ namespace Spectral.Runtime.Behaviours
 		}
 
 		private void Update()
+		{
+			ManageMusicInstances();
+			ManageSoundInstances();
+		}
+
+		private void ManageMusicInstances()
 		{
 			//Find the music instance with the highest index that wants to be played
 			int targetInstanceIndex = -1;
@@ -135,12 +141,41 @@ namespace Spectral.Runtime.Behaviours
 			}
 		}
 
+		private void ManageSoundInstances()
+		{
+			for (int i = soundInstances.Count - 1; i >= 0; i--)
+			{
+				if (soundInstances[i].FullyStopped)
+				{
+					Destroy(soundInstances[i].gameObject);
+					soundInstances.RemoveAt(i);
+				}
+			}
+		}
+
 		public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 		{
-			for (int i = 0; i < activeMusicInstances.Count; i++)
+			foreach (MusicInstance musicInstance in activeMusicInstances)
 			{
-				activeMusicInstances[i].WantsToPlay = false;
+				musicInstance.WantsToPlay = false;
 			}
+		}
+
+		public void PlayPersistantSound(Sound targetSound, float volume = 1)
+		{
+			SoundPlayer soundPlayer = CreateSoundPlayer(targetSound);
+			soundPlayer.FadePoint = volume;
+			soundInstances.Add(soundPlayer);
+			soundPlayer.Play();
+		}
+
+		private SoundPlayer CreateSoundPlayer(Sound targetSound)
+		{
+			SoundPlayer soundPlayer = new GameObject(targetSound.soundName + " Sound Player").AddComponent<SoundPlayer>();
+			soundPlayer.transform.SetParent(transform);
+			soundPlayer.Setup(targetSound);
+
+			return soundPlayer;
 		}
 	}
 
