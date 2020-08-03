@@ -26,7 +26,7 @@ namespace Spectral.Runtime.Behaviours.UI
 
 		private void UpdateScoreDisplay()
 		{
-			playerScoreDisplay.text = PlayerScoreManager.CurrentPlayerScore.ToString();
+			playerScoreDisplay.text = (PlayerScoreManager.CurrentPlayerScore * ConstantCollector.SCORE_MULTIPLIER).ToString();
 		}
 
 		private void UpdateSizeDisplay()

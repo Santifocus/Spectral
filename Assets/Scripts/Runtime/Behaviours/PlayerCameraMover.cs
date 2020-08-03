@@ -15,9 +15,9 @@ namespace Spectral.Runtime.Behaviours
 		[SerializeField] private float scaleLerpSpeed = 0.5f;
 		[SerializeField] private float levelDimensionLerp = 0.5f;
 		[SerializeField] private Transform shakeCore = default;
+		[SerializeField] private Camera cameraComponent = default;
 
 		private bool initiated;
-		private Camera cameraComponent;
 		private Vector2 currentBasePosition;
 		private float currentToPlayerOffset;
 
@@ -27,7 +27,6 @@ namespace Spectral.Runtime.Behaviours
 		private void Start()
 		{
 			activePlayerCamera = this;
-			cameraComponent = GetComponent<Camera>();
 			currentToPlayerOffset = toPlayerOffset;
 		}
 
