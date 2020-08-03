@@ -12,7 +12,7 @@ namespace Spectral.Runtime.FX.Handling
 		public override System.Type FXTargetType => typeof(ScreenBorderColor);
 		private readonly List<ScreenBorderColorInstance> effectInstances = new List<ScreenBorderColorInstance>();
 
-		public override FXInstance InitiateFX(FXObject baseData, FXInstanceData instanceData)
+		public override FXInstance InitialiseFX(FXObject baseData, FXInstanceData instanceData)
 		{
 			ScreenBorderColorInstance newInstance = new ScreenBorderColorInstance(baseData, instanceData);
 			effectInstances.Add(newInstance);

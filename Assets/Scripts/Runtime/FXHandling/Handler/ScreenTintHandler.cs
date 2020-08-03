@@ -11,7 +11,7 @@ namespace Spectral.Runtime.FX.Handling
 		public override System.Type FXTargetType => typeof(ScreenTint);
 		private readonly List<ScreenTintInstance> effectInstances = new List<ScreenTintInstance>();
 
-		public override FXInstance InitiateFX(FXObject baseData, FXInstanceData instanceData)
+		public override FXInstance InitialiseFX(FXObject baseData, FXInstanceData instanceData)
 		{
 			ScreenTintInstance newInstance = new ScreenTintInstance(baseData, instanceData);
 			effectInstances.Add(newInstance);

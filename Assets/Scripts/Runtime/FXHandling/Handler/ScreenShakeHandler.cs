@@ -14,7 +14,7 @@ namespace Spectral.Runtime.FX.Handling
 
 		private float delayTillNextShake;
 
-		public override FXInstance InitiateFX(FXObject baseData, FXInstanceData instanceData)
+		public override FXInstance InitialiseFX(FXObject baseData, FXInstanceData instanceData)
 		{
 			ScreenShakeInstance newInstance = new ScreenShakeInstance(baseData, instanceData);
 			effectInstances.Add(newInstance);

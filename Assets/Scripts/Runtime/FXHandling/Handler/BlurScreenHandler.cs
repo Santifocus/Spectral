@@ -16,7 +16,7 @@ namespace Spectral.Runtime.FX.Handling
 		private float curBlurIntensity;
 		private float curBlurDistance;
 
-		public override FXInstance InitiateFX(FXObject baseData, FXInstanceData instanceData)
+		public override FXInstance InitialiseFX(FXObject baseData, FXInstanceData instanceData)
 		{
 			ScreenBlurInstance newInstance = new ScreenBlurInstance(baseData, instanceData);
 			effectInstances.Add(newInstance);

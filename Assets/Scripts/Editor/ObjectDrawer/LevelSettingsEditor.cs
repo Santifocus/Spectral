@@ -19,10 +19,7 @@ namespace Spectral.Editor
 															? targetMusicControllerBackingField
 															: targetMusicControllerBackingField = FindObjectOfType<MusicController>();
 
-		protected override bool ShouldHideBaseInspector()
-		{
-			return true;
-		}
+		protected override bool ShouldHideBaseInspector => true;
 
 		protected override void CustomInspector()
 		{

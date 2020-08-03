@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a4da04ae97cd24ebcc4f9c10331de6, type: 3}
   m_Name: TestObstacle
   m_EditorClassIdentifier: 
-  Model: {fileID: 9140138709427009310, guid: 55d37000ce6166a4dab966282034debd, type: 3}
+  Model: {fileID: 4674235486081778228, guid: 42fe45a7c9e26c94292e5df2dae37beb, type: 3}
   DamageRange: 1
   DamageAmount: 1
   DamageImpactForce: 8

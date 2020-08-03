@@ -117,3 +117,23 @@ MonoBehaviour:
       NonDefaultValue: 0
       UseDefault: 1
       DefaultOffset: 0
+  EatFX:
+  - BaseFX: {fileID: 11400000, guid: 4e4d554fd3a736a498081a66c1374c21, type: 2}
+    EnabledOverwrites: 0
+    MultiplierClamps:
+      Min: 1
+      Max: 1
+    InitiationDelay: 0
+    PositionOffset: {x: 0, y: 0, z: 0}
+    RotationOffset: {x: 0, y: 0, z: 0}
+    NewScale: {x: 1, y: 1, z: 1}
+  DamageFX:
+  - BaseFX: {fileID: 11400000, guid: dae48f48785640a43984276b02c48103, type: 2}
+    EnabledOverwrites: 0
+    MultiplierClamps:
+      Min: 1
+      Max: 1
+    InitiationDelay: 0
+    PositionOffset: {x: 0, y: 0, z: 0}
+    RotationOffset: {x: 0, y: 0, z: 0}
+    NewScale: {x: 1, y: 1, z: 1}
