@@ -42,6 +42,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - MaxFrames: 32
+    - Vector1_1468193A: 0
     - Vector1_225FD851: 8
     - Vector1_37B8B118: 4
     - Vector1_451B0D4B: 25
@@ -49,6 +50,7 @@ Material:
     - Color_287050CA: {r: 1, g: 0, b: 0, a: 0}
     - Color_66D2534: {r: 0, g: 0, b: 0, a: 0}
     - Color_A050A4E3: {r: 0.54901963, g: 3.1686275, b: 2.5254903, a: 0}
+    - Color_C37F733D: {r: 0.3349057, g: 1, b: 0.9999998, a: 0}
 --- !u!114 &1657394582700796823
 MonoBehaviour:
   m_ObjectHideFlags: 11
