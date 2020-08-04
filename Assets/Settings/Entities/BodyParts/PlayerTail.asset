@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2a12e60b26b9c840b83a5cc06b28075, type: 3}
   m_Name: PlayerTail
   m_EditorClassIdentifier: 
-  PartPrefab: {fileID: 9140138709427009310, guid: 55d37000ce6166a4dab966282034debd,
+  PartPrefab: {fileID: 6888205701128941102, guid: 55d37000ce6166a4dab966282034debd,
     type: 3}
   Lenght: 0.75
   PartOffset: 0.25

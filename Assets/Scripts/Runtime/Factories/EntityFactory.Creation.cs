@@ -56,7 +56,7 @@ namespace Spectral.Runtime.Factories
 			entityCore.Head = headObject.AddComponent<EntityBodyPart>();
 			entityCore.Head.Config = settings.EntityHead;
 			entityCore.Head.Body = currentJointAttachment;
-			entityCore.Head.Model = Object.Instantiate(settings.EntityHead.PartPrefab, turnCore.transform).transform;
+			entityCore.Head.FeedbackPlayer = Object.Instantiate(settings.EntityHead.PartPrefab, turnCore.transform);
 			entityCore.Head.TurnCore = turnCore.transform;
 			entityCore.Head.CalculatedLength = lastSize;
 

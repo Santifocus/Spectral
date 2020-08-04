@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+﻿using Spectral.Runtime.Behaviours;
 
 namespace Spectral.Runtime.DataStorage
 {
 	public class EntityBodyPartConfiguration : SpectralScriptableObject
 	{
-		public GameObject PartPrefab;
+		public EntityFeedbackPlayer PartPrefab;
 		public float Lenght = 1;
 		public float PartOffset = 0.25f;
 		public float AngleLimiter = 50;

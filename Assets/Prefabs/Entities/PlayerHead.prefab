@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8315088185908176344}
+  - component: {fileID: 5596559092686344253}
   m_Layer: 0
   m_Name: PlayerHead
   m_TagString: Untagged
@@ -32,6 +33,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5596559092686344253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3901906472040601866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0048f489be260e34aaa0fbc870736fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eatEffect:
+    EffectRenderer: {fileID: 4752360839012380556}
+    ShouldPlayEffect: 1
+    EffectName: Vector1_1468193A
+    EffectTime: 1
+    EffectValueMin: 0
+    EffectValueMax: 1
+  damageEffect:
+    EffectRenderer: {fileID: 4752360839012380556}
+    ShouldPlayEffect: 1
+    EffectName: Vector1_5AF1E367
+    EffectTime: 1
+    EffectValueMin: 0
+    EffectValueMax: 1
 --- !u!1001 &2671023304032183497
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -204,6 +231,12 @@ PrefabInstance:
 --- !u!4 &8040131316035594563 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 0fb105febd63fd4489f5d736f0a6e44c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3093687190674342489}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4752360839012380556 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: 0fb105febd63fd4489f5d736f0a6e44c,
     type: 3}
   m_PrefabInstance: {fileID: 3093687190674342489}
   m_PrefabAsset: {fileID: 0}

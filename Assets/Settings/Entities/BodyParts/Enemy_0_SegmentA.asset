@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2a12e60b26b9c840b83a5cc06b28075, type: 3}
   m_Name: Enemy_0_SegmentA
   m_EditorClassIdentifier: 
-  PartPrefab: {fileID: 7749228815461979815, guid: 5108bef94fbf8b84e894d4b6759ea92c,
+  PartPrefab: {fileID: 1778527614783431505, guid: 5108bef94fbf8b84e894d4b6759ea92c,
     type: 3}
   Lenght: 0.5
   PartOffset: 0.25

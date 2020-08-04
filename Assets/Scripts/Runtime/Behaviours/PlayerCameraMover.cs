@@ -1,4 +1,5 @@
 ﻿using Spectral.Runtime.Behaviours.Entities;
+using Spectral.Runtime.DataStorage;
 using UnityEngine;
 
 namespace Spectral.Runtime.Behaviours
@@ -60,6 +61,7 @@ namespace Spectral.Runtime.Behaviours
 			//Normalize position based on the level-bounds minus the view rect
 			Vector2 normalizedPosition = NormalizePositionFromLevelBoundsAndViewRect(basePosition, currentlyUsedLevelWidth, currentlyUsedLevelHeight);
 			transform.position = new Vector3(currentlyUsedLevelWidth * normalizedPosition.x, currentToPlayerOffset, currentlyUsedLevelHeight * normalizedPosition.y);
+			cameraComponent.nearClipPlane = currentToPlayerOffset - (LevelLoaderSettings.Current.LevelDepth * 0.5f);
 		}
 
 		private void UpdateUsedLevelDimensions(Vector2 viewRect)
