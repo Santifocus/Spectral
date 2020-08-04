@@ -1,3 +1,4 @@
+using Spectral.Runtime.Behaviours.Entities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ namespace Spectral.Runtime.Behaviours.UI
 	{
 		[Header("Pointer")] [SerializeField] private RectTransform onScreenPointer = default;
 		[SerializeField] private RectTransform offScreenPointerCore = default;
-		[SerializeField] private Vector2 borderPadding = new Vector2(24, 24);
+		[SerializeField] private float pointerOffsetToPlayer = 4;
 
 		[Header("Pointer Coloring")] [SerializeField]
 		private Graphic[] pointerComponents = default;
@@ -25,6 +26,18 @@ namespace Spectral.Runtime.Behaviours.UI
 			UpdatePointerPosition();
 			UpdatePointerColor();
 			SetGateOnScreenState(false);
+			LevelLoader.LevelTransitionBegan += LevelTransitionStarted;
+		}
+
+		private void OnDestroy()
+		{
+			LevelLoader.LevelTransitionBegan -= LevelTransitionStarted;
+		}
+
+		private void LevelTransitionStarted(int transitionDirection, LevelPlane previousLevelPlane, LevelPlane newLevelPlane, bool hasTransitionedToPlaneBefore)
+		{
+			colorTransitionTimer = TransitionGateActive() ? colorTransitionTime : 0;
+			UpdatePointerColor();
 		}
 
 		private void Update()
@@ -35,8 +48,9 @@ namespace Spectral.Runtime.Behaviours.UI
 
 		private void UpdatePointerPosition()
 		{
-			if ((LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject                       == null)
-				|| (LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject.downTransitionGate == null))
+			if (!PlayerMover.Existent                                                                             ||
+				(LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject                    == null) ||
+				(LevelLoader.GameLevelPlanes[LevelLoader.PlayerLevelIndex].CoreObject.downTransitionGate == null))
 			{
 				return;
 			}
@@ -51,13 +65,11 @@ namespace Spectral.Runtime.Behaviours.UI
 			}
 			else
 			{
-				Vector2 clampedOnScreen = new Vector2(Mathf.Clamp(gateOnScreenPoint.x, borderPadding.x, Screen.width - borderPadding.x),
-													Mathf.Clamp(gateOnScreenPoint.y, borderPadding.y, Screen.height  - borderPadding.y));
-
-				offScreenPointerCore.position = clampedOnScreen;
-				Vector2 clampDif = (Vector2) gateOnScreenPoint - clampedOnScreen;
-				float pointerAngle = Mathf.Atan2(clampDif.y, clampDif.x) * Mathf.Rad2Deg;
-				offScreenPointerCore.localEulerAngles = new Vector3(0, 0, pointerAngle);
+				Vector2 playerOnScreenPoint = PlayerCameraMover.ActiveCamera.WorldToScreenPoint(PlayerMover.Instance.Head.transform.position);
+				Vector2 onScreenDif = (Vector2) gateOnScreenPoint - playerOnScreenPoint;
+				Vector2 direction = onScreenDif.normalized;
+				offScreenPointerCore.position = playerOnScreenPoint + (direction * pointerOffsetToPlayer);
+				offScreenPointerCore.right = direction;
 			}
 		}
 

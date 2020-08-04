@@ -28,7 +28,7 @@ namespace Spectral.Runtime.Factories
 		{
 			//Setup the Transforms
 			Transform foodObjectCore = new GameObject("Body Part Food Object").transform;
-			Transform partModel = bodyPart.Model;
+			Transform partModel = bodyPart.FeedbackPlayer.transform;
 			foodObjectCore.SetParent(targetFoodSpawner.TargetPlane.TargetStorage.FoodObjectStorage);
 			partModel.SetParent(foodObjectCore);
 

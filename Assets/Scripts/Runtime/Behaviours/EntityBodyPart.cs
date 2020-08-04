@@ -8,7 +8,7 @@ namespace Spectral.Runtime.Behaviours
 		private const float ENTITY_PART_BODY_DRAG = 2.5f;
 		public EntityBodyPartConfiguration Config { get; set; }
 		public Rigidbody Body { get; set; }
-		public Transform Model { get; set; }
+		public EntityFeedbackPlayer FeedbackPlayer { get; set; }
 		public Transform TurnCore { get; set; }
 		public HingeJoint Joint { get; set; }
 
@@ -24,7 +24,7 @@ namespace Spectral.Runtime.Behaviours
 			TurnCore.SetParent(transform);
 
 			//Create the model
-			Model = Instantiate(config.PartPrefab, TurnCore).transform;
+			FeedbackPlayer = Instantiate(config.PartPrefab, TurnCore);
 
 			//Setup components
 			//Rigidbody

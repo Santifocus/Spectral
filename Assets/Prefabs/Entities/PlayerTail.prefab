@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4295079857645947852}
+  - component: {fileID: 6888205701128941102}
   m_Layer: 0
   m_Name: PlayerTail
   m_TagString: Untagged
@@ -31,6 +32,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6888205701128941102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9140138709427009310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0048f489be260e34aaa0fbc870736fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eatEffect:
+    EffectRenderer: {fileID: 5325804725813818796}
+    ShouldPlayEffect: 1
+    EffectName: Vector1_1468193A
+    EffectTime: 1
+    EffectValueMin: 0
+    EffectValueMax: 1
+  damageEffect:
+    EffectRenderer: {fileID: 5325804725813818796}
+    ShouldPlayEffect: 1
+    EffectName: Vector1_5AF1E367
+    EffectTime: 1
+    EffectValueMin: 0
+    EffectValueMax: 1
 --- !u!1001 &2518695492010367097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108,6 +135,12 @@ PrefabInstance:
 --- !u!4 &7462043444152529763 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 0896abfa22825544c84ca1a9e07fef5a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2518695492010367097}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5325804725813818796 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: 0896abfa22825544c84ca1a9e07fef5a,
     type: 3}
   m_PrefabInstance: {fileID: 2518695492010367097}
   m_PrefabAsset: {fileID: 0}

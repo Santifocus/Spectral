@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2a12e60b26b9c840b83a5cc06b28075, type: 3}
   m_Name: PlayerTorso
   m_EditorClassIdentifier: 
-  PartPrefab: {fileID: 6503134397601524848, guid: ae82c3ff8a286fa46add7508fe09fc2f,
+  PartPrefab: {fileID: 2024667182088149309, guid: ae82c3ff8a286fa46add7508fe09fc2f,
     type: 3}
   Lenght: 0.75
   PartOffset: 0.25

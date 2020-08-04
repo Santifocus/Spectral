@@ -183,6 +183,13 @@ namespace Spectral.Runtime.Behaviours.Entities
 			{
 				target.Eat();
 			}
+
+			//Play effects on parts
+			int bodySize = EntityFactory.GetEntitySize(this);
+			for (int i = 0; i < bodySize; i++)
+			{
+				EntityFactory.GetBodyPartFromIndex(this, i).FeedbackPlayer.PlayEatEffect();
+			}
 		}
 
 		public virtual void Damage(int amount = 1, bool silent = false)
@@ -200,6 +207,13 @@ namespace Spectral.Runtime.Behaviours.Entities
 				}
 
 				EntityFactory.DecreaseEntitySize(this, entitySettings);
+			}
+
+			//Play effects on parts
+			int bodySize = EntityFactory.GetEntitySize(this);
+			for (int i = 0; i < bodySize; i++)
+			{
+				EntityFactory.GetBodyPartFromIndex(this, i).FeedbackPlayer.PlayDamageEffect();
 			}
 		}
 

@@ -22,11 +22,6 @@ namespace Spectral.Runtime.Behaviours
 
 		public void TryActivate()
 		{
-			if (!SamePlaneAsPlayerInstance())
-			{
-				return;
-			}
-
 			if (transitionDirection == -1)
 			{
 				Activate();
@@ -42,7 +37,8 @@ namespace Spectral.Runtime.Behaviours
 
 		public bool CanBeActivated()
 		{
-			return wasActivatedBefore || (EntityFactory.GetEntitySize(PlayerMover.Instance) >= AffiliatedLevelPlane.PlaneSettings.RequiredPlayerSizeToTransition);
+			return SamePlaneAsPlayerInstance() &&
+					(wasActivatedBefore || (EntityFactory.GetEntitySize(PlayerMover.Instance) >= AffiliatedLevelPlane.PlaneSettings.RequiredPlayerSizeToTransition));
 		}
 
 		private void Activate()
