@@ -194,11 +194,6 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		public virtual void Damage(int amount = 1, bool silent = false)
 		{
-			if (!silent)
-			{
-				FXInstanceUtils.ExecuteFX(entitySettings.DamageFX, transform);
-			}
-
 			for (int i = 0; i < amount; i++)
 			{
 				if (!Alive)
@@ -208,12 +203,17 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 				EntityFactory.DecreaseEntitySize(this, entitySettings);
 			}
-
-			//Play effects on parts
-			int bodySize = EntityFactory.GetEntitySize(this);
-			for (int i = 0; i < bodySize; i++)
+			
+			if (!silent)
 			{
-				EntityFactory.GetBodyPartFromIndex(this, i).FeedbackPlayer.PlayDamageEffect();
+				FXInstanceUtils.ExecuteFX(entitySettings.DamageFX, transform);
+
+				//Play effects on parts
+				int bodySize = EntityFactory.GetEntitySize(this);
+				for (int i = 0; i < bodySize; i++)
+				{
+					EntityFactory.GetBodyPartFromIndex(this, i).FeedbackPlayer.PlayDamageEffect();
+				}
 			}
 		}
 
