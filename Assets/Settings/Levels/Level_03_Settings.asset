@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017848a574208fa44bc291a480c94a5b, type: 3}
+  m_Name: Level_03_Settings
+  m_EditorClassIdentifier: 
+  LevelSceneID: 4
+  StartPlayerSize: 4
+  RequiredPlayerSizeToTransition: 9
+  LevelWidth:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: -50
+  LevelHeight:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: -50
+  FoodInLevel:
+    NonDefaultValue: 0
+    UseDefault: 1
+    DefaultOffset: -3
+  FoodObjectVariants:
+  - {fileID: 3903851201713435295, guid: 104bcc0dcd9f352409a93e16c752202d, type: 3}
+  BackgroundColor: {r: 0.046665095, g: 0.16513224, b: 0.25015837, a: 0}
+  MusicIndex: 0
