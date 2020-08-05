@@ -47,7 +47,9 @@ MonoBehaviour:
   LevelStartIndex: 0
   LevelTransitionTime: 2
   LevelDepth: 30
-  TransitionGateModelDown: {fileID: 9140138709427009310, guid: 55d37000ce6166a4dab966282034debd,
+  TransitionGateModelDown: {fileID: 4059692601525168827, guid: 4ba0c1c20b8d8df4f8684e80ea9f9d26,
     type: 3}
-  TransitionGateModelUp: {fileID: 3901906472040601866, guid: 5cc9e25c14cddde4d8d673e05438310b,
+  DownTransitionFX: []
+  TransitionGateModelUp: {fileID: 4059692601525168827, guid: d0c8fffcc9c0e4f4e9b10859b5a7927c,
     type: 3}
+  UpTransitionFX: []
