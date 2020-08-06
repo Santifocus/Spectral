@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameBeginSound
   m_EditorClassIdentifier: 
   soundName: Game Begin
-  clip: {fileID: 8300000, guid: 3c54cea01dd668f47b7c142d7f0d060f, type: 3}
+  clip: {fileID: 8300000, guid: c979e10e1d6ebfe4bb41e5497235e8e8, type: 3}
   audioGroup: {fileID: 0}
   Loop: 0
   priority: 128

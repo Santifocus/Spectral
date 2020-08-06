@@ -66,11 +66,29 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4ec94a0bc25013f4b8bc343a6f249aa0, type: 2}
   - {fileID: 11400000, guid: 4ec94a0bc25013f4b8bc343a6f249aa0, type: 2}
   LevelStartIndex: 0
-  LevelTransitionTime: 2
+  LevelTransitionTime: 3.5
   LevelDepth: 30
   TransitionGateModelDown: {fileID: 4059692601525168827, guid: 4ba0c1c20b8d8df4f8684e80ea9f9d26,
     type: 3}
-  DownTransitionFX: []
+  DownTransitionFX:
+  - BaseFX: {fileID: 11400000, guid: b589ddaa7acfe4c49ae46bf156831eee, type: 2}
+    EnabledOverwrites: 0
+    MultiplierClamps:
+      Min: 1
+      Max: 1
+    InitiationDelay: 0
+    PositionOffset: {x: 0, y: 0, z: 0}
+    RotationOffset: {x: 0, y: 0, z: 0}
+    NewScale: {x: 0, y: 0, z: 0}
   TransitionGateModelUp: {fileID: 4059692601525168827, guid: d0c8fffcc9c0e4f4e9b10859b5a7927c,
     type: 3}
-  UpTransitionFX: []
+  UpTransitionFX:
+  - BaseFX: {fileID: 11400000, guid: 9d91eaa38a8f026469c344c5ed9d0dcc, type: 2}
+    EnabledOverwrites: 0
+    MultiplierClamps:
+      Min: 1
+      Max: 1
+    InitiationDelay: -2
+    PositionOffset: {x: 0, y: 0, z: 0}
+    RotationOffset: {x: 0, y: 0, z: 0}
+    NewScale: {x: 0, y: 0, z: 0}
