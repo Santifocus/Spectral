@@ -42,6 +42,7 @@ namespace Spectral.Runtime.Factories
 					throw new System.ArgumentException($"Cannot create a Transition gate with {nameof(transitionDirection)}: '{transitionDirection}'.");
 #else
 					Object.Destroy(gateCoreObject.gameObject);
+
 					return null;
 #endif
 				}

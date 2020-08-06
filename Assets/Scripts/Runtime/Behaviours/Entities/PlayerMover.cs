@@ -115,7 +115,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 			if (forceImpact > 0.01f)
 			{
 				Vector2 direction = new Vector2((forceImpactVector.x > 0 ? 1 : 0) * Mathf.Sign(selfPosition.x * -1),
-												(forceImpactVector.y > 0 ? 1 : 0) * Mathf.Sign(selfPosition.y * -1)).normalized;
+												(forceImpactVector.y > 0 ? 1 : 0) * Mathf.Sign(selfPosition.y * -1));
 
 				AddForceImpact(forceImpact * Time.deltaTime * direction);
 			}
@@ -123,10 +123,10 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private Vector2? GetInputPosition()
 		{
-#if UNITY_ANDROID || UNITY_IPHONE
-			return Input.touchCount > 0 ? (Vector2?)Input.GetTouch(0).position : null;
-#else
+#if UNITY_EDITOR
 			return Input.GetMouseButton(0) ? (Vector2?) Input.mousePosition : null;
+#else
+			return Input.touchCount > 0 ? (Vector2?)Input.GetTouch(0).position : null;
 #endif
 		}
 
