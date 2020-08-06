@@ -38,6 +38,11 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private void ResetEnemy()
 		{
+			if (!EntitySettings)
+			{
+				return;
+			}
+
 			SetIdleState(true);
 			originSpawnPosition = Head.transform.position.XYZtoXZ();
 			SetupViewAngles();
@@ -48,7 +53,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 		private void SetupViewAngles()
 		{
 			float standardViewAngle =
-				Mathf.Min(entitySettings.AIConfiguration.ViewAngle, 360) * Mathf.Deg2Rad;
+				Mathf.Min(EntitySettings.AIConfiguration.ViewAngle, 360) * Mathf.Deg2Rad;
 
 			viewAngleCos = Mathf.Cos(standardViewAngle);
 		}
@@ -87,14 +92,14 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private void IdleBehaviour()
 		{
-			if ((entitySettings.AIConfiguration.ActiveBehaviour != ActiveBehaviourType.Passive) && CanSeeTarget())
+			if ((EntitySettings.AIConfiguration.ActiveBehaviour != ActiveBehaviourType.Passive) && CanSeeTarget())
 			{
 				SetIdleState(false);
 
 				return;
 			}
 
-			if (!CheckForFood() && (entitySettings.AIConfiguration.IdleBehaviour != IdleBehaviourType.Stay))
+			if (!CheckForFood() && (EntitySettings.AIConfiguration.IdleBehaviour != IdleBehaviourType.Stay))
 			{
 				IdleMovement();
 			}
@@ -107,14 +112,14 @@ namespace Spectral.Runtime.Behaviours.Entities
 				return false;
 			}
 
-			switch (entitySettings.AIConfiguration.EatBehavior)
+			switch (EntitySettings.AIConfiguration.EatBehavior)
 			{
 				default:
 				case EatBehaviorType.DoesntEat:
 					return false;
 				case EatBehaviorType.EatsTillFull:
 					if (eatenFoodObjectCount >=
-						entitySettings.AIConfiguration.MaxSizeIncrease)
+						EntitySettings.AIConfiguration.MaxSizeIncrease)
 					{
 						return false;
 					}
@@ -153,7 +158,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 				idleDecisionCooldown -= Time.deltaTime;
 				if (idleDecisionCooldown <= 0)
 				{
-					if (entitySettings.AIConfiguration.IdleBehaviour == IdleBehaviourType.Patrol)
+					if (EntitySettings.AIConfiguration.IdleBehaviour == IdleBehaviourType.Patrol)
 					{
 						GetNewPatrolPoint();
 					}
@@ -180,7 +185,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 			float directionAngle = Random.Range(0f, 360f);
 			Vector3 newWanderPosition = Head.transform.position
 										+ (new Vector3(Mathf.Sin(directionAngle * Mathf.Deg2Rad), 0, Mathf.Cos(directionAngle * Mathf.Deg2Rad))
-											* entitySettings.AIConfiguration.WanderingRadius
+											* EntitySettings.AIConfiguration.WanderingRadius
 											* Random.Range(0.25f, 1));
 
 			currentTargetPosition = newWanderPosition.XYZtoXZ().ClampIntoLevelBounds(AffiliatedLevelPlane.PlaneSettings);
@@ -188,20 +193,20 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		private void GetNewPatrolPoint()
 		{
-			if (entitySettings.AIConfiguration.PatrolPoints.Length == 0)
+			if (EntitySettings.AIConfiguration.PatrolPoints.Length == 0)
 			{
 				return;
 			}
 
 			idleDecisionCooldown = -1;
-			patrolPointIndex = (patrolPointIndex + 1) % entitySettings.AIConfiguration.PatrolPoints.Length;
-			currentTargetPosition = (originSpawnPosition + entitySettings.AIConfiguration.PatrolPoints[patrolPointIndex]).ClampIntoLevelBounds(AffiliatedLevelPlane.PlaneSettings);
+			patrolPointIndex = (patrolPointIndex + 1) % EntitySettings.AIConfiguration.PatrolPoints.Length;
+			currentTargetPosition = (originSpawnPosition + EntitySettings.AIConfiguration.PatrolPoints[patrolPointIndex]).ClampIntoLevelBounds(AffiliatedLevelPlane.PlaneSettings);
 		}
 
 		private void ResetDecisionDelay()
 		{
 			idleDecisionCooldown =
-				Mathf.Max(0.001f, entitySettings.AIConfiguration.NextMovementDelay * Random.Range(0.75f, 1.25f));
+				Mathf.Max(0.001f, EntitySettings.AIConfiguration.NextMovementDelay * Random.Range(0.75f, 1.25f));
 		}
 
 		#endregion
@@ -217,7 +222,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 				return;
 			}
 
-			if (entitySettings.AIConfiguration.ActiveBehaviour == ActiveBehaviourType.Aggressive)
+			if (EntitySettings.AIConfiguration.ActiveBehaviour == ActiveBehaviourType.Aggressive)
 			{
 				ChaseTarget();
 			}
@@ -238,18 +243,18 @@ namespace Spectral.Runtime.Behaviours.Entities
 			}
 
 			currentTargetPosition = target.position.XYZtoXZ();
-			if (TryReachTargetPoint(entitySettings.AIConfiguration.AttackRange))
+			if (TryReachTargetPoint(EntitySettings.AIConfiguration.AttackRange))
 			{
-				attackCooldown = entitySettings.AIConfiguration.AttackCooldown;
+				attackCooldown = EntitySettings.AIConfiguration.AttackCooldown;
 				SetIdleState(true);
 
 				//Cause the force impact
-				float forceImpact = entitySettings.AIConfiguration.AttackForceImpact;
+				float forceImpact = EntitySettings.AIConfiguration.AttackForceImpact;
 				Vector2 forceDirection = (currentTargetPosition - Head.transform.position.XYZtoXZ()).normalized;
 				PlayerMover.Instance.AddForceImpact(forceDirection * forceImpact);
 
 				//Damage the player
-				PlayerMover.Instance.Damage(entitySettings.AIConfiguration.AttackDamage);
+				PlayerMover.Instance.Damage(EntitySettings.AIConfiguration.AttackDamage);
 
 				//Grow the entity
 				OnEat();
@@ -312,6 +317,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 		{
 			Vector2 diff = currentTargetPosition - Head.transform.position.XYZtoXZ();
 			float dist = diff.sqrMagnitude;
+			stopDistance *= stopDistance;
 			if (dist < stopDistance)
 			{
 				IntendedAcceleration = 0;
@@ -322,8 +328,8 @@ namespace Spectral.Runtime.Behaviours.Entities
 			{
 				dist = Mathf.Sqrt(dist);
 				IntendedMoveDirection = (diff / dist).XZtoXYZ();
-				float maxPossibleAcceleration = idle ? entitySettings.AIConfiguration.IdleMoveSpeedMultiplier : 1f;
-				float wantedAcceleration = dist * entitySettings.MoveSpeed;
+				float maxPossibleAcceleration = idle ? EntitySettings.AIConfiguration.IdleMoveSpeedMultiplier : 1f;
+				float wantedAcceleration = dist * EntitySettings.MoveSpeed;
 				IntendedAcceleration = Mathf.Min(wantedAcceleration, maxPossibleAcceleration);
 
 				return false;
@@ -338,7 +344,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 			}
 
 			float dist = (Head.transform.position - PlayerMover.Instance.Head.transform.position).XYZtoXZ().sqrMagnitude;
-			float maxDist = entitySettings.AIConfiguration.ForgetTargetDistance;
+			float maxDist = EntitySettings.AIConfiguration.ForgetTargetDistance;
 
 			return dist > (maxDist * maxDist);
 		}
@@ -358,7 +364,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 		{
 			Vector2 diff = point - Head.transform.position.XYZtoXZ();
 			float dist = diff.sqrMagnitude;
-			float viewRange = entitySettings.AIConfiguration.ViewRange;
+			float viewRange = EntitySettings.AIConfiguration.ViewRange;
 			if (dist > (viewRange * viewRange))
 			{
 				return false;
@@ -381,7 +387,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 		public override void OnEat(FoodObject target = null)
 		{
-			if (eatenFoodObjectCount < entitySettings.AIConfiguration.MaxSizeIncrease)
+			if (eatenFoodObjectCount < EntitySettings.AIConfiguration.MaxSizeIncrease)
 			{
 				base.OnEat(target);
 			}
@@ -405,34 +411,34 @@ namespace Spectral.Runtime.Behaviours.Entities
 			Gizmos.color = Color.red;
 			Vector3 heightPos = new Vector3(0, Head.transform.position.y, 0);
 			Gizmos.DrawLine(Head.transform.position, currentTargetPosition.XZtoXYZ() + heightPos);
-			if (entitySettings.AIConfiguration.IdleBehaviour == IdleBehaviourType.Wander)
+			if (EntitySettings.AIConfiguration.IdleBehaviour == IdleBehaviourType.Wander)
 			{
 				UnityEditor.Handles.color = Color.cyan / 3;
 				UnityEditor.Handles.DrawSolidDisc(Head.transform.position, Vector3.up,
-												entitySettings.AIConfiguration.WanderingRadius);
+												EntitySettings.AIConfiguration.WanderingRadius);
 			}
-			else if (entitySettings.AIConfiguration.IdleBehaviour == IdleBehaviourType.Patrol)
+			else if (EntitySettings.AIConfiguration.IdleBehaviour == IdleBehaviourType.Patrol)
 			{
 				if (patrolPointIndex == -1)
 				{
 					return;
 				}
 
-				for (int i = patrolPointIndex; i < (patrolPointIndex + entitySettings.AIConfiguration.PatrolPoints.Length); i++)
+				for (int i = patrolPointIndex; i < (patrolPointIndex + EntitySettings.AIConfiguration.PatrolPoints.Length); i++)
 				{
-					int index = i                                                                      % entitySettings.AIConfiguration.PatrolPoints.Length;
-					int lastIndex = ((index - 1) + entitySettings.AIConfiguration.PatrolPoints.Length) % entitySettings.AIConfiguration.PatrolPoints.Length;
-					Gizmos.color = (Color.HSVToRGB(index / (float) entitySettings.AIConfiguration.PatrolPoints.Length, 1, 1) + Color.white) / 3;
-					Gizmos.DrawLine((originSpawnPosition + entitySettings.AIConfiguration.PatrolPoints[lastIndex]).XZtoXYZ() + heightPos,
-									(originSpawnPosition + entitySettings.AIConfiguration.PatrolPoints[index]).XZtoXYZ()     + heightPos);
+					int index = i                                                                      % EntitySettings.AIConfiguration.PatrolPoints.Length;
+					int lastIndex = ((index - 1) + EntitySettings.AIConfiguration.PatrolPoints.Length) % EntitySettings.AIConfiguration.PatrolPoints.Length;
+					Gizmos.color = (Color.HSVToRGB(index / (float) EntitySettings.AIConfiguration.PatrolPoints.Length, 1, 1) + Color.white) / 3;
+					Gizmos.DrawLine((originSpawnPosition + EntitySettings.AIConfiguration.PatrolPoints[lastIndex]).XZtoXYZ() + heightPos,
+									(originSpawnPosition + EntitySettings.AIConfiguration.PatrolPoints[index]).XZtoXYZ()     + heightPos);
 
-					Gizmos.DrawSphere((originSpawnPosition + entitySettings.AIConfiguration.PatrolPoints[index]).XZtoXYZ() + heightPos, REACHED_POINT_THRESHOLD);
+					Gizmos.DrawSphere((originSpawnPosition + EntitySettings.AIConfiguration.PatrolPoints[index]).XZtoXYZ() + heightPos, REACHED_POINT_THRESHOLD);
 				}
 			}
 
 			UnityEditor.Handles.color = (Color.green + Color.red) / 3;
-			float viewDistance = entitySettings.AIConfiguration.ViewRange;
-			float standardViewAngle = Mathf.Min(entitySettings.AIConfiguration.ViewAngle, 360);
+			float viewDistance = EntitySettings.AIConfiguration.ViewRange;
+			float standardViewAngle = Mathf.Min(EntitySettings.AIConfiguration.ViewAngle, 360);
 			float leftAngle = Head.transform.eulerAngles.y - standardViewAngle;
 			Vector3 leftForward = new Vector3(Mathf.Sin(leftAngle * Mathf.Deg2Rad), 0, Mathf.Cos(leftAngle * Mathf.Deg2Rad));
 			UnityEditor.Handles.DrawSolidArc(Head.transform.position, Vector3.up, leftForward, standardViewAngle * 2, viewDistance);

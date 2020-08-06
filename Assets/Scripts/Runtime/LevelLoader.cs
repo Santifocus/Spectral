@@ -22,6 +22,8 @@ namespace Spectral.Runtime
 
 		public static event Action<int, LevelPlane, LevelPlane, bool> LevelTransitionBegan;
 		public static bool Transitioning { get; private set; }
+		private static bool UnloadingScene => UnloadingSceneCount > 0;
+		private static int UnloadingSceneCount;
 
 		private static MusicInstance lastMusicInstance;
 
@@ -40,8 +42,11 @@ namespace Spectral.Runtime
 
 			//Create all required Level planes
 			await CreateLevelPlane(PlayerLevelIndex, 0);
+			await UnloadSceneTask();
 			await CreateLevelPlane(PlayerLevelIndex + 1, 1);
+			await UnloadSceneTask();
 			await CreateLevelPlane(PlayerLevelIndex - 1, -1);
+			await UnloadSceneTask();
 
 			//Setup the music for the plane
 			lastMusicInstance = new MusicInstance(0, 0, GameLevelPlanes[PlayerLevelIndex].PlaneSettings.MusicIndex);
@@ -121,13 +126,29 @@ namespace Spectral.Runtime
 			}
 
 			//Now unload the empty scene
+			UnloadScene(targetScene);
+
+			return extractedObjectParent;
+		}
+
+		private static async void UnloadScene(Scene targetScene)
+		{
+			UnloadingSceneCount++;
 			AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(targetScene);
 			while (!unloadOperation.isDone)
 			{
 				await Task.Delay(1);
 			}
 
-			return extractedObjectParent;
+			UnloadingSceneCount--;
+		}
+
+		private static async Task UnloadSceneTask()
+		{
+			while (UnloadingScene)
+			{
+				await Task.Delay(1);
+			}
 		}
 
 		private static async void TransitionLevel(int direction, bool hasTransitionedToPlaneBefore)
@@ -152,13 +173,18 @@ namespace Spectral.Runtime
 			lastMusicInstance = new MusicInstance(0, 0, GameLevelPlanes[PlayerLevelIndex = targetLevelIndex].PlaneSettings.MusicIndex);
 			MusicController.Instance.AddMusicInstance(lastMusicInstance);
 			(LevelPlaneData planeData, float prevTransitionDepth)[] targetObjectData = GameLevelPlanes.Where(p => p.CoreObject).Select(p => (p, p.CurrentPlaneDepth)).ToArray();
-			int millisecondsPassed = 0;
-			int totalMilliseconds = (int) (LevelLoaderSettings.Current.LevelTransitionTime * 1000);
-			while (millisecondsPassed < totalMilliseconds)
+			float startTime = Time.time;
+			float currentTime = 0;
+			while (currentTime < LevelLoaderSettings.Current.LevelTransitionTime)
 			{
-				await Task.Delay(TRANSITION_TIME_STEP);
-				millisecondsPassed += TRANSITION_TIME_STEP;
-				float transitionPoint = millisecondsPassed / (float) totalMilliseconds;
+				int currentFrame = Time.frameCount;
+				while (currentFrame == Time.frameCount)
+				{
+					await Task.Delay(1);
+				}
+
+				currentTime = Time.time - startTime;
+				float transitionPoint = currentTime / LevelLoaderSettings.Current.LevelTransitionTime;
 				foreach ((LevelPlaneData planeData, float prevTransitionDepth) in targetObjectData)
 				{
 					planeData.CurrentPlaneDepth = prevTransitionDepth - (transitionPoint * direction);

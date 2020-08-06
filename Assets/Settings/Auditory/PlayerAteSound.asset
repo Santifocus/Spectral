@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerAteSound
   m_EditorClassIdentifier: 
   soundName: Player Ate
-  clip: {fileID: 8300000, guid: a62de4a89a2465c41a6a6d6dec8c56f7, type: 3}
+  clip: {fileID: 8300000, guid: 284c3b4b8755a0b4facbc95b360175a3, type: 3}
   audioGroup: {fileID: 0}
   Loop: 0
   priority: 128

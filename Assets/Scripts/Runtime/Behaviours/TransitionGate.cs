@@ -1,6 +1,8 @@
 ﻿using System;
 using Spectral.Runtime.Behaviours.Entities;
+using Spectral.Runtime.DataStorage;
 using Spectral.Runtime.Factories;
+using Spectral.Runtime.FX.Handling;
 
 namespace Spectral.Runtime.Behaviours
 {
@@ -22,11 +24,6 @@ namespace Spectral.Runtime.Behaviours
 
 		public void TryActivate()
 		{
-			if (!SamePlaneAsPlayerInstance())
-			{
-				return;
-			}
-
 			if (transitionDirection == -1)
 			{
 				Activate();
@@ -42,12 +39,17 @@ namespace Spectral.Runtime.Behaviours
 
 		public bool CanBeActivated()
 		{
-			return wasActivatedBefore || (EntityFactory.GetEntitySize(PlayerMover.Instance) >= AffiliatedLevelPlane.PlaneSettings.RequiredPlayerSizeToTransition);
+			return SamePlaneAsPlayerInstance() &&
+					(wasActivatedBefore || (EntityFactory.GetEntitySize(PlayerMover.Instance) >= AffiliatedLevelPlane.PlaneSettings.RequiredPlayerSizeToTransition));
 		}
 
 		private void Activate()
 		{
 			PlayerWantsToStartLevelTransition?.Invoke(transitionDirection, wasActivatedBefore);
+			FXInstanceUtils.ExecuteFX(transitionDirection > 0
+										? LevelLoaderSettings.Current.UpTransitionFX
+										: LevelLoaderSettings.Current.DownTransitionFX, transform);
+
 			wasActivatedBefore = true;
 		}
 	}

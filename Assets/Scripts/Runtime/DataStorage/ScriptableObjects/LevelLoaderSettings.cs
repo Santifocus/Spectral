@@ -1,3 +1,4 @@
+using Spectral.Runtime.DataStorage.FX;
 using UnityEngine;
 
 namespace Spectral.Runtime.DataStorage
@@ -16,7 +17,11 @@ namespace Spectral.Runtime.DataStorage
 		public int LevelStartIndex = 0;
 		public float LevelTransitionTime = 2;
 		public float LevelDepth = 20;
+
+		//Transition
 		public GameObject TransitionGateModelDown;
+		public FXObjectData[] DownTransitionFX;
 		public GameObject TransitionGateModelUp;
+		public FXObjectData[] UpTransitionFX;
 	}
 }

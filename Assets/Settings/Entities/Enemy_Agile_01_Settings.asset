@@ -49,6 +49,7 @@ MonoBehaviour:
     UseDefault: 1
     DefaultOffset: 0
   MinParts: 1
+  SpawnPartCount: 3
   PartMinimumScale:
     NonDefaultValue: 0
     UseDefault: 1
@@ -66,12 +67,11 @@ MonoBehaviour:
     NonDefaultValue: 0
     UseDefault: 1
     DefaultOffset: 0
-  OverwritePrefab: {fileID: 0}
   EnableAI: 1
   AIConfiguration:
     IdleBehaviour: 2
     ActiveBehaviour: 3
-    EatBehavior: 3
+    EatBehavior: 2
     IdleMoveSpeedMultiplier:
       NonDefaultValue: 0
       UseDefault: 1
@@ -117,3 +117,5 @@ MonoBehaviour:
       NonDefaultValue: 0
       UseDefault: 1
       DefaultOffset: 0
+  EatFX: []
+  DamageFX: []

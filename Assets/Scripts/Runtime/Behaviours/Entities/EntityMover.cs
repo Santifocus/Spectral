@@ -8,7 +8,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 {
 	public class EntityMover : LevelPlaneBehavior
 	{
-		[SerializeField] protected EntitySettings entitySettings = default;
+		[SerializeField] private EntitySettings entitySettings = default;
 		[SerializeField] private int spawnTotalBodySize = 1;
 
 		protected bool Alive;
@@ -36,7 +36,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 		protected float CurrentAcceleration { get; private set; }
 		protected float IntendedAcceleration;
 
-		protected float EatDistance => entitySettings.FoodEatDistance * Head.transform.localScale.x;
+		protected float EatDistance => entitySettings.FoodEatDistance * Head.transform.lossyScale.x;
 
 		private float intendedMoveAngle;
 		private Vector3? intendedMoveDirection;
@@ -62,18 +62,22 @@ namespace Spectral.Runtime.Behaviours.Entities
 				}
 				else
 				{
-					gameObject.SetActive(false);
 #if SPECTRAL_DEBUG
+					gameObject.SetActive(false);
 					throw new System.Exception("A scene injected Entity (" + name +
 												") had a total body size which was below the minimum count of body parts allowed by the Settings... Disabling");
+#else
+					Destroy(gameObject);
 #endif
 				}
 			}
 			else
 			{
-				gameObject.SetActive(false);
 #if SPECTRAL_DEBUG
+				gameObject.SetActive(false);
 				throw new System.NullReferenceException("A scene injected Entity (" + name + ") had no Settings applied and could therefore not be created... Disabling");
+#else
+				Destroy(gameObject);
 #endif
 			}
 		}
@@ -183,15 +187,17 @@ namespace Spectral.Runtime.Behaviours.Entities
 			{
 				target.Eat();
 			}
+
+			//Play effects on parts
+			int bodySize = EntityFactory.GetEntitySize(this);
+			for (int i = 0; i < bodySize; i++)
+			{
+				EntityFactory.GetBodyPartFromIndex(this, i).FeedbackPlayer.PlayEatEffect();
+			}
 		}
 
 		public virtual void Damage(int amount = 1, bool silent = false)
 		{
-			if (!silent)
-			{
-				FXInstanceUtils.ExecuteFX(entitySettings.DamageFX, transform);
-			}
-
 			for (int i = 0; i < amount; i++)
 			{
 				if (!Alive)
@@ -200,6 +206,18 @@ namespace Spectral.Runtime.Behaviours.Entities
 				}
 
 				EntityFactory.DecreaseEntitySize(this, entitySettings);
+			}
+
+			if (!silent)
+			{
+				FXInstanceUtils.ExecuteFX(entitySettings.DamageFX, transform);
+
+				//Play effects on parts
+				int bodySize = EntityFactory.GetEntitySize(this);
+				for (int i = 0; i < bodySize; i++)
+				{
+					EntityFactory.GetBodyPartFromIndex(this, i).FeedbackPlayer.PlayDamageEffect();
+				}
 			}
 		}
 

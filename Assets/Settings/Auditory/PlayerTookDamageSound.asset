@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerTookDamageSound
   m_EditorClassIdentifier: 
   soundName: Player Took Damage
-  clip: {fileID: 8300000, guid: c6bcf117c70270741b7458e1bb9c0dca, type: 3}
+  clip: {fileID: 8300000, guid: e666bc3a265fee94db7f4b3ed805dfaf, type: 3}
   audioGroup: {fileID: 0}
   Loop: 0
   priority: 128
