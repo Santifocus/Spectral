@@ -49,7 +49,7 @@ MonoBehaviour:
     UseDefault: 1
     DefaultOffset: 0
   MinParts: 1
-  SpawnPartCount: 3
+  SpawnPartCount: 5
   PartMinimumScale:
     NonDefaultValue: 0
     UseDefault: 1
@@ -69,8 +69,8 @@ MonoBehaviour:
     DefaultOffset: 0
   EnableAI: 1
   AIConfiguration:
-    IdleBehaviour: 3
-    ActiveBehaviour: 1
+    IdleBehaviour: 2
+    ActiveBehaviour: 3
     EatBehavior: 2
     IdleMoveSpeedMultiplier:
       NonDefaultValue: 0

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b90d9615614ce6640ada455017e05caf, type: 3}
-  m_Name: Enemy_Fast_01_Settings
+  m_Name: Enemy_Agile_03_Settings
   m_EditorClassIdentifier: 
   MoveSpeed:
     NonDefaultValue: 0
     UseDefault: 1
-    DefaultOffset: 1
+    DefaultOffset: -0.5
   VelocityDamping:
     NonDefaultValue: 0
     UseDefault: 1
@@ -35,7 +35,7 @@ MonoBehaviour:
   TurnSpeed:
     NonDefaultValue: 0
     UseDefault: 1
-    DefaultOffset: -40
+    DefaultOffset: 10
   TurnAcceleration:
     NonDefaultValue: 0
     UseDefault: 1
@@ -49,7 +49,7 @@ MonoBehaviour:
     UseDefault: 1
     DefaultOffset: 0
   MinParts: 1
-  SpawnPartCount: 3
+  SpawnPartCount: 4
   PartMinimumScale:
     NonDefaultValue: 0
     UseDefault: 1
@@ -84,17 +84,7 @@ MonoBehaviour:
       NonDefaultValue: 0
       UseDefault: 1
       DefaultOffset: 20
-    PatrolPoints:
-    - {x: 0, y: 0}
-    - {x: 0, y: 0}
-    - {x: 0, y: 0}
-    - {x: 0, y: 0}
-    - {x: 0, y: 0}
-    - {x: 0, y: 0}
-    - {x: 0, y: 0}
-    - {x: 0, y: 0}
-    - {x: 0, y: 0}
-    - {x: 0, y: 0}
+    PatrolPoints: []
     ViewRange:
       NonDefaultValue: 0
       UseDefault: 1
