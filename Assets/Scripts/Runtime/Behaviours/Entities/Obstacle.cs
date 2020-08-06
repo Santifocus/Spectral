@@ -94,7 +94,8 @@ namespace Spectral.Runtime.Behaviours
 			{
 				Vector2 dif = part.transform.position.XYZtoXZ() - transform.position.XYZtoXZ();
 				float sqrDist = dif.sqrMagnitude;
-				if (sqrDist < (obstacleSettings.DamageRange * obstacleSettings.DamageRange))
+				float damageRange = obstacleSettings.DamageRange * transform.localScale.x;
+				if (sqrDist < (damageRange * damageRange))
 				{
 					Vector2? impactDirection = null;
 					if (obstacleSettings.DamageImpactForce != 0)
