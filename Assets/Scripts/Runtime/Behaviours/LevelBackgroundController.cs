@@ -67,6 +67,7 @@ namespace Spectral.Runtime.Behaviours
 		private void InitialiseTransitionEffect(int transitionDirection)
 		{
 			transitionEffectRenderer.material.SetFloat(transitionEffectDirectionNameID, transitionDirection);
+			transitionEffectRenderer.gameObject.SetActive(true);
 		}
 
 		private void Update()
@@ -117,6 +118,7 @@ namespace Spectral.Runtime.Behaviours
 		private void FinaliseTransitionEffect()
 		{
 			transitionEffectRenderer.material.SetFloat(transitionEffectNameID, 0);
+			transitionEffectRenderer.gameObject.SetActive(false);
 		}
 	}
 }
