@@ -36,7 +36,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 		protected float CurrentAcceleration { get; private set; }
 		protected float IntendedAcceleration;
 
-		protected float EatDistance => entitySettings.FoodEatDistance * Head.transform.localScale.x;
+		protected float EatDistance => entitySettings.FoodEatDistance * Head.transform.lossyScale.x;
 
 		private float intendedMoveAngle;
 		private Vector3? intendedMoveDirection;
