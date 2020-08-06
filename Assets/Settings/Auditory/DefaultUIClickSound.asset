@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DefaultUIClickSound
   m_EditorClassIdentifier: 
   soundName: Default UI Click
-  clip: {fileID: 8300000, guid: 8d9613d4f8a5c9648b565e212e77460e, type: 3}
+  clip: {fileID: 8300000, guid: f5ab590510a6ef84290bfae32edcd2ca, type: 3}
   audioGroup: {fileID: 0}
   Loop: 0
   priority: 100

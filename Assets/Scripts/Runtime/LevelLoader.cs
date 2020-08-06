@@ -175,7 +175,6 @@ namespace Spectral.Runtime
 			(LevelPlaneData planeData, float prevTransitionDepth)[] targetObjectData = GameLevelPlanes.Where(p => p.CoreObject).Select(p => (p, p.CurrentPlaneDepth)).ToArray();
 			float startTime = Time.time;
 			float currentTime = 0;
-			
 			while (currentTime < LevelLoaderSettings.Current.LevelTransitionTime)
 			{
 				int currentFrame = Time.frameCount;
@@ -183,7 +182,7 @@ namespace Spectral.Runtime
 				{
 					await Task.Delay(1);
 				}
-				
+
 				currentTime = Time.time - startTime;
 				float transitionPoint = currentTime / LevelLoaderSettings.Current.LevelTransitionTime;
 				foreach ((LevelPlaneData planeData, float prevTransitionDepth) in targetObjectData)
