@@ -22,6 +22,6 @@ MonoBehaviour:
   DefaultFoodInLevelCount: 10
   DefaultLevelWidth: 100
   DefaultLevelHeight: 100
-  LevelBorderSpawnBlockWidth: 6
+  LevelBorderSpawnBlockWidth: 7
   LevelBorderForceFieldWidth: 7
   LevelBorderForceFieldStrength: 10
