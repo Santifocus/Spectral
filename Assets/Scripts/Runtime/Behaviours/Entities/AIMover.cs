@@ -42,6 +42,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 			{
 				return;
 			}
+
 			SetIdleState(true);
 			originSpawnPosition = Head.transform.position.XYZtoXZ();
 			SetupViewAngles();

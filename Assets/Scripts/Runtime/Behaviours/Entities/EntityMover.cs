@@ -67,7 +67,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 					throw new System.Exception("A scene injected Entity (" + name +
 												") had a total body size which was below the minimum count of body parts allowed by the Settings... Disabling");
 #else
-				Destroy(gameObject);
+					Destroy(gameObject);
 #endif
 				}
 			}
@@ -207,7 +207,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 
 				EntityFactory.DecreaseEntitySize(this, entitySettings);
 			}
-			
+
 			if (!silent)
 			{
 				FXInstanceUtils.ExecuteFX(entitySettings.DamageFX, transform);

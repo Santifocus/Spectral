@@ -35,7 +35,7 @@ namespace Substance.Platform
 #elif (UNITY_IOS)
             buildTarget = BuildTarget.IOS;
 #elif (UNITY_ANDROID)
-            buildTarget = BuildTarget.Android;
+			buildTarget = BuildTarget.Android;
 #endif
 
 			return buildTarget;
@@ -50,7 +50,7 @@ namespace Substance.Platform
 #elif (UNITY_IOS)
             buildTarget = "IOS";
 #elif (UNITY_ANDROID)
-            buildTarget = "Android";
+			buildTarget = "Android";
 #endif
 
 			return buildTarget;
@@ -60,7 +60,7 @@ namespace Substance.Platform
 		{
 			bool bMobile = false;
 #if (UNITY_IOS || UNITY_ANDROID)
-            bMobile = true;
+			bMobile = true;
 #endif
 
 			return bMobile;
@@ -72,7 +72,7 @@ namespace Substance.Platform
 #if (UNITY_IOS)
             format = TextureFormat.PVRTC_RGBA4;
 #elif (UNITY_ANDROID)
-            format = TextureFormat.ETC2_RGBA8;
+			format = TextureFormat.ETC2_RGBA8;
 #else
 			Debug.LogError("The current build target is NOT for a modbile platform!");
 #endif
@@ -113,7 +113,7 @@ namespace Substance.Platform
 			Debug.Log("ENABLE_MONO");
 #endif
 #if (UNITY_ANDROID)
-            Debug.Log("UNITY_ANDROID");
+			Debug.Log("UNITY_ANDROID");
 #endif
 #if (ENABLE_IL2CPP)
             Debug.Log("ENABLE_IL2CPP");
@@ -128,7 +128,7 @@ namespace Substance.Platform
 #if (UNITY_IOS)
         public const string attributeValue = "__Internal";
 #elif (UNITY_ANDROID)
-        public const string attributeValue = "Substance.Engine.Mobile";
+		public const string attributeValue = "Substance.Engine.Mobile";
 #else
 		public const string attributeValue = "UnknownAttributeValue";
 #endif
