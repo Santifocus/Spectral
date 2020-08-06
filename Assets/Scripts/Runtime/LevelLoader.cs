@@ -173,13 +173,19 @@ namespace Spectral.Runtime
 			lastMusicInstance = new MusicInstance(0, 0, GameLevelPlanes[PlayerLevelIndex = targetLevelIndex].PlaneSettings.MusicIndex);
 			MusicController.Instance.AddMusicInstance(lastMusicInstance);
 			(LevelPlaneData planeData, float prevTransitionDepth)[] targetObjectData = GameLevelPlanes.Where(p => p.CoreObject).Select(p => (p, p.CurrentPlaneDepth)).ToArray();
-			int millisecondsPassed = 0;
-			int totalMilliseconds = (int) (LevelLoaderSettings.Current.LevelTransitionTime * 1000);
-			while (millisecondsPassed < totalMilliseconds)
+			float startTime = Time.time;
+			float currentTime = 0;
+			
+			while (currentTime < LevelLoaderSettings.Current.LevelTransitionTime)
 			{
-				await Task.Delay(TRANSITION_TIME_STEP);
-				millisecondsPassed += TRANSITION_TIME_STEP;
-				float transitionPoint = millisecondsPassed / (float) totalMilliseconds;
+				int currentFrame = Time.frameCount;
+				while (currentFrame == Time.frameCount)
+				{
+					await Task.Delay(1);
+				}
+				
+				currentTime = Time.time - startTime;
+				float transitionPoint = currentTime / LevelLoaderSettings.Current.LevelTransitionTime;
 				foreach ((LevelPlaneData planeData, float prevTransitionDepth) in targetObjectData)
 				{
 					planeData.CurrentPlaneDepth = prevTransitionDepth - (transitionPoint * direction);
