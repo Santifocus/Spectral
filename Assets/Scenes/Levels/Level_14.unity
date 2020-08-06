@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4182cfcfe198e334294adcd4d2bf25ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entitySettings: {fileID: 11400000, guid: d4e196c6bf399574fa79193b763ffcc9, type: 2}
+  entitySettings: {fileID: 11400000, guid: ccd34e1d083a7684bbe8aaab4cf9f4f6, type: 2}
   spawnTotalBodySize: 4
 --- !u!1 &1488160083
 GameObject:
@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4182cfcfe198e334294adcd4d2bf25ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entitySettings: {fileID: 11400000, guid: d4e196c6bf399574fa79193b763ffcc9, type: 2}
+  entitySettings: {fileID: 11400000, guid: b567dd3716fd2d3458b0270da619192d, type: 2}
   spawnTotalBodySize: 4
 --- !u!1 &2023022090
 GameObject:
