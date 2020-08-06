@@ -8,7 +8,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 {
 	public class EntityMover : LevelPlaneBehavior
 	{
-		[SerializeField] protected EntitySettings entitySettings = default;
+		[SerializeField] private EntitySettings entitySettings = default;
 		[SerializeField] private int spawnTotalBodySize = 1;
 
 		protected bool Alive;
@@ -62,18 +62,22 @@ namespace Spectral.Runtime.Behaviours.Entities
 				}
 				else
 				{
-					gameObject.SetActive(false);
 #if SPECTRAL_DEBUG
+					gameObject.SetActive(false);
 					throw new System.Exception("A scene injected Entity (" + name +
 												") had a total body size which was below the minimum count of body parts allowed by the Settings... Disabling");
+#else
+				Destroy(gameObject);
 #endif
 				}
 			}
 			else
 			{
-				gameObject.SetActive(false);
 #if SPECTRAL_DEBUG
+				gameObject.SetActive(false);
 				throw new System.NullReferenceException("A scene injected Entity (" + name + ") had no Settings applied and could therefore not be created... Disabling");
+#else
+				Destroy(gameObject);
 #endif
 			}
 		}
