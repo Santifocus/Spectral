@@ -317,6 +317,7 @@ namespace Spectral.Runtime.Behaviours.Entities
 		{
 			Vector2 diff = currentTargetPosition - Head.transform.position.XYZtoXZ();
 			float dist = diff.sqrMagnitude;
+			stopDistance *= stopDistance;
 			if (dist < stopDistance)
 			{
 				IntendedAcceleration = 0;

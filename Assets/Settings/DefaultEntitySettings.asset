@@ -30,7 +30,7 @@ MonoBehaviour:
   AIViewRange: 12
   AIViewAngle: 50
   AIForgetTargetDistance: 16
-  AIAttackRange: 3
+  AIAttackRange: 0.9
   AIAttackDamage: 1
   AIAttackForceImpact: 7
   AIAttackCooldown: 3
